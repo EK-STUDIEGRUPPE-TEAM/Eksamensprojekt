@@ -1,26 +1,37 @@
 package thestudiegruppe.projectestimationtool.Model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Project {
 
     private int id;
     private String name;
-    private String email;
-    private String password;
+    private String description;
+    private LocalDate date;
     private List<SubProject> subProjects;
     private User user;
     private Status status;
 
-    public Project(int id, String name, String email, String password, User user, Status status) {
+    public Project(int id, String name, String description, LocalDate date, User user, Status status) {
 
         this.id = id;
         this.name = name;
-        this.email = email;
-        this.password = password;
+        this.description = description;
+        this.date = date;
         this.user = user;
         this.status = status;
     }
+
+    public Project(String name, String description, User user, Status status){
+
+        this.name = name;
+        this.description = description;
+        this.date = LocalDate.now();
+        this.user = user;
+        this.status = status;
+    }
+
 
     public Project() {
     }
@@ -45,25 +56,16 @@ public class Project {
         this.name = name;
     }
 
-    public String getEmail() {
+    public String getDescription(){
 
-        return email;
+        return description;
     }
 
-    public void setEmail(String eemail) {
-
-        this.email = email;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public String getPassword() {
 
-        return password;
-    }
-
-    public void setPassword(String password) {
-
-        this.password = password;
-    }
 
     public List<SubProject> getSubProjects() {
 

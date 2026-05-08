@@ -1,8 +1,10 @@
 package thestudiegruppe.projectestimationtool.Repository;
 
+import org.apache.logging.log4j.util.Timer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
 
 import java.sql.ResultSet;
@@ -27,7 +29,7 @@ public class TaskRepository {
                     rs.getString("name"),
                     rs.getString("description"),
                     rs.getDouble("hourlyRate"),
-                    rs.getStatus("status"),
+                    Status.valueOf(rs.getString("status")),
                     rs.getInt("subProject_id")
             );
             return task;
@@ -36,13 +38,40 @@ public class TaskRepository {
 
         public int addTask (Task task){
             String sql = "INSERT INTO Task (name, description, hourlyRate, status, subProject_id) VALUES (?, ?, ?, ?, ?)";
-            return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus(), task.getSubTasks());
+            return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus(), task.getSubProjectId());
         }
 
         public List<Task> findAll() {
-            String sql = "SELECT id, name, description, hourlyRate FROM Task";
-            return jdbcTemplate.query(sql, new TaskRowMapper();
+            String sql = "SELECT id, name, description, hourlyRate, status, subProject_id FROM Task";
+            return jdbcTemplate.query(sql, new TaskRowMapper());
         }
+
+        public List<Task> findTasksBySubProjectId(int subProjectId){
+            String sql = "SELECT id, name, description, hourlyRate, status FROM Task WHERE subProject_id";
+            return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectId);
+        }
+
+        public void deleteTask (int id){
+            String sql = "DELETE FROM Task WHERE id";
+            jdbcTemplate.update(sql, id);
+        }
+
+        public int updateTask(Task task){
+        String sql = "UPDATE Task SET name, description, hourlyRate, status WHERE id";
+        return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus());
+        }
+
+        public int deleteBySubProjectId (int subProjectId){
+        return 0;
+        }
+
+        public double calculateTaskPrice(double hourlyRate){
+        return 0;
+        }
+
+
+
+
 
 
 }

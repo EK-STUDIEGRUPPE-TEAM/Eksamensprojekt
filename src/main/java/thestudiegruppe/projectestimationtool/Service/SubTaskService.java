@@ -26,6 +26,6 @@ public class SubTaskService {
     }
 
     public void deleteSubTask(int id) {
-        subTaskRepository.deleteSubTask(id)
+        subTaskRepository.deleteSubTask(id);
     }
 }
