@@ -12,13 +12,12 @@ public class Task {
     private List<SubTask> subTasks;
     private int subProjectId;
 
-    public Task (int id, String name,String description, double hourlyRate, Status status, List<SubTask> subTasks, int subProjectId){
+    public Task (int id, String name,String description, double hourlyRate, Status status, int subProjectId){
         this.id = id;
         this.name = name;
         this.description = description;
         this.hourlyRate = hourlyRate;
         this.status = status;
-        this.subTasks = subTasks;
         this.subProjectId = subProjectId;
     }
 
