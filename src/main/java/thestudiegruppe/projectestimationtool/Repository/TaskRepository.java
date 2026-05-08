@@ -1,4 +1,48 @@
 package thestudiegruppe.projectestimationtool.Repository;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Model.Task;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+@Repository
 public class TaskRepository {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    public TaskRepository(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public static class TaskRowMapper implements RowMapper <Task> {
+
+        @Override
+        public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Task task = new Task(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getDouble("hourlyRate"),
+                    rs.getStatus("status"),
+                    rs.getInt("subProject_id")
+            );
+            return task;
+        }
+    }
+
+        public int addTask (Task task){
+            String sql = "INSERT INTO Task (name, description, hourlyRate, status, subProject_id) VALUES (?, ?, ?, ?, ?)";
+            return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus(), task.getSubTasks());
+        }
+
+        public List<Task> findAll() {
+            String sql = "SELECT id, name, description, hourlyRate FROM Task";
+            return jdbcTemplate.query(sql, new TaskRowMapper();
+        }
+
+
 }
