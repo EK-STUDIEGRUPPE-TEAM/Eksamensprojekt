@@ -2,7 +2,7 @@ package thestudiegruppe.projectestimationtool.Model;
 
 public class SubTask {
 
-    private int subTaskId;
+    private int id;
     private String name;
     private String description;
     private int estimatedHours;
@@ -11,20 +11,20 @@ public class SubTask {
     public SubTask() {
     }
 
-    public SubTask(int subTaskId, String name, String description, int estimatedHours, Status status) {
-        this.subTaskId = subTaskId;
+    public SubTask(int id, String name, String description, int estimatedHours, Status status) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.estimatedHours = estimatedHours;
         this.status = status;
     }
 
-    public int getSubTaskId() {
-        return subTaskId;
+    public int getId() {
+        return id;
     }
 
-    public void setSubTaskId(int subTaskId) {
-        this.subTaskId = subTaskId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
