@@ -16,12 +16,16 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public void createTask(Task task) {
-        taskRepository.addTask(task);
+    public int createTask(Task task) {
+        return taskRepository.addTask(task);
     }
 
     public List<Task> findTasksBySubProject(int subProjectId) {
         return taskRepository.findTasksBySubProjectId(subProjectId);
+    }
+
+    public List<Task> getAllTasks(){
+        return taskRepository.findAll();
     }
 
     public void deleteTask(int id){
@@ -32,11 +36,11 @@ public class TaskService {
         taskRepository.updateTask(task);
     }
 
-    public int deleteBySubProjectId (int subProjectId) {
-        return taskRepository.deleteBySubProjectId(subProjectId);
+    public int deleteTaskBySubProjectId (int subProjectId) {
+        return taskRepository.deleteTaskBySubProjectId(subProjectId);
     }
 
-    public double calculateTaskPrice (Task task){
-        return 0;
+    public List<Task> calculateTaskPrice (double hourlyRate){
+        return taskRepository.findTaskPrice(hourlyRate);
     }
 }

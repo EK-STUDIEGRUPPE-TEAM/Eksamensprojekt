@@ -7,13 +7,12 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 CREATE TABLE IF NOT EXISTS Task (
-                        task_id AUTO_INCREMENT,
+                        id INT AUTO_INCREMENT PRIMARY KEY,
                         name VARCHAR(),
                         description VARCHAR(),
                         status VARCHAR(),
-                        Hourly_rate decimal,
+                        hourlyRate decimal,
                         subProject_id int,
-                        PRIMARY KEY (task_id)
 );
 
 CREATE TABLE IF NOT EXISTS SubTask (

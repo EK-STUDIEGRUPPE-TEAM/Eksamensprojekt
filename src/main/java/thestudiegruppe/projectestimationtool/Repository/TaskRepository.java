@@ -61,17 +61,14 @@ public class TaskRepository {
         return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus());
         }
 
-        public int deleteBySubProjectId (int subProjectId){
-        return 0;
+        public int deleteTaskBySubProjectId (int subProjectId){
+        String sql = "DELETE Task WHERE subProject_id";
+        return jdbcTemplate.update(sql, subProjectId);
         }
 
-        public double calculateTaskPrice(double hourlyRate){
-        return 0;
+        public List<Task> findTaskPrice(double hourlyRate){
+        String sql = "SELECT hourlyRate FROM Task";
+        return jdbcTemplate.query(sql, new TaskRowMapper(), hourlyRate);
         }
-
-
-
-
-
 
 }
