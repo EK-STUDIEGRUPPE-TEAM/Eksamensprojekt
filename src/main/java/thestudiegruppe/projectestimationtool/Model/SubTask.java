@@ -7,6 +7,7 @@ public class SubTask {
     private String description;
     private int estimatedHours;
     private Status status;
+    private int taskId;
 
     public SubTask() {
     }
@@ -17,6 +18,7 @@ public class SubTask {
         this.description = description;
         this.estimatedHours = estimatedHours;
         this.status = status;
+        this.taskId = taskId;
     }
 
     public int getId() {
@@ -57,6 +59,14 @@ public class SubTask {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 }
 
