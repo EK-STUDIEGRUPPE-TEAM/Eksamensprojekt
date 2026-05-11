@@ -20,12 +20,12 @@ public class TaskService {
         return taskRepository.addTask(task);
     }
 
-    public List<Task> findTasksBySubProject(int subProjectId) {
-        return taskRepository.findTasksBySubProjectId(subProjectId);
+    public List<Task> getAllTasks(){
+        return taskRepository.findAllTasks();
     }
 
-    public List<Task> getAllTasks(){
-        return taskRepository.findAll();
+    public List<Task> getTasksBySubProject(int subProjectId) {
+        return taskRepository.findTasksBySubProjectId(subProjectId);
     }
 
     public void deleteTask(int id){
@@ -40,7 +40,7 @@ public class TaskService {
         return taskRepository.deleteTaskBySubProjectId(subProjectId);
     }
 
-    public List<Task> calculateTaskPrice (double hourlyRate){
-        return taskRepository.findTaskPrice(hourlyRate);
+    public List<Task> calculateTaskPrice (int subProjectId){
+        return taskRepository.findTasksBySubProjectId(subProjectId);
     }
 }

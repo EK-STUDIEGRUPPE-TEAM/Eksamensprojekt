@@ -21,11 +21,26 @@ public class SubTaskService {
     }
 
     public List<SubTask> getAllSubTasks() {
-        return subTaskRepository.getAllSubTask;
+        return subTaskRepository.findAllSubTask();
+    }
 
+    public List<SubTask> getSubTasksByTaskId(int taskId){
+        return subTaskRepository.findSubTaskByTaskId(taskId);
     }
 
     public void deleteSubTask(int id) {
         subTaskRepository.deleteSubTask(id);
+    }
+
+    public void updateTask(SubTask subTask){
+        subTaskRepository.updateSubTask(subTask);
+    }
+
+    public void deleteSubTaskByTaskId (int taskId){
+        subTaskRepository.deleteSubTaskByTaskId(taskId);
+    }
+
+    public List<SubTask> calculateEstimatedHours (int taskId){
+        return subTaskRepository.findSubTaskByTaskId(taskId);
     }
 }
