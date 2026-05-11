@@ -1,11 +1,13 @@
 package thestudiegruppe.projectestimationtool.Service;
 
+import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
 
 import java.util.List;
 
+@Service
 public class ProjectService {
 
     private final ProjectRepository projectRepository;

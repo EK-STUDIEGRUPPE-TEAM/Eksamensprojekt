@@ -9,16 +9,16 @@ public class SubTask {
     private Status status;
     private int taskId;
 
-    public SubTask() {
-    }
-
-    public SubTask(int id, String name, String description, int estimatedHours, Status status) {
+    public SubTask(int id, String name, String description, int estimatedHours, Status status, int taskId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.estimatedHours = estimatedHours;
         this.status = status;
         this.taskId = taskId;
+    }
+
+    public SubTask() {
     }
 
     public int getId() {

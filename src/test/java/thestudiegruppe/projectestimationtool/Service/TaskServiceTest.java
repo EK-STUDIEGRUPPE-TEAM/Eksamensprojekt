@@ -46,7 +46,7 @@ class TaskServiceTest {
     void getAllTasksShouldReturnTasks(){
         Task task = new Task(1, "Test Task", "Test for Task Service", 250.0, TODO, 2);
 
-        when(repository.findAll()).thenReturn(List.of(task));
+        when(repository.findAllTasks()).thenReturn(List.of(task));
 
         List<Task> result = service.getAllTasks();
 

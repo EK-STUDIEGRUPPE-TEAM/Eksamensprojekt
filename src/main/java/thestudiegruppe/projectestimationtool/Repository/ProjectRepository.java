@@ -2,6 +2,7 @@ package thestudiegruppe.projectestimationtool.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.time.LocalDate;
 
-
+@Repository
 public class ProjectRepository {
 
 
