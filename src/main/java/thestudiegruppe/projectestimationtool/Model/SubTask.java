@@ -12,7 +12,7 @@ public class SubTask {
     public SubTask() {
     }
 
-    public SubTask(int subTaskId, String name, String description, int estimatedHours, Status status, int taskId) {
+    public SubTask(int id, String name, String description, int estimatedHours, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
