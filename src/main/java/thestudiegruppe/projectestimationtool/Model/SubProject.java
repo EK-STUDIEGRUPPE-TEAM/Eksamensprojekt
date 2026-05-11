@@ -2,26 +2,26 @@ package thestudiegruppe.projectestimationtool.Model;
 
 public class SubProject {
 
-    private int subProjectId;
+    private int id;
     private String name;
     private String description;
 
     public SubProject() {
     }
 
-    public SubProject(int subProjectId, String name, String description) {
-        this.subProjectId = subProjectId;
+    public SubProject(int id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
 
     }
 
-    public int getSubProjectId() {
-        return subProjectId;
+    public int getId() {
+        return id;
     }
 
-    public void setSubProjectId(int subProjectId) {
-        this.subProjectId = subProjectId;
+    public void setId(int id) {
+        this.id = id;
     }
     public String getName() {
         return name;
