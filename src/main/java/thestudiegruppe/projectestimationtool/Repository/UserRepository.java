@@ -19,31 +19,31 @@ public class UserRepository {
 
 
     public List<User> getAllUsers(){
-        String sql = "SELECT * FROM User";
+        String sql = "SELECT * FROM Users";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
     public void createUser(User user){
-        String sql = "INSERT INTO User(name, email, password) VALUES(?,?,?)";
+        String sql = "INSERT INTO Users(name, email, password) VALUES(?,?,?)";
 
         jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword());
     }
 
     public void delete(int id){
-        String sql = "DELETE FROM User WHERE user_id = ?";
+        String sql = "DELETE FROM Users WHERE user_id = ?";
 
         jdbcTemplate.update(sql, id);
 
     }
 
     public User findUserById(int id){
-        String sql = "SELECT * FROM User WHERE user_id = ?";
+        String sql = "SELECT * FROM Users WHERE user_id = ?";
 
         return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
     }
 
     public void update(User user){
-        String sql = "UPDATE User SET name = ? WHERE user_id = ?";
+        String sql = "UPDATE Users SET name = ? WHERE user_id = ?";
 
         jdbcTemplate.update(sql, user.getName(), user.getId());
     }

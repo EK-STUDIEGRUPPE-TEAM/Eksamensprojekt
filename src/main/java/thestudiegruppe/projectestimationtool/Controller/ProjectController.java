@@ -1,12 +1,11 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
+
+import java.util.List;
 
 
 @RestController
@@ -21,38 +20,34 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/show")
-    public Project show(Project project) {
-      projectService.findAllProjects();
-      return project;
+    @GetMapping()
+    public List<Project> show() {
+      return projectService.findAllProjects();
     }
 
-    @GetMapping("/add")
-    public Project add(Project project) {
+    @PostMapping("/add")
+    public Project add(@RequestBody Project project) {
         projectService.createProject(project);
-
         return project;
     }
 
-    @GetMapping("/delete")
-    public String delete(int id) {
-
-        return null;
+    @PostMapping("/delete/{id}")
+    public Project delete(@PathVariable int id, @RequestBody Project project) {
+        projectService.deleteProject(project);
+        return project;
     }
 
-    @PostMapping("/save")
-    public String save(Project project) {
 
-
-
-        return null;
+    @PostMapping("/update/{id}")
+    public Project update(@PathVariable int id, @RequestBody Project project) {
+        projectService.updateProject(project);
+        return project;
     }
 
-    @PostMapping("/update")
-    public String update(Project project) {
-
-        return null;
-    }
-
+//    @PostMapping("/save")
+//    public String save(Project project) {
+//
+//        return null;
+//    }
 
 }

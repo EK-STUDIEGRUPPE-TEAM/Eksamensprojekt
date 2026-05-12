@@ -16,20 +16,27 @@ public class SubTaskController {
         this.subTaskService = subTaskService;
     }
 
-    @PostMapping
-    public void createSubTask(@RequestBody SubTask subTask) {
-        subTaskService.createSubTask(subTask);
-    }
 
     @GetMapping
     public List<SubTask> getAllSubTasks() {
         return subTaskService.getAllSubTasks();
-
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteSubTask(@PathVariable int id) {
-        subTaskService.deleteSubTask(id);
+    @PostMapping("/add")
+    public SubTask createSubTask(@RequestBody SubTask subTask) {
+        subTaskService.createSubTask(subTask);
+        return subTask;
+    }
 
+    @PostMapping("/update/{id}")
+    public SubTask update(@PathVariable int id, @RequestBody SubTask subTask){
+        subTaskService.updateTask(subTask);
+        return subTask;
+    }
+
+    @PostMapping("/delete/{id}")
+    public SubTask deleteSubTask(@PathVariable int id, @RequestBody SubTask subTask) {
+        subTaskService.deleteSubTask(id);
+        return subTask;
     }
 }

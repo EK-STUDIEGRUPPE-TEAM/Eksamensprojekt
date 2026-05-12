@@ -23,7 +23,7 @@ public class ProjectRepository {
 
     public void add(Project project) {
 
-        String sql = "INSERT INTO Projects(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Project(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
 
         jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getStatus().name());
 
@@ -31,32 +31,37 @@ public class ProjectRepository {
 
     public List<Project> findAll() {
 
-        String sql = "SELECT id, name, description, date, user_id, status from Projects";
+        String sql = "SELECT * FROM Project";
 
         return jdbcTemplate.query(sql, new ProjectRowMapper());
 
     }
 
     public void delete(int id) {
-
-        String sql = "DELETE FROM Projects WHERE id = ?";
+        String sql = "DELETE FROM SubProject WHERE project_id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public int update(Project project) {
-        String sql = "UPDATE Projects SET name = ?, description = ?, date = ?, user_id = ?, status = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getStatus().name(), project.getId());
+        String sql = "UPDATE Project SET name = ?, description = ?, date = ?, user_id = ?, status = ? WHERE project_id = ?";
+        return jdbcTemplate.update(sql,
+                project.getName(),
+                project.getDescription(),
+                project.getDate(),
+                project.getUser().getId(),
+                project.getStatus().name(),
+                project.getId());
     }
 
 
     public Project findById(int id) {
-        String sql = "SELECT * FROM Projects WHERE id = ?";
+        String sql = "SELECT * FROM Project WHERE user_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
     }
 
 
     public List<Project> findByUser(User user) {
-        String sql = "SELECT * FROM Projects WHERE user_id = ?";
+        String sql = "SELECT * FROM Project WHERE user_id = ?";
 
         return jdbcTemplate.query(sql, new Object[]{user.getId()}, new ProjectRowMapper());
     }

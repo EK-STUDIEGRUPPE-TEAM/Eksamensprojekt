@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SubProject {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private Project project;
@@ -13,20 +13,21 @@ public class SubProject {
     public SubProject() {
     }
 
-    public SubProject(int id, String name, String description, Project project) {
+    public SubProject(Integer id, String name, String description, Project project) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.project = project;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }

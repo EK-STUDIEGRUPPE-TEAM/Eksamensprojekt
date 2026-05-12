@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS SubTask;
+DROP TABLE IF EXISTS Task;
+DROP TABLE IF EXISTS SubProject;
+DROP TABLE IF EXISTS Project;
+DROP TABLE IF EXISTS Users;
+
 CREATE TABLE IF NOT EXISTS Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
@@ -18,6 +24,7 @@ CREATE TABLE IF NOT EXISTS Project (
 CREATE TABLE IF NOT EXISTS SubProject (
     subProject_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
+    description VARCHAR(200),
     status VARCHAR(50),
     project_id INT,
     FOREIGN KEY (project_id) REFERENCES Project(project_id)
@@ -36,6 +43,7 @@ CREATE TABLE IF NOT EXISTS Task (
 CREATE TABLE IF NOT EXISTS SubTask (
     subTask_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
+    description VARCHAR(200),
     estimated_hours INT,
     status VARCHAR(50),
     task_id INT,

@@ -19,19 +19,18 @@ public class SubProjectRepository {
 
 
     public void addSubProject(SubProject subProject) {
-        String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?)";
+        String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?,?)";
 
         jdbcTemplate.update(sql, subProject.getName(), subProject.getDescription(), subProject.getProject().getId());
     }
 
     public List<SubProject> getAllSubProjects() {
-        String sql = "SELECT subProject_id, name, description, project_id FROM SubProject";
-
+        String sql = "SELECT * FROM SubProject";
         return jdbcTemplate.query(sql, new SubProjectRowMapper());
     }
 
     public void updateSubProject(SubProject subProject) {
-        String sql = "UPDATE SubProject SET name = ?, description = ? WHERE subProject_id";
+        String sql = "UPDATE SubProject SET name = ?, description = ? WHERE subProject_id = ?";
 
         jdbcTemplate.update(sql, subProject.getName(), subProject.getDescription(), subProject.getId());
     }

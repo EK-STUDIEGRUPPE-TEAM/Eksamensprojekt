@@ -13,4 +13,13 @@ public enum Status {
     public String getDisplayName() {
         return displayName;
     }
+
+//    public static Status fromDisplayName(String text){
+//     for (Status status : Status.values()){
+//         if (status.displayName.equalsIgnoreCase(text)){
+//             return status;
+//         }
+//     }
+//     throw new IllegalArgumentException("Unknown status: " + text);
+//    }
 }
