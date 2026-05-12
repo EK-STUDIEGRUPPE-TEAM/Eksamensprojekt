@@ -32,12 +32,12 @@ public class SubTaskRepository {
     }
 
     public List<SubTask> findSubTaskByTaskId(int taskId){
-        String sql = "SELECT id, name, description, estimated_hours, status, task_id FROM SubTask WHERE task_id = ?";
+        String sql = "SELECT subTask_id, name, description, estimated_hours, status, task_id FROM SubTask WHERE task_id = ?";
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
     public void deleteSubTask(int id){
-        String sql = "DELETE FROM SubTask WHERE task_id = ?";
+        String sql = "DELETE FROM SubTask WHERE subTask_id = ?";
         jdbcTemplate.update(sql, id);
     }
 
@@ -53,7 +53,7 @@ public class SubTaskRepository {
     }
 
     public int deleteSubTaskByTaskId(int taskId){
-        String sql = "DELETE FROM Subtask WHERE task_id = ?";
+        String sql = "DELETE FROM SubTask WHERE task_id = ?";
         return jdbcTemplate.update(sql, taskId);
     }
 }

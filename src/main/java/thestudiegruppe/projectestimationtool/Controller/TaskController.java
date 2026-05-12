@@ -29,9 +29,8 @@ public class TaskController {
     }
 
     @PostMapping("/deleteTask/{id}")
-    public Task delete(@PathVariable int id, @RequestBody Task task){
-        taskService.deleteTask(task);
-        return task;
+    public void delete(@PathVariable int id){
+        taskService.deleteTask(id);
     }
 
     // save fungerer som både update og additem

@@ -54,4 +54,32 @@ public class Task {
     public int getSubProjectId(){
         return subProjectId;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setSubTasks(List<SubTask> subTasks) {
+        this.subTasks = subTasks;
+    }
+
+    public void setSubProjectId(int subProjectId) {
+        this.subProjectId = subProjectId;
+    }
 }

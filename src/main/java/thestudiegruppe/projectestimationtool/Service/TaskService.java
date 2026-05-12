@@ -11,9 +11,11 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final SubTaskService subTaskService;
 
-    public TaskService (TaskRepository taskRepository){
+    public TaskService (TaskRepository taskRepository, SubTaskService subTaskService){
         this.taskRepository = taskRepository;
+        this.subTaskService = subTaskService;
     }
 
     public int createTask(Task task) {
@@ -28,8 +30,8 @@ public class TaskService {
         return taskRepository.findTasksBySubProjectId(subProjectId);
     }
 
-    public void deleteTask(Task task){
-        taskRepository.deleteTask(task.getId());
+    public void deleteTask(int id){
+        taskRepository.deleteTask(id);
     }
 
     public void updateTask(Task task) {
@@ -44,10 +46,12 @@ public class TaskService {
 
         double totalPrice = 0;
         List<Task> tasks = taskRepository.findTasksBySubProjectId(subProjectId);
-
                for (Task task : tasks) {
-                  totalPrice += task.getHourlyRate();
+                   if (task.getHourlyRate() < 0){
+                       throw new IllegalArgumentException("Calculated price can't be less than zero!");
+                   }
+                  totalPrice += task.getHourlyRate() * subTaskService.calculateEstimatedHours(task.getId());
                }
-                   return totalPrice;
+               return totalPrice;
     }
 }

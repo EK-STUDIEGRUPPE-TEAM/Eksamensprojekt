@@ -44,15 +44,26 @@ public class SubTaskService {
         subTaskRepository.deleteSubTaskByTaskId(taskId);
     }
 
-    public int calculateEstimatedHours(Task task){
-        int total = 0;
-        for (SubTask subTask : task.getSubTasks()){
-            total += subTask.getEstimatedHours();
+    public int calculateEstimatedHours(int taskId){
+        List<SubTask> subTasks = subTaskRepository.findSubTaskByTaskId(taskId);
+        int totalHours = 0;
+        for (SubTask subTask : subTasks){
+            if (subTask.getEstimatedHours() < 0){
+                throw new IllegalArgumentException("Estimated hours can't be less than zero!");
+            }
+            totalHours += subTask.getEstimatedHours();
         }
-        if (total < 0){
-            throw new IllegalArgumentException("Can't be minus!");
-        } else {
-            return total;
-        }
+        return totalHours;
     }
+
+//    public int calculateEstimatedHours(Task task){
+//        int total = 0;
+//        for (SubTask subTask : task.getSubTasks()){
+//            if (subTask.getEstimatedHours() < 0){
+//                throw new IllegalArgumentException("Can't be minus!");
+//            }
+//                total += subTask.getEstimatedHours();
+//        }
+//        return total;
+//    }
 }
