@@ -14,21 +14,18 @@ public class UserService {
     }
 
     public void createUser(User user){
-
+userRepository.createUser(user);
     }
 
     public void delete(User user){
-
+userRepository.delete(user.getId());
     }
 
     public void update(User user){
-
+userRepository.update(user);
     }
 
-    public User findUserById(String email){
-        return null;
+    public User findUserById(int id){
+        return userRepository.findUserById(id);
     }
-
-
-
 }
