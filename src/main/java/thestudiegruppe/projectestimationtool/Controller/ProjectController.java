@@ -13,7 +13,6 @@ import thestudiegruppe.projectestimationtool.Service.ProjectService;
 @RequestMapping("/project")
 public class ProjectController {
 
-
     private final ProjectService projectService;
 
 
@@ -28,13 +27,11 @@ public class ProjectController {
       return project;
     }
 
-
-
     @GetMapping("/add")
-    public String add(Model model) {
-        model.addAttribute("project", new Project());
-        return "addProject";
+    public Project add(Project project) {
+        projectService.createProject(project);
 
+        return project;
     }
 
     @GetMapping("/delete")

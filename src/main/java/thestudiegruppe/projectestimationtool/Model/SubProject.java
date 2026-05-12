@@ -1,12 +1,14 @@
 package thestudiegruppe.projectestimationtool.Model;
 
+import java.util.List;
+
 public class SubProject {
 
     private int id;
     private String name;
     private String description;
-
     private Project project;
+    private List<Task> taskList;
 
     public SubProject() {
     }
@@ -40,6 +42,9 @@ public class SubProject {
     public void setDescription(String description) {
         this.description = description;
 
+    }
+    public List<Task> getTaskList(){
+        return taskList;
     }
 
     public Project getProject() {

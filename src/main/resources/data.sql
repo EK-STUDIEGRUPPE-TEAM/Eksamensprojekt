@@ -1,5 +1,5 @@
 -- Users
-INSERT INTO User (name, email, password)
+INSERT INTO Users (name, email, password)
 VALUES ('Alice Johnson', 'alice@example.com', 'alice123'),
        ('Bob Smith', 'bob@example.com', 'bob123'),
        ('Charlie Brown', 'charlie@example.com', 'charlie123');
@@ -22,7 +22,7 @@ INSERT INTO Task (name, description, status, hourlyRate, subProject_id)
 VALUES ('Create Landing Page', 'Design and code landing page UI', 'In Progress', 45.00, 1),
        ('Build API', 'Develop REST API for website', 'In Progress', 60.00, 2),
        ('Login Feature', 'Implement login and registration', 'Todo', 50.00, 3),
-       ('Student Dashboard', 'Create dashboard for students', 'done', 55.00, 4);
+       ('Student Dashboard', 'Create dashboard for students', 'Done', 55.00, 4);
 
 -- SubTasks
 INSERT INTO SubTask (name, estimated_hours, status, task_id)
