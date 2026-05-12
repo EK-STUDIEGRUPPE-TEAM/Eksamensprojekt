@@ -1,13 +1,10 @@
 package thestudiegruppe.projectestimationtool.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import thestudiegruppe.projectestimationtool.Mapper.SubProjectRowMapper;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -22,9 +19,9 @@ public class SubProjectRepository {
 
 
     public void addSubProject(SubProject subProject) {
-        String sql = "INSERT INTO SubProject(name, description) VALUES(?,?)";
+        String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?)";
 
-        jdbcTemplate.update(sql, subProject.getName(), subProject.getDescription());
+        jdbcTemplate.update(sql, subProject.getName(), subProject.getDescription(), subProject.getProject().getId());
     }
 
     public List<SubProject> getAllSubProjects() {

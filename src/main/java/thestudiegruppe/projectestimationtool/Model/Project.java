@@ -32,7 +32,6 @@ public class Project {
         this.status = status;
     }
 
-
     public Project() {
     }
 
@@ -96,6 +95,7 @@ public class Project {
 
         this.status = status;
     }
+
 
 
 }

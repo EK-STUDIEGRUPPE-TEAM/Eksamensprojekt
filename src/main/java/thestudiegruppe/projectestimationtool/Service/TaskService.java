@@ -40,7 +40,14 @@ public class TaskService {
         return taskRepository.deleteTaskBySubProjectId(subProjectId);
     }
 
-    public List<Task> calculateTaskPrice (int subProjectId){
-        return taskRepository.findTasksBySubProjectId(subProjectId);
+    public double calculateTaskPrice (int subProjectId){
+
+        double totalPrice = 0;
+        List<Task> tasks = taskRepository.findTasksBySubProjectId(subProjectId);
+
+               for (Task task : tasks) {
+                  totalPrice += task.getHourlyRate();
+               }
+                   return totalPrice;
     }
 }

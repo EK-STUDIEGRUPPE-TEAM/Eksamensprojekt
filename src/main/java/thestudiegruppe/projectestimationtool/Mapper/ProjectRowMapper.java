@@ -16,7 +16,7 @@ public class ProjectRowMapper implements RowMapper<Project>{
             user.setId(rs.getInt("user_id"));
 
             Project project = new Project(
-                    rs.getInt("id"),
+                    rs.getInt("project_id"),
                     rs.getString("name"),
                     rs.getString("description"),
                     rs.getDate("date").toLocalDate(),

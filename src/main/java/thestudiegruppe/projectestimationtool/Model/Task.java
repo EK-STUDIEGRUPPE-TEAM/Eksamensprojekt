@@ -12,7 +12,7 @@ public class Task {
     private List<SubTask> subTasks;
     private int subProjectId;
 
-    public Task (int id, String name,String description, double hourlyRate, Status status, int subProjectId){
+    public Task(int id, String name, String description, double hourlyRate, Status status, int subProjectId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -21,30 +21,28 @@ public class Task {
         this.subProjectId = subProjectId;
     }
 
-    public Task(){
-
+    public Task() {
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public double getHourlyRate(){
+    public double getHourlyRate() {
         return hourlyRate;
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return status;
     }
-
     public List<SubTask> getSubTasks(){
         return subTasks;
     }

@@ -1,11 +1,5 @@
 package thestudiegruppe.projectestimationtool.Controller;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.UserService;
 
@@ -20,31 +14,38 @@ public class UserController {
     }
 
     @GetMapping()
-    public String show(Model model){
-        return null;
+    public User showAllUsers(User user){
+        userService.getAllUsers(user);
+        return user;
     }
 
+
     @PostMapping("/add")
-    public User createUser(User user, Model model){
-
+    public User createUser(User user){
         userService.createUser(user);
-
         return user;
     }
 
     @PostMapping("/delete")
-    public String delete(int id){
-        return null;
+    public User delete(@RequestBody User user){
+        userService.delete(user);
+        return user;
     }
 
-    @PostMapping("/save")
-    public String save(User user){
-        return null;
-    }
+//    @PostMapping("/save")
+//    public String save(User user){
+//
+//        return null;
+//    }
 
     @PostMapping("/update")
-    public String update(User user){
-        return null;
+    public User update(User user) {
+        userService.update(user);
+        return user;
     }
 
+    @GetMapping("/{id}")
+    public User findUserById(@PathVariable int id) {
+        return userService.findUserById(id);
+    }
 }

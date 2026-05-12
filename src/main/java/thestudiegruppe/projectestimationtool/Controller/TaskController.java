@@ -1,15 +1,12 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 
-@Controller
+@RestController
+@RequestMapping("/task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -20,12 +17,14 @@ public class TaskController {
 
     @GetMapping("/showTask")
     public String show(Model model){
-        return null;
+        model.addAttribute("tasks", taskService.getAllTasks());
+        return "showTask";
     }
 
     @GetMapping("/addTask")
     public String add(Model model){
-        return null;
+        model.addAttribute("task", new Task());
+        return "addTask";
     }
 
     @GetMapping("/deleteTask/{id}")
@@ -43,6 +42,5 @@ public class TaskController {
     public String update(@PathVariable Task task){
         return null;
     }
-
 }
 
