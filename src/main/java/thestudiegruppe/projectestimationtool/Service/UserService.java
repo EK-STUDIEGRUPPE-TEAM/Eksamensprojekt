@@ -14,21 +14,18 @@ public class UserService {
     }
 
     public void createUser(User user){
-        userRepository.createUser(user);
+userRepository.createUser(user);
     }
 
-    public void delete(int id){
-        userRepository.delete(id);
+    public void delete(User user){
+userRepository.delete(user.getId());
     }
 
     public void update(User user){
-        userRepository.update(user);
+userRepository.update(user);
     }
 
-    public User findUserById(int id ){
+    public User findUserById(int id){
         return userRepository.findUserById(id);
     }
-
-
-
 }
