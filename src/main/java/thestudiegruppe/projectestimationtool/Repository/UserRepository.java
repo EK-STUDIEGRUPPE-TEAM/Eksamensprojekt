@@ -1,14 +1,10 @@
 package thestudiegruppe.projectestimationtool.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import thestudiegruppe.projectestimationtool.Mapper.UserRowMapper;
 import thestudiegruppe.projectestimationtool.Model.User;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,6 +17,11 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    public List<User> getAllUsers(){
+        String sql = "SELECT * FROM User";
+        return jdbcTemplate.query(sql, new UserRowMapper());
+    }
 
     public void createUser(User user){
         String sql = "INSERT INTO User(name, email, password) VALUES(?,?,?)";

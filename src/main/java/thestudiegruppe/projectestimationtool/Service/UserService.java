@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -13,6 +15,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public List<User> getAllUsers(User user) {
+        userRepository.getAllUsers();
+        return getAllUsers(user);
+    }
     public void createUser(User user){
 userRepository.createUser(user);
     }

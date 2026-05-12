@@ -11,7 +11,7 @@ public class TaskRowMapper implements RowMapper<Task> {
 
     public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
         Task task = new Task(
-                rs.getInt("id"),
+                rs.getInt("task_id"),
                 rs.getString("name"),
                 rs.getString("description"),
                 rs.getDouble("hourlyRate"),

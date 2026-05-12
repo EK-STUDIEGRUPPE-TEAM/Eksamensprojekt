@@ -1,18 +1,12 @@
 package thestudiegruppe.projectestimationtool.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import thestudiegruppe.projectestimationtool.Mapper.ProjectRowMapper;
 import thestudiegruppe.projectestimationtool.Model.Project;
-import thestudiegruppe.projectestimationtool.Model.Status;
-import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Model.User;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.time.LocalDate;
 
 @Repository
 public class ProjectRepository {
@@ -29,9 +23,9 @@ public class ProjectRepository {
 
     public void add(Project project) {
 
-        String sql = "INSERT INTO Projects(name, description, date, user_id, status ) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Projects(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
 
-        jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId());
+        jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getStatus().name());
 
     }
 
@@ -50,9 +44,8 @@ public class ProjectRepository {
     }
 
     public int update(Project project) {
-
-        String sql = "UPDATE project SET name = ?, description = ?, date = ?, user_id = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getId());
+        String sql = "UPDATE Projects SET name = ?, description = ?, date = ?, user_id = ?, status = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getStatus().name(), project.getId());
     }
 
 
@@ -67,6 +60,4 @@ public class ProjectRepository {
 
         return jdbcTemplate.query(sql, new Object[]{user.getId()}, new ProjectRowMapper());
     }
-
-
 }

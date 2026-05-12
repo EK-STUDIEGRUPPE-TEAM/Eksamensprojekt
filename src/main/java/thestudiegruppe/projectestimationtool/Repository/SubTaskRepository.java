@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 import thestudiegruppe.projectestimationtool.Mapper.SubTaskRowMapper;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -29,7 +27,7 @@ public class SubTaskRepository {
     }
 
     public List<SubTask> findSubTaskByTaskId(int taskId){
-        String sql = "SELECT id, name, description, estimatedHours, status FROM SubTask WHERE task_id = ?";
+        String sql = "SELECT id, name, description, estimatedHours, status, task_id FROM SubTask WHERE task_id = ?";
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 

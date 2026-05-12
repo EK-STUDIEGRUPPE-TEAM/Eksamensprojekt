@@ -1,18 +1,16 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
 
 
-@Controller
-
+@RestController
 @RequestMapping("/project")
-
 public class ProjectController {
 
 
@@ -25,14 +23,17 @@ public class ProjectController {
     }
 
     @GetMapping("/show")
-    public String show(Model model) {
-        return null;
+    public Project show(Project project) {
+      projectService.findAllProjects();
+      return project;
     }
+
+
 
     @GetMapping("/add")
     public String add(Model model) {
-
-        return null;
+        model.addAttribute("project", new Project());
+        return "addProject";
 
     }
 
@@ -44,6 +45,8 @@ public class ProjectController {
 
     @PostMapping("/save")
     public String save(Project project) {
+
+
 
         return null;
     }
