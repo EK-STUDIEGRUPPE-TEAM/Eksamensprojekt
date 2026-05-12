@@ -20,22 +20,37 @@ public class ProjectService {
 
     public void createProject(Project project){
 
+        projectRepository.add(project);
 
     }
 
     public List<Project> findProjectByUser(User user){
 
-        return null;
+        return projectRepository.findByUser(user);
     }
 
     public void updateProject(Project project){
 
+    projectRepository.update(project);
+
+    }
+    public void deleteProject(Project project){
+        projectRepository.delete(project.getId());
 
     }
 
-    public void deleteProject(Project project){
+    public List<Project> findAllProjects(){
 
+        return projectRepository.findAll();
+    }
 
+    public Project findProjectById(int id) {
+
+        return projectRepository.findById(id);
+    }
+
+    public List<Project> findAllProjectsByUserId(User user){
+        return projectRepository.findByUser(user);
     }
 
 
