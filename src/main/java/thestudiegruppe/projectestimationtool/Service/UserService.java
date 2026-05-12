@@ -23,8 +23,8 @@ public class UserService {
         userRepository.createUser(user);
     }
 
-    public void delete(User user) {
-        userRepository.delete(user.getId());
+    public void deleteUser(int id) {
+        userRepository.delete(id);
     }
 
     public void update(User user) {

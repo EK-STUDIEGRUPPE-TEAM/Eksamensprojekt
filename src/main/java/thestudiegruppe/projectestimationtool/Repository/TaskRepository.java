@@ -27,12 +27,12 @@ public class TaskRepository {
         }
 
         public List<Task> findTasksBySubProjectId(int subProjectId){
-            String sql = "SELECT id, name, description, hourlyRate, status FROM Task WHERE subProject_id = ?";
+            String sql = "SELECT task_id, name, description, hourlyRate, status FROM Task WHERE subProject_id = ?";
             return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectId);
         }
 
         public void deleteTask (int id){
-            String sql = "DELETE FROM Task WHERE subProject_id = ?";
+            String sql = "DELETE FROM Task WHERE task_id = ?";
             jdbcTemplate.update(sql, id);
         }
 

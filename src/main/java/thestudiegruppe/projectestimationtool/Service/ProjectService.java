@@ -32,8 +32,8 @@ public class ProjectService {
     projectRepository.update(project);
 
     }
-    public void deleteProject(Project project){
-        projectRepository.delete(project.getId());
+    public void deleteProject(int id){
+        projectRepository.delete(id);
 
     }
 

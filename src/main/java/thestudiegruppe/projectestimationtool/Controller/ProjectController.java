@@ -32,9 +32,8 @@ public class ProjectController {
     }
 
     @PostMapping("/delete/{id}")
-    public Project delete(@PathVariable int id, @RequestBody Project project) {
-        projectService.deleteProject(project);
-        return project;
+    public void delete(@PathVariable int id) {
+        projectService.deleteProject(id);
     }
 
 

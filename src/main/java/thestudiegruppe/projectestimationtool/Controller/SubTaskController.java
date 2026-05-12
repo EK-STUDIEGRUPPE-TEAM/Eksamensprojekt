@@ -35,8 +35,7 @@ public class SubTaskController {
     }
 
     @PostMapping("/delete/{id}")
-    public SubTask deleteSubTask(@PathVariable int id, @RequestBody SubTask subTask) {
+    public void deleteSubTask(@PathVariable int id) {
         subTaskService.deleteSubTask(id);
-        return subTask;
     }
 }

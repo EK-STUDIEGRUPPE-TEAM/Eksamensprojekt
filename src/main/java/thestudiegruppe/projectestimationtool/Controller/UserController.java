@@ -28,9 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/delete/{id}")
-    public User delete(@PathVariable int id, @RequestBody User user) {
-        userService.delete(user);
-        return user;
+    public void delete(@PathVariable int id) {
+        userService.deleteUser(id);
     }
 
     @PostMapping("/update/{id}")

@@ -52,5 +52,4 @@ class TaskServiceTest {
 
         assertEquals(1, result.size());
     }
-
 }
