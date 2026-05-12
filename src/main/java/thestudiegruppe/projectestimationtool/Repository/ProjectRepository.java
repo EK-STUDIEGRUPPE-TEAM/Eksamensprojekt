@@ -64,13 +64,27 @@ public class ProjectRepository {
 
     public void delete(int id) {
 
-        String sql = "DELETE from Projects where id(?)";
-
+        String sql = "DELETE FROM Projects WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     public int update(Project project) {
 
-        return 0;
+        String sql = "UPDATE project SET name = ?, description = ?, date = ?, user_id = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getId());
+    }
+
+
+    public Project findById(int id) {
+        String sql = "SELECT * FROM Projects WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new projectRowMapper());
+    }
+
+
+    public List<Project> findByUser(User user) {
+        String sql = "SELECT * FROM Projects WHERE user_id = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{user.getId()}, new projectRowMapper());
     }
 
 
