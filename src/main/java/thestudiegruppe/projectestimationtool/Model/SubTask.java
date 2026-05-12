@@ -2,14 +2,14 @@ package thestudiegruppe.projectestimationtool.Model;
 
 public class SubTask {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private int estimatedHours;
     private Status status;
     private int taskId;
 
-    public SubTask(int id, String name, String description, int estimatedHours, Status status, int taskId) {
+    public SubTask(Integer id, String name, String description, int estimatedHours, Status status, int taskId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -21,11 +21,11 @@ public class SubTask {
     public SubTask() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

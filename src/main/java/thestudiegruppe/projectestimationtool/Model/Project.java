@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Project {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private LocalDate date;
@@ -13,7 +13,7 @@ public class Project {
     private User user;
     private Status status;
 
-    public Project(int id, String name, String description, LocalDate date, User user, Status status) {
+    public Project(Integer id, String name, String description, LocalDate date, User user, Status status) {
 
         this.id = id;
         this.name = name;
@@ -35,12 +35,12 @@ public class Project {
     public Project() {
     }
 
-    public int getId() {
+    public Integer getId() {
 
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
 
         this.id = id;
     }

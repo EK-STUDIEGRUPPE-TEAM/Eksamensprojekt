@@ -19,9 +19,7 @@ public class ProjectService {
     }
 
     public void createProject(Project project){
-
         projectRepository.add(project);
-
     }
 
     public List<Project> findProjectByUser(User user){
@@ -40,7 +38,6 @@ public class ProjectService {
     }
 
     public List<Project> findAllProjects(){
-
         return projectRepository.findAll();
     }
 

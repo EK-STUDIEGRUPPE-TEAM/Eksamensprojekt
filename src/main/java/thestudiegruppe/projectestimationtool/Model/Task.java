@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Task {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private double hourlyRate;
@@ -12,7 +12,7 @@ public class Task {
     private List<SubTask> subTasks;
     private int subProjectId;
 
-    public Task(int id, String name, String description, double hourlyRate, Status status, int subProjectId) {
+    public Task(Integer id, String name, String description, double hourlyRate, Status status, int subProjectId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,8 +24,12 @@ public class Task {
     public Task() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/task")
 public class TaskController {
@@ -15,32 +17,34 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/showTask")
-    public String show(Model model){
-        model.addAttribute("tasks", taskService.getAllTasks());
-        return "showTask";
+    @GetMapping()
+    public List<Task> showAllTasks(){
+        return taskService.getAllTasks();
     }
 
-    @GetMapping("/addTask")
-    public String add(Model model){
-        model.addAttribute("task", new Task());
-        return "addTask";
+    @PostMapping("/addTask")
+    public Task add(@RequestBody Task task){
+        taskService.createTask(task);
+        return task;
     }
 
-    @GetMapping("/deleteTask/{id}")
-    public String delete(@PathVariable int id){
-        return null;
+    @PostMapping("/deleteTask/{id}")
+    public Task delete(@PathVariable int id, @RequestBody Task task){
+        taskService.deleteTask(task);
+        return task;
     }
 
     // save fungerer som både update og additem
-    @PostMapping("/saveTask")
-    public String save(@ModelAttribute Task task){
-        return null;
+//    @PostMapping("/saveTask")
+//    public String save(@ModelAttribute Task task){
+//        return null;
+//    }
+
+    @PostMapping("/update/{id}")
+    public Task update(@PathVariable int id, @RequestBody Task task){
+        taskService.updateTask(task);
+        return task;
     }
 
-    @GetMapping
-    public String update(@PathVariable Task task){
-        return null;
-    }
 }
 

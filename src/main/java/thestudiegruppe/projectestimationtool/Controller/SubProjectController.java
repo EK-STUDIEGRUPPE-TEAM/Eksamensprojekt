@@ -16,18 +16,27 @@ public class SubProjectController {
         this.subProjectService = subProjectService;
     }
 
-    @PostMapping
-    public void createSubProject(@RequestBody SubProject subProject) {
-        subProjectService.createSubProject(subProject);
-    }
-
     @GetMapping
     public List<SubProject> getAllSubProjects() {
         return subProjectService.getAllSubProjects();
 
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/add")
+    public SubProject createSubProject(@RequestBody SubProject subProject) {
+        subProjectService.createSubProject(subProject);
+        return subProject;
+    }
+
+    @PostMapping("/update/{id}")
+    public SubProject update(@PathVariable int id, @RequestBody SubProject subProject){
+        subProjectService.updateSubProject(subProject);
+        return subProject;
+    }
+
+
+
+    @DeleteMapping("/delete/{id}")
     public void deleteSubProject(@PathVariable int id) {
         subProjectService.deleteSubProject(id);
     }
