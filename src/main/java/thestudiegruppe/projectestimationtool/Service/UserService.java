@@ -9,23 +9,23 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService( UserRepository userRepository ) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void createUser(User user) {
-        userRepository.createUser(user);
+    public void createUser(User user){
+userRepository.createUser(user);
     }
 
-    public void delete(User user) {
-        userRepository.delete(user.getId());
+    public void delete(User user){
+userRepository.delete(user.getId());
     }
 
-    public void update(User user) {
-        userRepository.update(user);
+    public void update(User user){
+userRepository.update(user);
     }
 
-    public User findUserById(int id) {
+    public User findUserById(int id){
         return userRepository.findUserById(id);
     }
 }
