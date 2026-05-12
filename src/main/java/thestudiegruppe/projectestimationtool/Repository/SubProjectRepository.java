@@ -3,6 +3,7 @@ package thestudiegruppe.projectestimationtool.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Mapper.SubProjectRowMapper;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 
 import java.sql.ResultSet;
@@ -18,19 +19,7 @@ public class SubProjectRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static class SubProjectRowMapper implements RowMapper<SubProject>{
 
-        @Override
-        public SubProject mapRow(ResultSet rs, int rowNum) throws SQLException{
-
-            SubProject subProject = new SubProject(
-                    rs.getInt("subProject_id"),
-                    rs.getString("name"),
-                    rs.getString("description")
-            );
-            return subProject;
-        }
-    }
 
     public void addSubProject(SubProject subProject) {
         String sql = "INSERT INTO SubProject(name, description) VALUES(?,?)";

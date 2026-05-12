@@ -5,10 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.UserService;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
@@ -24,8 +25,11 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(Model model){
-        return null;
+    public User createUser(User user, Model model){
+
+        userService.createUser(user);
+
+        return user;
     }
 
     @PostMapping("/delete")

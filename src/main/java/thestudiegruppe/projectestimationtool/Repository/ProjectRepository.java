@@ -3,6 +3,7 @@ package thestudiegruppe.projectestimationtool.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Mapper.ProjectRowMapper;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
@@ -25,26 +26,6 @@ public class ProjectRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static class projectRowMapper implements RowMapper<Project> {
-
-        @Override
-        public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            User user = new User();
-            user.setId(rs.getInt("user_id"));
-
-            Project project = new Project(
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("description"),
-                    rs.getDate("date").toLocalDate(),
-                    user,
-                    Status.valueOf((rs.getString("status")))
-            );
-            return project;
-        }
-    }
-
 
     public void add(Project project) {
 
@@ -58,7 +39,7 @@ public class ProjectRepository {
 
         String sql = "SELECT id, name, description, date, user_id, status from Projects";
 
-        return jdbcTemplate.query(sql, new projectRowMapper());
+        return jdbcTemplate.query(sql, new ProjectRowMapper());
 
     }
 
@@ -77,14 +58,14 @@ public class ProjectRepository {
 
     public Project findById(int id) {
         String sql = "SELECT * FROM Projects WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new projectRowMapper());
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
     }
 
 
     public List<Project> findByUser(User user) {
         String sql = "SELECT * FROM Projects WHERE user_id = ?";
 
-        return jdbcTemplate.query(sql, new Object[]{user.getId()}, new projectRowMapper());
+        return jdbcTemplate.query(sql, new Object[]{user.getId()}, new ProjectRowMapper());
     }
 
 

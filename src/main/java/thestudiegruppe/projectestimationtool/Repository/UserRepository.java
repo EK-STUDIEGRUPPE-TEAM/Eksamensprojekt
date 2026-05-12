@@ -3,6 +3,7 @@ package thestudiegruppe.projectestimationtool.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Mapper.UserRowMapper;
 import thestudiegruppe.projectestimationtool.Model.User;
 
 import java.sql.ResultSet;
@@ -21,26 +22,9 @@ public class UserRepository {
     }
 
 
-    public static class UserRowMapper implements RowMapper<User>{
-
-        @Override
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException{
-
-            User user = new User(
-                    rs.getInt("user_id"),
-                    rs.getString("name"),
-                    rs.getString("email"),
-                    rs.getString("password"),
-                    new ArrayList<>()
-            );
-
-            return user;
-        }
-
-    }
-
     public void createUser(User user){
         String sql = "INSERT INTO User(name, email, password) VALUES(?,?,?)";
+
         jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword());
     }
 
