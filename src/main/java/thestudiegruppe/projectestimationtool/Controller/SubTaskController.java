@@ -29,7 +29,7 @@ public class SubTaskController {
     }
 
     @PostMapping("/update/{id}")
-    public SubTask update(@PathVariable int id, @RequestBody SubTask subTask){
+    public SubTask update(@PathVariable int id, @RequestBody SubTask subTask) {
         subTaskService.updateTask(subTask);
         return subTask;
     }

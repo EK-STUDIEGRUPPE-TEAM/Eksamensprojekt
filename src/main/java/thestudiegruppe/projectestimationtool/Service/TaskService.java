@@ -1,6 +1,7 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
@@ -87,10 +88,10 @@ public class TaskService {
         for (Task task : tasks) {
 
             //Tjekker om taskens timeløn er ugyldig.
-            //Hvis hourlyRate er mindre end 0, kastes en exception,
-            //fordi en negativ timeløn ikke giver mening i prisberegning.
+            //Hvis hourlyRate er mindre end 0, kaster vi en custom NegativeValueException
+            //fordi en negativ timepris ikke giver mening i prisberegning.
             if (task.getHourlyRate() < 0) {
-                throw new IllegalArgumentException("Hourly rate can't be less than zero!");
+                throw new NegativeValueException("Timepris");
             }
 
             //Lægger taskens pris til den samlede pris.

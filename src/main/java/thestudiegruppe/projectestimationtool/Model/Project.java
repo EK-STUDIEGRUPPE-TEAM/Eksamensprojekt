@@ -23,7 +23,7 @@ public class Project {
         this.status = status;
     }
 
-    public Project(String name, String description, int userId, Status status){
+    public Project(String name, String description, int userId, Status status) {
 
         this.name = name;
         this.description = description;
@@ -55,19 +55,18 @@ public class Project {
         this.name = name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
 
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
     public LocalDate getDate() {
         return date;
     }
-
 
 
     public List<SubProject> getSubProjects() {
@@ -99,7 +98,6 @@ public class Project {
 
         this.status = status;
     }
-
 
 
 }

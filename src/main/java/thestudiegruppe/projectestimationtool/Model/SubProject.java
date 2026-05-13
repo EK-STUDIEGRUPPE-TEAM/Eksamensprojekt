@@ -44,7 +44,8 @@ public class SubProject {
         this.description = description;
 
     }
-    public List<Task> getTasks(){
+
+    public List<Task> getTasks() {
         return tasks;
     }
 

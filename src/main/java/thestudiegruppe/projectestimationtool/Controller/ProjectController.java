@@ -22,7 +22,7 @@ public class ProjectController {
 
     @GetMapping()
     public List<Project> show() {
-      return projectService.findAllProjects();
+        return projectService.findAllProjects();
     }
 
     @PostMapping("/add")

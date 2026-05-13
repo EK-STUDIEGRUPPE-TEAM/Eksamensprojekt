@@ -9,7 +9,8 @@ import java.sql.SQLException;
 
 public class SubTaskRowMapper implements RowMapper<SubTask> {
 
-    public SubTask mapRow (ResultSet rs, int rowNum) throws SQLException {
+    public SubTask mapRow(ResultSet rs, int rowNum) throws SQLException {
+
         SubTask subTask = new SubTask(
                 rs.getInt("subTask_id"),
                 rs.getString("name"),
@@ -18,6 +19,7 @@ public class SubTaskRowMapper implements RowMapper<SubTask> {
                 Status.valueOf(rs.getString("status")),
                 rs.getInt("task_id")
         );
+
         return subTask;
     }
 

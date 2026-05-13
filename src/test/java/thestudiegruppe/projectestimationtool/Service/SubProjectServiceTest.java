@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static thestudiegruppe.projectestimationtool.Model.Status.DONE;
 
-@ExtendWith( MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class SubProjectServiceTest {
 
     //Laver fake version af repository
@@ -28,29 +28,29 @@ public class SubProjectServiceTest {
     @InjectMocks
     private SubProjectService service;
 
-//test for at tjekke om der returneres den liste som repository giver tilbage
+    //test for at tjekke om der returneres den liste som repository giver tilbage
     @Test
-    void getAllSubProjectsShouldReturnList( ) {
+    void getAllSubProjectsShouldReturnList() {
 
         //Her adder vi et project objekt og sætter dataen ind i et subProject
         Project project = new Project();
-        SubProject subProject = new SubProject(1 , "test SubProject" , "test" , project);
+        SubProject subProject = new SubProject(1, "test SubProject", "test", project);
 
         // Viser at når repository bliver kaldt, så returner det test dataen
         when(repository.getAllSubProjects()).thenReturn(List.of(subProject));
 
         // tester om serivce-metoden virker
-        List < SubProject > result = service.getAllSubProjects();
+        List<SubProject> result = service.getAllSubProjects();
 
         //Tjekker om vores resultat er det vi forventer
         //om vi kan se SubProject med navnet "test Subprject" i listen
-        assertEquals(1 , result.size());
-        assertEquals("test SubProject" , result.get(0).getName());
+        assertEquals(1, result.size());
+        assertEquals("test SubProject", result.get(0).getName());
     }
 
     //Tjekker om service kalder korrekt til repository
     @Test
-    void deleteSubProjectShouldCallRepository( ) {
+    void deleteSubProjectShouldCallRepository() {
 
         // kalder service
         service.deleteSubProject(1);
@@ -65,7 +65,7 @@ public class SubProjectServiceTest {
 
         // Der laves et nyt projekt og addes et subProject til med testdata
         Project project = new Project();
-        SubProject subProject = new SubProject(1 , "test" , "SubProject calls Repo" , project);
+        SubProject subProject = new SubProject(1, "test", "SubProject calls Repo", project);
 
         //Her sætter vi vores lavet subprojekt ind i vores service
         service.createSubProject(subProject);
@@ -78,7 +78,7 @@ public class SubProjectServiceTest {
     void updateSubProjectShouldCallRepository() {
         // Project og Subproject oprettes som testdata
         Project project = new Project();
-        SubProject subProject = new SubProject(1 , "test" , "test for update" , project);
+        SubProject subProject = new SubProject(1, "test", "test for update", project);
 
         // Her kaldes update i service
         service.updateSubProject(subProject);

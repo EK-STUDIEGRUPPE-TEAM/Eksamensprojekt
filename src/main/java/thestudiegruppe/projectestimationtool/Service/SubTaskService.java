@@ -1,6 +1,7 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
 
@@ -23,7 +24,7 @@ public class SubTaskService {
         return subTaskRepository.findAllSubTask();
     }
 
-    public List<SubTask> getSubTasksByTaskId(int taskId){
+    public List<SubTask> getSubTasksByTaskId(int taskId) {
         return subTaskRepository.findSubTaskByTaskId(taskId);
     }
 
@@ -31,26 +32,35 @@ public class SubTaskService {
         subTaskRepository.deleteSubTask(id);
     }
 
-    public void updateTask(SubTask subTask){
+    public void updateTask(SubTask subTask) {
         subTaskRepository.updateSubTask(subTask);
     }
 
-    public void deleteSubTaskByTaskId (int taskId){
+    public void deleteSubTaskByTaskId(int taskId) {
         subTaskRepository.deleteSubTaskByTaskId(taskId);
     }
 
     // Udregner det totale antal estimerede timer for en Task (taskId) baseret på dens subtask
-    // Hvis estimatedHours er mindre end 0 kaster vi en standard exception
-    // Kan erstattes af custom exception
-    public int calculateEstimatedHours(int taskId){
+    public int calculateEstimatedHours(int taskId) {
+
+        // Henter alle subtasks
         List<SubTask> subTasks = subTaskRepository.findSubTaskByTaskId(taskId);
+
+        // Variabel for samlede antal timer
         int totalHours = 0;
-        for (SubTask subTask : subTasks){
-            if (subTask.getEstimatedHours() < 0){
-                throw new IllegalArgumentException("Estimated hours can't be less than zero!");
+
+        //Går igennem hver subTask i listen mens den beregner timerne.
+        for (SubTask subTask : subTasks) {
+
+            // Hvis estimatedHours er mindre end 0 kaster vi en custom NegativeValueException
+            // fordi negative timer ikke giver mening i tidsberegning.
+            if (subTask.getEstimatedHours() < 0) {
+                throw new NegativeValueException("Timer");
             }
+            // Lægger timerne sammen i vores variabel som sum.
             totalHours += subTask.getEstimatedHours();
         }
+        // returnere den samlede antal timer for én task
         return totalHours;
     }
 }

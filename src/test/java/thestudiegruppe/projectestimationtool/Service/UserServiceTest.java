@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import thestudiegruppe.projectestimationtool.Exception.UserNotFoundException;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.UserRepository;
 
@@ -140,7 +140,7 @@ class UserServiceTest {
     }
 
     @Test
-    void findUserById_shouldThrowUserNotFoundException_whenUserDoesNotExist(){
+    void findUserById_shouldThrowNotFoundException_whenUserDoesNotExist() {
         //Arrange: Laver testData.
         int userId = 1;
 
@@ -154,7 +154,7 @@ class UserServiceTest {
         når repository ikke finder nogen user.
         assertThrows(...) bruges til at teste, at en exception bliver kastet.
          */
-        assertThrows(UserNotFoundException.class, () -> userService.findUserById(userId));
+        assertThrows(NotFoundException.class, () -> userService.findUserById(userId));
 
         //Vi tjekker at repository-metoden blev kaldt 1 gang.
         verify(userRepository, times(1)).findUserById(userId);
