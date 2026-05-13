@@ -92,11 +92,13 @@ class UserServiceTest {
     @Test
     void deleteUser_shouldCallRepositoryDelete() {
         //Arrange: Vi laver testdata.
-        int id = 1;
+        User user = new User();
+        user.setId(1);
         //Act: Vi kalder metoden som vi vil teste.
-        userService.deleteUser(id);
-        //Assert: Vi tjekker om userRepository.delete(1) blev kaldt præcis 1 gang
-        verify(userRepository, times(1)).delete(id);
+        userService.delete(user);
+
+        //Assert: Vi tjekker om userRepository.delete() blev kaldt præcis 1 gang
+        verify(userRepository, times(1)).delete(1);
     }
 
     @Test
