@@ -1,6 +1,7 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.UserNotFoundException;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.UserRepository;
 
@@ -27,7 +28,6 @@ public class UserService {
             throw new IllegalArgumentException("User må ikke være null");
         }
         userRepository.createUser(user);
-
     }
 
     public void deleteUser(int id) {
@@ -39,12 +39,11 @@ public class UserService {
     }
 
     // Finder en bruger ud fra id.
-    // Hvis ingen bruger findes, kastes en midlertidig standard exception, som vil ændres senere.
-    // Denne kan senere erstattes af en custom exception.
+    // Kaster custom UserNotFoundException hvis bruger ikke er fundet
     public User findUserById(int id) {
         User user = userRepository.findUserById(id);
         if (user == null){
-            throw new RuntimeException("Bruger med " + id + " blev ikke fundet");
+            throw new UserNotFoundException(id);
         }
         return user;
     }
