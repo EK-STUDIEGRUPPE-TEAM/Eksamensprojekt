@@ -12,15 +12,14 @@ public class ProjectRowMapper implements RowMapper<Project>{
 
         public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            User user = new User();
-            user.setId(rs.getInt("user_id"));
+
 
             Project project = new Project(
                     rs.getInt("project_id"),
                     rs.getString("name"),
                     rs.getString("description"),
                     rs.getDate("date").toLocalDate(),
-                    user,
+                    rs.getInt("user_id"),
                     Status.valueOf((rs.getString("status")))
             );
             return project;

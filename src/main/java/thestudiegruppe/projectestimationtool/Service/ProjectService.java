@@ -22,9 +22,16 @@ public class ProjectService {
         projectRepository.add(project);
     }
 
-    public List<Project> findProjectByUser(User user){
+    public List<Project> findProjectByUserId(int userId){
 
-        return projectRepository.findByUser(user);
+        List<Project> projects = projectRepository.findByUserId(userId);
+
+        if(projects.isEmpty()){
+            throw new RuntimeException("Ingen projekter tilhører bruger med id: " + userId);
+
+        }
+
+        return projects;
     }
 
     public void updateProject(Project project){
@@ -43,11 +50,13 @@ public class ProjectService {
 
     public Project findProjectById(int id) {
 
-        return projectRepository.findById(id);
-    }
+        Project project = projectRepository.findById(id);
 
-    public List<Project> findAllProjectsByUserId(User user){
-        return projectRepository.findByUser(user);
+        if(project == null){
+            throw new RuntimeException("Project med " + id + " ikke fundet");
+        }
+        return project;
+
     }
 
 
