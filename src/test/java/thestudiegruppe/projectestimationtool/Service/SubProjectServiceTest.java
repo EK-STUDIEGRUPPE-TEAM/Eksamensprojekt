@@ -73,5 +73,19 @@ public class SubProjectServiceTest {
         //Tjekker om vores service kaldermtil repository automatisk
         verify(repository).addSubProject(subProject);
     }
+
+    @Test
+    void updateSubProjectShouldCallRepository() {
+        // Project og Subproject oprettes som testdata
+        Project project = new Project();
+        SubProject subProject = new SubProject(1 , "test" , "test for update" , project);
+
+        // Her kaldes update i service
+        service.updateSubProject(subProject);
+
+        // Tjekker om repository bliver kaldt korrekt
+        verify(repository).updateSubProject(subProject);
+
+    }
 }
 
