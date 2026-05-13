@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class UserRepository {
 
-     private final JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
 
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -18,33 +18,41 @@ public class UserRepository {
     }
 
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         String sql = "SELECT * FROM Users";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
-    public void createUser(User user){
+    public void signUp(User user) {
         String sql = "INSERT INTO Users(name, email, password) VALUES(?,?,?)";
 
         jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword());
     }
 
-    public void delete(int id){
+    public User findUserForLogIn(String email, String password){
+        String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
+
+        return jdbcTemplate.queryForObject(sql, new UserRowMapper(), email, password);
+    }
+
+    public void delete(int id) {
         String sql = "DELETE FROM Users WHERE user_id = ?";
 
         jdbcTemplate.update(sql, id);
 
     }
 
-    public User findUserById(int id){
+    public User findUserById(int id) {
         String sql = "SELECT * FROM Users WHERE user_id = ?";
 
         return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
     }
 
-    public void update(User user){
+    public void update(User user) {
         String sql = "UPDATE Users SET name = ? WHERE user_id = ?";
 
         jdbcTemplate.update(sql, user.getName(), user.getId());
     }
+
+
 }
