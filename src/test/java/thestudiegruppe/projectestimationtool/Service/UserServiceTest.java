@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import thestudiegruppe.projectestimationtool.Exception.EmailAlreadyExistsException;
 import thestudiegruppe.projectestimationtool.Exception.InvalidLoginException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.UserRepository;
 
@@ -229,7 +230,7 @@ class UserServiceTest {
     }
 
     @Test
-    void findUserById_shouldThrowNotFoundException_whenUserDoesNotExist() {
+    void findUserById_shouldThrowException_whenUserDoesNotExist(){
         //Arrange: Laver testData.
         int userId = 1;
 
@@ -243,7 +244,7 @@ class UserServiceTest {
         når repository ikke finder nogen user.
         assertThrows(...) bruges til at teste, at en exception bliver kastet.
          */
-        assertThrows(RuntimeException.class, () -> userService.findUserById(userId));
+        assertThrows(NotFoundException.class, () -> userService.findUserById(userId));
 
         //Vi tjekker at repository-metoden blev kaldt 1 gang.
         verify(userRepository, times(1)).findUserById(userId);

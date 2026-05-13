@@ -42,17 +42,15 @@ public class UserRepository {
 
     }
 
-    public User findUserById(int id) {
+    public User findUserById(int id){
         String sql = "SELECT * FROM Users WHERE user_id = ?";
 
         return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
     }
 
-    public void update(User user) {
+    public void update(User user){
         String sql = "UPDATE Users SET name = ? WHERE user_id = ?";
 
         jdbcTemplate.update(sql, user.getName(), user.getId());
     }
-
-
 }

@@ -21,12 +21,10 @@ public class ProjectRepository {
     }
 
 
-    public void add(Project project) {
+    public int add(Project project) {
 
         String sql = "INSERT INTO Project(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
-
-        jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUser().getId(), project.getStatus().name());
-
+        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUserId(), project.getStatus().name());
     }
 
     public List<Project> findAll() {
@@ -34,7 +32,6 @@ public class ProjectRepository {
         String sql = "SELECT * FROM Project";
 
         return jdbcTemplate.query(sql, new ProjectRowMapper());
-
     }
 
     public void delete(int id) {
@@ -48,7 +45,7 @@ public class ProjectRepository {
                 project.getName(),
                 project.getDescription(),
                 project.getDate(),
-                project.getUser().getId(),
+                project.getUserId(),
                 project.getStatus().name(),
                 project.getId());
     }
@@ -60,9 +57,9 @@ public class ProjectRepository {
     }
 
 
-    public List<Project> findByUser(User user) {
+    public List<Project> findByUserId(int userId) {
         String sql = "SELECT * FROM Project WHERE user_id = ?";
 
-        return jdbcTemplate.query(sql, new Object[]{user.getId()}, new ProjectRowMapper());
+        return jdbcTemplate.query(sql, new ProjectRowMapper(), userId);
     }
 }

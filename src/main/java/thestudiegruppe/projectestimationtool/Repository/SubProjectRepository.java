@@ -17,7 +17,6 @@ public class SubProjectRepository {
     }
 
 
-
     public void addSubProject(SubProject subProject) {
         String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?,?)";
 

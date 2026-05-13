@@ -10,25 +10,25 @@ public class Project {
     private String description;
     private LocalDate date;
     private List<SubProject> subProjects;
-    private User user;
+    private int userId;
     private Status status;
 
-    public Project(Integer id, String name, String description, LocalDate date, User user, Status status) {
+    public Project(Integer id, String name, String description, LocalDate date, int userId, Status status) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
-        this.user = user;
+        this.userId = userId;
         this.status = status;
     }
 
-    public Project(String name, String description, User user, Status status){
+    public Project(String name, String description, int userId, Status status) {
 
         this.name = name;
         this.description = description;
         this.date = LocalDate.now();
-        this.user = user;
+        this.userId = userId;
         this.status = status;
     }
 
@@ -55,15 +55,18 @@ public class Project {
         this.name = name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
 
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getDate() {
         return date;
     }
-
 
 
     public List<SubProject> getSubProjects() {
@@ -76,14 +79,14 @@ public class Project {
         this.subProjects = subProjects;
     }
 
-    public User getUser() {
+    public int getUserId() {
 
-        return user;
+        return userId;
     }
 
-    public void setUser(User user) {
+    public void setUserId(int userId) {
 
-        this.user = user;
+        this.userId = userId;
     }
 
     public Status getStatus() {
@@ -95,7 +98,6 @@ public class Project {
 
         this.status = status;
     }
-
 
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
@@ -42,7 +43,7 @@ class TaskServiceTest {
 
     //Tester at en task bliver gemt korrekt, når objekter ikke er null.
     @Test
-    void createTask_shouldCallRepositoryCreateTask_whenTaskIsNotNull(){
+    void createTask_shouldCallRepositoryCreateTask_whenTaskIsNotNull() {
         //Arrange: Der oprettes en ny Task, som ikke er null.
         Task task = new Task();
 
@@ -56,7 +57,7 @@ class TaskServiceTest {
 
     //Tester at systemet giver fejl, hvis man prøver at oprette en task med null.
     @Test
-    void createTask_shouldThrowException_whenTaskIsNull(){
+    void createTask_shouldThrowException_whenTaskIsNull() {
         //Arrange: Vi laver en ugyldig Task, som er null.
         Task task = null;
 
@@ -71,7 +72,7 @@ class TaskServiceTest {
 
     // Tester at service-klassen returnerer alle tasks fra repository.
     @Test
-    void getAllTasksShouldReturnTasks(){
+    void getAllTasksShouldReturnTasks() {
         // Arrange: Vi laver 2 test-Tasks.
         Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1", 250.0, Status.TODO, 1);
         Task task2 = new Task(2, "Test Task 2", "Test for Task Service 2", 300.0, Status.IN_PROGRESS, 2);
@@ -95,7 +96,7 @@ class TaskServiceTest {
 
     // Tester at en task bliver slettet korrekt ud fra taskens id.
     @Test
-    void deleteTask_shouldCallRepositoryDelete(){
+    void deleteTask_shouldCallRepositoryDelete() {
         // Arrange: Vi laver en Task og giver den et id.
         Task task = new Task();
         task.setId(1);
@@ -110,7 +111,7 @@ class TaskServiceTest {
 
     // Tester at en task bliver opdateret korrekt i repository.
     @Test
-    void updateTask_shouldCallRepositoryUpdate(){
+    void updateTask_shouldCallRepositoryUpdate() {
         // Arrange: Vi laver en Task, som kan opdateres.
         Task task = new Task();
 
@@ -122,12 +123,11 @@ class TaskServiceTest {
         verify(taskRepository, times(1)).updateTask(task);
 
 
-
     }
 
     // Tester at service-klassen returnerer en liste af tasks, når subProjectId er gyldigt.
     @Test
-    void getTasksBySubprojectId_shouldReturnTasks_whenSubProjectIdIsValid(){
+    void getTasksBySubprojectId_shouldReturnTasks_whenSubProjectIdIsValid() {
         // Arrange: Vi laver et gyldigt subProjectId.
         int subProjectId1 = 1;
 
@@ -137,7 +137,7 @@ class TaskServiceTest {
 
         /* Vi samler tasks i en liste, som repository skal returnere,
         når getTasksBySubProjectId(subProjectId1) bliver kaldt. */
-        List<Task> tasks = List.of(task1,task2);
+        List<Task> tasks = List.of(task1, task2);
 
         when(taskRepository.getTasksBySubProjectId(subProjectId1)).thenReturn(tasks);
 
@@ -155,7 +155,7 @@ class TaskServiceTest {
 
     // Tester at systemet giver fejl, hvis subProjectId ikke er gyldigt.
     @Test
-    void getTasksBySubProjectId_shouldThrowException_whenSubProjectIdIsInvalid(){
+    void getTasksBySubProjectId_shouldThrowException_whenSubProjectIdIsInvalid() {
         // Arrange: Vi laver et ugyldigt subProjectId.
         int subProjectId = 0;
 
@@ -170,7 +170,7 @@ class TaskServiceTest {
 
     // Tester at tasks bliver slettet korrekt ud fra et gyldigt subProjectId, og at antal slettede tasks returneres.
     @Test
-    void deleteTaskBySubProjectId_shouldReturnDeleteCount_whenSubProjectIdIsValid(){
+    void deleteTaskBySubProjectId_shouldReturnDeleteCount_whenSubProjectIdIsValid() {
         // Arrange: Vi laver et gyldigt subProjectId.
         int subProjectId = 1;
 
@@ -192,7 +192,7 @@ class TaskServiceTest {
 
     // Tester at systemet giver fejl, hvis man prøver at slette tasks med et ugyldigt subProjectId.
     @Test
-    void deleteTaskBySubProjectId_shouldThrowException_whenSubProjectIdIsInvalid(){
+    void deleteTaskBySubProjectId_shouldThrowException_whenSubProjectIdIsInvalid() {
         // Arrange: Vi laver et ugyldigt subProjectId.
         int subProjectId = 0;
 
@@ -208,7 +208,7 @@ class TaskServiceTest {
 
     // Tester at den samlede task-pris bliver beregnet korrekt, når subProjectId er gyldigt.
     @Test
-    void calculateTaskPrice_shouldReturnTotalPrice_whenSubProjectIdIsValid(){
+    void calculateTaskPrice_shouldReturnTotalPrice_whenSubProjectIdIsValid() {
         // Arrange: Vi laver et gyldigt subProjectId.
         int subProjectId = 1;
 
@@ -248,7 +248,7 @@ class TaskServiceTest {
 
     // Tester at systemet giver fejl, hvis man prøver at beregne task-pris med et ugyldigt subProjectId.
     @Test
-    void calculateTaskPrice_shouldThrowException_whenSubProjectIdIsInvalid(){
+    void calculateTaskPrice_shouldThrowException_whenSubProjectIdIsInvalid() {
         // Arrange: Vi laver et ugyldigt subProjectId.
         int subProjectId = 0;
 
@@ -265,7 +265,7 @@ class TaskServiceTest {
 
     // Tester at systemet giver fejl, hvis en task har en ugyldig negativ pris.
     @Test
-    void calculateTaskPrice_shouldThrowException_whenPriceIsNegative(){
+    void calculateTaskPrice_shouldThrowNegativeValueException_whenPriceIsNegative() {
         // Arrange: Vi laver et gyldigt subProjectId.
         int subProjectId = 1;
 
@@ -278,8 +278,8 @@ class TaskServiceTest {
         when(taskRepository.getTasksBySubProjectId(subProjectId)).thenReturn(tasks);
 
         /* Act + Assert: Vi forventer, at metoden kaster en
-        IllegalArgumentException, fordi task-prisen er ugyldig. */
-        assertThrows(IllegalArgumentException.class, () -> taskService.calculateTaskPrice(subProjectId));
+        custom NegativeValueException, fordi task-prisen er ugyldig. */
+        assertThrows(NegativeValueException.class, () -> taskService.calculateTaskPrice(subProjectId));
 
          /* Assert: Vi tjekker, at repository blev kaldt 1 gang,
         men at subTaskService aldrig blev kaldt, fordi metoden
@@ -289,7 +289,6 @@ class TaskServiceTest {
         verify(subTaskService, never()).calculateEstimatedHours(anyInt());
 
     }
-
 
 
 }

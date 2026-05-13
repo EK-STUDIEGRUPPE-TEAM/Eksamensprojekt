@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Exception.EmailAlreadyExistsException;
 import thestudiegruppe.projectestimationtool.Exception.InvalidLoginException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.UserRepository;
 
@@ -77,7 +78,7 @@ public class UserService {
     // Kaster custom UserNotFoundException hvis bruger ikke er fundet
     public User findUserById(int id) {
         User user = userRepository.findUserById(id);
-        if (user == null) {
+        if (user == null){
             throw new NotFoundException("Bruger", id);
         }
         return user;

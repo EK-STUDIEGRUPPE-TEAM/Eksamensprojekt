@@ -8,7 +8,7 @@ public class SubProject {
     private String name;
     private String description;
     private Project project;
-    private List<Task> taskList;
+    private List<Task> tasks;
 
     public SubProject() {
     }
@@ -44,8 +44,9 @@ public class SubProject {
         this.description = description;
 
     }
-    public List<Task> getTaskList(){
-        return taskList;
+
+    public List<Task> getTasks() {
+        return tasks;
     }
 
     public Project getProject() {

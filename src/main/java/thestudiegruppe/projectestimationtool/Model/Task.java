@@ -47,11 +47,12 @@ public class Task {
     public Status getStatus() {
         return status;
     }
-    public List<SubTask> getSubTasks(){
+
+    public List<SubTask> getSubTasks() {
         return subTasks;
     }
 
-    public int getSubProjectId(){
+    public int getSubProjectId() {
         return subProjectId;
     }
 

@@ -29,11 +29,10 @@ public class SubProjectController {
     }
 
     @PostMapping("/update/{id}")
-    public SubProject update(@PathVariable int id, @RequestBody SubProject subProject){
+    public SubProject update(@PathVariable int id, @RequestBody SubProject subProject) {
         subProjectService.updateSubProject(subProject);
         return subProject;
     }
-
 
 
     @DeleteMapping("/delete/{id}")
