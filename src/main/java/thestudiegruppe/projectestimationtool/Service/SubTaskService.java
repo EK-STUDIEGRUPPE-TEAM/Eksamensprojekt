@@ -55,15 +55,4 @@ public class SubTaskService {
         }
         return totalHours;
     }
-
-//    public int calculateEstimatedHours(Task task){
-//        int total = 0;
-//        for (SubTask subTask : task.getSubTasks()){
-//            if (subTask.getEstimatedHours() < 0){
-//                throw new IllegalArgumentException("Can't be minus!");
-//            }
-//                total += subTask.getEstimatedHours();
-//        }
-//        return total;
-//    }
 }
