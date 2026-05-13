@@ -8,6 +8,13 @@ public class Eksamensprojekt2SemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Eksamensprojekt2SemApplication.class, args);
+
+
+
+
+
     }
+
+
 
 }
