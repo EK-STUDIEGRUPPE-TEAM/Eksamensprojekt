@@ -95,7 +95,7 @@ class UserServiceTest {
         User user = new User();
         user.setId(1);
         //Act: Vi kalder metoden som vi vil teste.
-        userService.delete(user);
+        userService.deleteUser(user.getId());
 
         //Assert: Vi tjekker om userRepository.delete() blev kaldt præcis 1 gang
         verify(userRepository, times(1)).delete(1);
