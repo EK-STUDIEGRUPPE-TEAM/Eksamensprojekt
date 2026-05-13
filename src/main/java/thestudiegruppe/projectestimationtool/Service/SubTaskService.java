@@ -1,15 +1,10 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
-import thestudiegruppe.projectestimationtool.Model.Status;
-import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
-import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
 
 import java.util.List;
-
-import static thestudiegruppe.projectestimationtool.Model.Status.IN_PROGRESS;
 
 @Service
 public class SubTaskService {
@@ -44,6 +39,9 @@ public class SubTaskService {
         subTaskRepository.deleteSubTaskByTaskId(taskId);
     }
 
+    // Udregner det totale antal estimerede timer for en Task (taskId) baseret på dens subtask
+    // Hvis estimatedHours er mindre end 0 kaster vi en standard exception
+    // Kan erstattes af custom exception
     public int calculateEstimatedHours(int taskId){
         List<SubTask> subTasks = subTaskRepository.findSubTaskByTaskId(taskId);
         int totalHours = 0;
