@@ -23,10 +23,16 @@ public class UserRepository {
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
-    public void createUser(User user) {
+    public void signUp(User user) {
         String sql = "INSERT INTO Users(name, email, password) VALUES(?,?,?)";
 
         jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword());
+    }
+
+    public User findUserForLogIn(String email, String password){
+        String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
+
+        return jdbcTemplate.queryForObject(sql, new UserRowMapper(), email, password);
     }
 
     public void delete(int id) {
@@ -36,13 +42,13 @@ public class UserRepository {
 
     }
 
-    public User findUserById(int id) {
+    public User findUserById(int id){
         String sql = "SELECT * FROM Users WHERE user_id = ?";
 
         return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
     }
 
-    public void update(User user) {
+    public void update(User user){
         String sql = "UPDATE Users SET name = ? WHERE user_id = ?";
 
         jdbcTemplate.update(sql, user.getName(), user.getId());
