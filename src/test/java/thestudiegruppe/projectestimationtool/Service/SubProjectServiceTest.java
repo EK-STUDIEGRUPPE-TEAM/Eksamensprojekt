@@ -57,7 +57,21 @@ public class SubProjectServiceTest {
 
         // tjekker om repository er blevet kaldt med værdien 1
         verify(repository).deleteSubProject(1);
+    }
 
+    //test om createSubProject() bliver korrekt kaldt fra SubProjectService til SubProjectRepository
+    @Test
+    void createSubProjectShouldCallRepository() {
+
+        // Der laves et nyt projekt og addes et subProject til med testdata
+        Project project = new Project();
+        SubProject subProject = new SubProject(1 , "test" , "SubProject calls Repo" , project);
+
+        //Her sætter vi vores lavet subprojekt ind i vores service
+        service.createSubProject(subProject);
+
+        //Tjekker om vores service kaldermtil repository automatisk
+        verify(repository).addSubProject(subProject);
     }
 }
 
