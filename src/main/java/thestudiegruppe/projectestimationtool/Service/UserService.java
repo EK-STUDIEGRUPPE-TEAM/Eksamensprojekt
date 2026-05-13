@@ -19,8 +19,15 @@ public class UserService {
         return userRepository.getAllUsers();
     }
 
+    // Tjekker om user er null, før brugeren oprettes.
+    // Hvis user er null, kastes en midlertidig standard exception, som vil ændres senere.
+    // Denne kan senere erstattes af en custom exception.
     public void createUser(User user) {
+        if (user == null){
+            throw new IllegalArgumentException("User må ikke være null");
+        }
         userRepository.createUser(user);
+
     }
 
     public void deleteUser(int id) {
@@ -31,7 +38,14 @@ public class UserService {
         userRepository.update(user);
     }
 
+    // Finder en bruger ud fra id.
+    // Hvis ingen bruger findes, kastes en midlertidig standard exception, som vil ændres senere.
+    // Denne kan senere erstattes af en custom exception.
     public User findUserById(int id) {
-        return userRepository.findUserById(id);
+        User user = userRepository.findUserById(id);
+        if (user == null){
+            throw new RuntimeException("Bruger med " + id + " blev ikke fundet");
+        }
+        return user;
     }
 }
