@@ -13,24 +13,41 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final SubTaskService subTaskService;
 
-    public TaskService (TaskRepository taskRepository, SubTaskService subTaskService){
+    public TaskService(TaskRepository taskRepository, SubTaskService subTaskService) {
         this.taskRepository = taskRepository;
         this.subTaskService = subTaskService;
     }
 
-    public int createTask(Task task) {
-        return taskRepository.addTask(task);
+    //Opretter en ny tasj i databasen.
+    public void createTask(Task task) {
+        //Tjekker om task er null.
+        //Hvis task er null, kaste en exception,
+        //fordi metoden ikke kan oprette en tom task.
+        if (task == null) {
+            throw new IllegalArgumentException("Task må ikke være null");
+        }
+        //Sender task videre til repository, som gemmer den i databasen.
+        taskRepository.addTask(task);
     }
 
-    public List<Task> getAllTasks(){
-        return taskRepository.findAllTasks();
+    public List<Task> getAllTasks() {
+        return taskRepository.getAllTasks();
     }
 
-    public List<Task> getTasksBySubProject(int subProjectId) {
-        return taskRepository.findTasksBySubProjectId(subProjectId);
+    //Henter alle tasks, der hører til et bestemt subProject.
+    public List<Task> getTasksBySubProjectId(int subProjectId) {
+        //Tjekker om subProjectId er ugyldigt.
+        //Hvis id er 0 eller mindre, kastes en exception,
+        //fordi der skal bruges et gyldigt subProject-id.
+        if (subProjectId <= 0) {
+            throw new IllegalArgumentException("SubProject id skal være større end 0");
+        }
+
+        //Returnerer alle tasks for det valgte subProject.
+        return taskRepository.getTasksBySubProjectId(subProjectId);
     }
 
-    public void deleteTask(int id){
+    public void deleteTask(int id) {
         taskRepository.deleteTask(id);
     }
 
@@ -38,20 +55,50 @@ public class TaskService {
         taskRepository.updateTask(task);
     }
 
-    public int deleteTaskBySubProjectId (int subProjectId) {
+    //Sletter alle tasks, der hører til et bestemt subProject.
+    public int deleteTaskBySubProjectId(int subProjectId) {
+        //Tjekker om subProjectId er ugyldigt.
+        //Hvis id er 0 eller mindre, kastes en exception,
+        //fordi der skal bruges et gyldigt subProject-id.
+        if (subProjectId <= 0) {
+            throw new IllegalArgumentException("SubProject id skal være større end 0");
+        }
+
+        //Sletter tasks i repository og returnerer resultatet.
         return taskRepository.deleteTaskBySubProjectId(subProjectId);
     }
 
-    public double calculateTaskPrice (int subProjectId){
+    //Beregner den samlede pris for alle tasks i et bestemt subProject.
+    public double calculateTaskPrice(int subProjectId) {
+        //Tjekker om subProjectId er ugyldigt.
+        //Hvis id er 0 eller mindre, kastes en exception,
+        //fordi der skal bruges et gyldigt subProject-id.
+        if (subProjectId <= 0) {
+            throw new IllegalArgumentException("SubProject id skal være større end 0");
+        }
 
+        //Variabel til at gemme den samlede pris.
         double totalPrice = 0;
-        List<Task> tasks = taskRepository.findTasksBySubProjectId(subProjectId);
-               for (Task task : tasks) {
-                   if (task.getHourlyRate() < 0){
-                       throw new IllegalArgumentException("Calculated price can't be less than zero!");
-                   }
-                  totalPrice += task.getHourlyRate() * subTaskService.calculateEstimatedHours(task.getId());
-               }
-               return totalPrice;
+
+        //Henter alle tasks, der hører til det valgte subProject.
+        List<Task> tasks = taskRepository.getTasksBySubProjectId(subProjectId);
+
+        //Går igennem hver task i listen.
+        for (Task task : tasks) {
+
+            //Tjekker om taskens timeløn er ugyldig.
+            //Hvis hourlyRate er mindre end 0, kastes en exception,
+            //fordi en negativ timeløn ikke giver mening i prisberegning.
+            if (task.getHourlyRate() < 0) {
+                throw new IllegalArgumentException("Hourly rate can't be less than zero!");
+            }
+
+            //Lægger taskens pris til den samlede pris.
+            //Prisen beregnes som hourlyRate * estimerede timer for tasken.
+            totalPrice += task.getHourlyRate() * subTaskService.calculateEstimatedHours(task.getId());
+        }
+
+        //Returnerer den samlede beregnede pris.
+        return totalPrice;
     }
 }
