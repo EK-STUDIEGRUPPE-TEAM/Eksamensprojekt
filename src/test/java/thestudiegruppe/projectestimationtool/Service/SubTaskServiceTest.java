@@ -24,19 +24,7 @@ class SubTaskServiceTest {
     @InjectMocks
     private SubTaskService service;
 
-    // tester om calculate metoden virker (DEN GIVER NULL HVIS DER IKKE ER LAVET SUBTASKS, IKKE 0)
-
-//    @Test
-//    void calculateEstimatedHoursShouldReturnTotal(){
-//        Task task = new Task(1, "Test Task", "Test for Task Service", 250.0, TODO, 2);
-//
-//        int result = service.calculateEstimatedHours(task);
-//
-//        assertNull(result);
-//    }
-
     // tester om calculate metoden virker når man finder et ikke finder ID (GIVER IKKE NULL MODSAT 'Task task')
-
     @Test
     void calculateEstimatedHoursShouldReturnTotal(){
         when(repository.findSubTaskByTaskId(1)).thenReturn(List.of(
