@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.User;
@@ -36,16 +37,16 @@ class ProjectServiceTest {
     @Test
     void createProjectShouldCreateProjectSuccessfully() {
 
-      //Arrange: Lave testdata
+        //Arrange: Lave testdata
 
         Project project = new Project();
 
-       Mockito.when(projectRepository.add(project)).thenReturn(1);
+        Mockito.when(projectRepository.add(project)).thenReturn(1);
 
-      //Act: Kalde metoden som vi vil teste, fra service klassen
+        //Act: Kalde metoden som vi vil teste, fra service klassen
 
         projectService.createProject(project);
-      //Assert: Kalder funktionen i service klassen, repository korrekt
+        //Assert: Kalder funktionen i service klassen, repository korrekt
 
         Mockito.verify(projectRepository).add(project);
 
@@ -56,12 +57,12 @@ class ProjectServiceTest {
     void getAllProjectsShouldReturnAllProjectsSuccessfully() {
 
         //Arrange: Lave testdata
-       List<Project> projects = new ArrayList<>();
+        List<Project> projects = new ArrayList<>();
 
-       projects.add(new Project());
-       projects.add(new Project());
+        projects.add(new Project());
+        projects.add(new Project());
 
-       Mockito.when(projectRepository.findAll()).thenReturn(projects);
+        Mockito.when(projectRepository.findAll()).thenReturn(projects);
 
         //Act: Kalde metoden som testes fra serviceklassen
 
@@ -146,7 +147,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void findProjectById_shouldThrowExceptionWhenProjectNotFound() {
+    void findProjectById_shouldThrowNotFoundExceptionWhenProjectNotFound() {
 
         //Arrange: Lave testdata
         int projectId = 1;
@@ -156,7 +157,7 @@ class ProjectServiceTest {
 
         //Act: Kalde metoden som testes fra serviceklassen
 
-        Assertions.assertThrows(RuntimeException.class, () -> projectService.findProjectById(projectId));
+        Assertions.assertThrows(NotFoundException.class, () -> projectService.findProjectById(projectId));
 
 
         //Assert: Kalder funktionen i service klassen, repository korrekt
@@ -183,8 +184,6 @@ class ProjectServiceTest {
         Mockito.verify(projectRepository).findByUserId(userId);
 
     }
-
-
 
 
 }

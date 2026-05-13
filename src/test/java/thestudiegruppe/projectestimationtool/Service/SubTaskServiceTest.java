@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
 
@@ -27,7 +28,7 @@ class SubTaskServiceTest {
     private SubTaskService service;
 
     @Test
-    void createSubTask_ShouldCallRepository(){
+    void createSubTask_ShouldCallRepository() {
         // ARRANGE
         // Fake objekt som testdata
         SubTask subTask = new SubTask();
@@ -44,7 +45,7 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void getAllSubTasks_ShouldReturnAllSubTasks(){
+    void getAllSubTasks_ShouldReturnAllSubTasks() {
         //ARRANGE
         // Her laver vi vores fake testdata
         SubTask subTask = new SubTask();
@@ -75,7 +76,7 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void getSubTaskByTaskId_ShouldReturnSubTaskId(){
+    void getSubTaskByTaskId_ShouldReturnSubTaskId() {
         // ARRANGE
         // Fake objekt som testdata
         SubTask subTask = new SubTask();
@@ -98,7 +99,7 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void deleteSubTask_ShouldCallRepository(){
+    void deleteSubTask_ShouldCallRepository() {
         // ARRANGE
         // Fake id som testdata
         int id = 1;
@@ -115,7 +116,7 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void updateSubTask_ShouldCallRepository(){
+    void updateSubTask_ShouldCallRepository() {
         // ARRANGE
         // Ett fake objekt som testdata
         SubTask subTask = new SubTask();
@@ -132,7 +133,7 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void deleteSubTaskByTaskId_ShouldCallRepository(){
+    void deleteSubTaskByTaskId_ShouldCallRepository() {
         // ARRANGE
         // Fake id som testdata
         int taskId = 1;
@@ -150,7 +151,7 @@ class SubTaskServiceTest {
 
     // tester om calculate metoden virker når man ikke finder ID (GIVER IKKE NULL)
     @Test
-    void calculateEstimatedHours_ShouldReturnTotal(){
+    void calculateEstimatedHours_ShouldReturnTotal() {
         //ARRANGE
         // Fake objekter med hver deres estimatedHours til testdata
         List<SubTask> subTasks = List.of(
@@ -171,7 +172,7 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void calculateEstimatedHours_ShouldThrowException_WhenHoursAreNegative(){
+    void calculateEstimatedHours_ShouldThrowNegativeValueException_WhenHoursAreNegative() {
         // ARRANGE
         // Fake testdata med negative timer
         List<SubTask> subTasks = List.of(
@@ -185,12 +186,9 @@ class SubTaskServiceTest {
         when(repository.findSubTaskByTaskId(1)).thenReturn(subTasks);
 
         // ASSERT
-        // Tester at negative timer kaster en exception
-        assertThrows(IllegalArgumentException.class, () -> service.calculateEstimatedHours(1));
+        // Tester at negative timer kaster en custom NegativeValueException
+        assertThrows(NegativeValueException.class, () -> service.calculateEstimatedHours(1));
     }
-
-
-
 
 
 }

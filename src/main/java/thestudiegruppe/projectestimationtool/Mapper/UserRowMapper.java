@@ -9,18 +9,16 @@ import java.util.ArrayList;
 
 public class UserRowMapper implements RowMapper<User> {
 
-    public User mapRow(ResultSet rs, int rowNum)throws SQLException{
+    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            User user = new User(
-                    rs.getInt("user_id"),
-                    rs.getString("name"),
-                    rs.getString("email"),
-                    rs.getString("password"),
-                    new ArrayList<>()
-            );
+        User user = new User(
+                rs.getInt("user_id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("password"),
+                new ArrayList<>()
+        );
 
-            return user;
-
-
+        return user;
     }
 }

@@ -24,7 +24,7 @@ public class ProjectRepository {
     public int add(Project project) {
 
         String sql = "INSERT INTO Project(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
-       return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUserId(), project.getStatus().name());
+        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUserId(), project.getStatus().name());
     }
 
     public List<Project> findAll() {
