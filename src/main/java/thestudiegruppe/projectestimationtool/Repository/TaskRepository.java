@@ -16,17 +16,17 @@ public class TaskRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-        public int addTask (Task task){
+        public void addTask (Task task){
             String sql = "INSERT INTO Task (name, description, hourlyRate, status, subProject_id) VALUES (?, ?, ?, ?, ?)";
-            return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus().name(), task.getSubProjectId());
+            jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus().name(), task.getSubProjectId());
         }
 
-        public List<Task> findAllTasks() {
+        public List<Task> getAllTasks() {
             String sql = "SELECT * FROM Task";
             return jdbcTemplate.query(sql, new TaskRowMapper());
         }
 
-        public List<Task> findTasksBySubProjectId(int subProjectId){
+        public List<Task> getTasksBySubProjectId(int subProjectId){
             String sql = "SELECT task_id, name, description, hourlyRate, status FROM Task WHERE subProject_id = ?";
             return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectId);
         }
