@@ -32,7 +32,7 @@ public class SubTaskService {
         subTaskRepository.deleteSubTask(id);
     }
 
-    public void updateTask(SubTask subTask) {
+    public void updateSubTask(SubTask subTask) {
         subTaskRepository.updateSubTask(subTask);
     }
 

@@ -123,7 +123,7 @@ class SubTaskServiceTest {
 
         // ACT
         // Her kalder vi på service metoden
-        service.updateTask(subTask);
+        service.updateSubTask(subTask);
 
         // ASSERT
         /* Tjekker om service sender objektet til repository

@@ -20,6 +20,10 @@ public class SubProjectService {
         subProjectRepository.addSubProject(subProject);
     }
 
+    public List<SubProject> getSubProjectsByProjectId(int projectId) {
+        return subProjectRepository.getSubProjectsByProjectId(projectId);
+    }
+
     public List<SubProject> getAllSubProjects() {
         return subProjectRepository.getAllSubProjects();
     }
