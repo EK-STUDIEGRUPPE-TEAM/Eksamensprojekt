@@ -115,10 +115,10 @@ class TaskServiceTest {
         // Arrange: Vi laver en Task, som kan opdateres.
         Task task = new Task();
 
-        // Act: Vi kalder updateTask() i service-klassen.
+        // Act: Vi kalder updateSubTask() i service-klassen.
         taskService.updateTask(task);
 
-        /* Assert: Vi tjekker, at repository-metoden updateTask(task)
+        /* Assert: Vi tjekker, at repository-metoden updateSubTask(task)
         blev kaldt præcis 1 gang. */
         verify(taskRepository, times(1)).updateTask(task);
 

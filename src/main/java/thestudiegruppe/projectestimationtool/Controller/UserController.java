@@ -1,12 +1,14 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.UserService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -16,30 +18,36 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> showAllUsers() {
-        return userService.getAllUsers();
-    }
+    // Tror ikke vi har brug for en showallusers ?? men tør ikke slette endnu
+//    @GetMapping
+//    public String showAllUsers(Model model) {
+//        model.addAttribute("users", userService.getAllUsers());
+//        return "user";
+//    }
 
     @PostMapping("/signUp")
-    public User signUp(@RequestBody User user) {
+    public String signUp(@ModelAttribute User user) {
         userService.signUp(user);
-        return user;
+        return "redirect:/";
     }
 
     @PostMapping("/delete/{id}")
-    public void delete(@PathVariable int id) {
+    public String delete(@PathVariable int id) {
         userService.deleteUser(id);
+        return "redirect:/login";
     }
 
     @PostMapping("/update/{id}")
-    public User update(@PathVariable int id, @RequestBody User user) {
+    public String update(@PathVariable int id, @ModelAttribute User user) {
+        user.setId(id);
         userService.update(user);
-        return user;
+        return "redirect:/user/" + id;
     }
 
     @GetMapping("/{id}")
-    public User findUserById(@PathVariable int id) {
-        return userService.findUserById(id);
+    public String findUserById(@PathVariable int id, Model model) {
+        User user = userService.findUserById(id);
+        model.addAttribute("user", user);
+        return "profile";
     }
 }

@@ -27,7 +27,7 @@ public class TaskRepository {
     }
 
     public List<Task> getTasksBySubProjectId(int subProjectId) {
-        String sql = "SELECT task_id, name, description, hourlyRate, status FROM Task WHERE subProject_id = ?";
+        String sql = "SELECT * FROM Task WHERE subProject_id = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectId);
     }
 

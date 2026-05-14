@@ -1,5 +1,6 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.Task;
@@ -7,7 +8,7 @@ import thestudiegruppe.projectestimationtool.Service.TaskService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/task")
 public class TaskController {
 
@@ -17,32 +18,29 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping()
-    public List<Task> showAllTasks() {
-        return taskService.getAllTasks();
+    @GetMapping("/{subProjectId}")
+    public String getSubTasksByTaskId(@PathVariable int subProjectId, Model model) {
+        model.addAttribute("tasks", taskService.getTasksBySubProjectId(subProjectId));
+        return "task";
     }
 
     @PostMapping("/addTask")
-    public Task add(@RequestBody Task task) {
+    public String add(@ModelAttribute Task task) {
         taskService.createTask(task);
-        return task;
+        return "redirect:/task/" + task.getSubProjectId();
     }
 
-    @PostMapping("/deleteTask/{id}")
-    public void delete(@PathVariable int id) {
+    @PostMapping("/deleteTask/{subProjectId}/{id}")
+    public String delete(@PathVariable int subProjectId, @PathVariable int id) {
         taskService.deleteTask(id);
+        return "redirect:/task/" + subProjectId;
     }
-
-    // save fungerer som både update og additem
-//    @PostMapping("/saveTask")
-//    public String save(@ModelAttribute Task task){
-//        return null;
-//    }
 
     @PostMapping("/update/{id}")
-    public Task update(@PathVariable int id, @RequestBody Task task) {
+    public String update(@PathVariable int id, @ModelAttribute Task task) {
+        task.setId(id);
         taskService.updateTask(task);
-        return task;
+        return "redirect:/task/" + task.getSubProjectId();
     }
 
 }
