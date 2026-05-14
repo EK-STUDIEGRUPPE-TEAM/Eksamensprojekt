@@ -23,6 +23,11 @@ public class SubProjectRepository {
         jdbcTemplate.update(sql, subProject.getName(), subProject.getDescription(), subProject.getProject().getId());
     }
 
+    public List<SubProject> getSubProjectsByProjectId(int projectId) {
+        String sql = "SELECT * FROM SubProject WHERE project_id = ?";
+        return jdbcTemplate.query(sql, new SubProjectRowMapper(), projectId);
+    }
+
     public List<SubProject> getAllSubProjects() {
         String sql = "SELECT * FROM SubProject";
         return jdbcTemplate.query(sql, new SubProjectRowMapper());

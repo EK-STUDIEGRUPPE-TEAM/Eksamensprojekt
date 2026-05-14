@@ -32,7 +32,7 @@ public class SubTaskRepository {
     }
 
     public List<SubTask> findSubTaskByTaskId(int taskId) {
-        String sql = "SELECT subTask_id, name, description, estimated_hours, status, task_id FROM SubTask WHERE task_id = ?";
+        String sql = "SELECT * FROM SubTask WHERE task_id = ?";
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
