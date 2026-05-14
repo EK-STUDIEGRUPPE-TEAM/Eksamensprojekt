@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+
+</head>
+
+<body>
+<nav>
+    <strong>Projector</strong>
+    <ul>
+        <li>Home</li>
+        <li>SignUp</li>
+        <li>LogIn</li>
+    </ul>
+</nav>
+
+<div>
+    <p>Kom i gang</p>
+    <h1>Opret bruger</h1>
+    <p>Opret din profil og få adgang til dine projector og tasks</p>
+</div>
+
+<!--
+Denne form bruges til at oprette en ny bruger.
+
+th:action="@{/user/signup}"
+betyder at formularen sender data til /user/signup,
+når brugeren trykker på submit.
+
+Vi bruger /user/signup, fordi UserController har @RequestMapping("/user")
+og metoden har @PostMapping("/signup").
+
+th:object="${user}"
+betyder at formularen arbejder med det User-objekt,
+som PageController har sendt med model.addAttribute("user", new User()).
+
+method="post"
+betyder at formularen sender data til backend.
+POST bruges typisk når vi opretter eller ændrer data.
+-->
+<form th:action="@{/user/signup}" th:object="${user}" method="post">
+    <div>
+        <label>Fulde Navn</label>
+        <!--
+        Dette felt kobles til user.name.
+        Når brugeren skriver sit navn, bliver værdien gemt i User-objektets name-felt.
+        -->
+        <input type="text" th:field="*{name}"  placeholder="Indtast dit navn her" required/>
+    </div>
+
+    <div>
+        <label>Email</label>
+        <!--
+        Dette felt kobles til user.email.
+        Når formularen sendes, bliver emailen lagt ind i User-objektet.
+        -->
+        <input type="email" th:field="*{email}" placeholder="Indtast din email her" required/>
+    </div>
+
+    <div>
+        <label>Password</label>
+        <!--
+        Dette felt kobles til user.password.
+        type="password" gør, at teksten bliver skjult, når brugeren skriver.
+        -->
+        <input type="password" th:field="*{password}" placeholder="Indtast dit password her" required/>
+    </div>
+
+    <!--
+    Når brugeren trykker på knappen,
+    sendes formularens data til den URL, der står i th:action.
+    -->
+    <input type="submit" value="SignUp"/>
+</form>
+
+</body>
+</html>

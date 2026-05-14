@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+
+</head>
+
+<body>
+<nav>
+  <strong>Projector</strong>
+  <ul>
+    <li>Home</li>
+    <li>SignUp</li>
+    <li>LogIn</li>
+  </ul>
+</nav>
+
+<div>
+  <h1>Login</h1>
+  <p>Login på din profil her</p>
+</div>
+
+<!--
+Denne form bruges til login.
+
+th:action="@{/user/login}"
+betyder at formularen sender data til /user/login,
+når brugeren trykker på Login.
+
+Vi bruger /user/login, fordi UserController har @RequestMapping("/user")
+og login-metoden har @PostMapping("/login").
+
+th:object="${user}"
+betyder at formularen arbejder med User-objektet,
+som PageController sender til login.html.
+
+method="post"
+betyder at formularen sender data til backend.
+-->
+<form th:action="@{/user/login}" th:object="${user}" method="post">
+  <div>
+    <label>Email</label>
+    <!--
+    Dette felt kobles til user.email.
+    Emailen bruges til at finde brugeren i databasen.
+    -->
+    <input type="email" th:field="*{email}" placeholder="Indtast din email her" required/>
+  </div>
+
+  <div>
+    <label>Password</label>
+    <!--
+    Dette felt kobles til user.password.
+    Passwordet bruges sammen med email til at tjekke login.
+    -->
+    <input type="password" th:field="*{password}" placeholder="Indtast dit password her" required/>
+  </div>
+
+  <!--
+  Når brugeren trykker Login,
+  sendes email og password til /user/login.
+  -->
+  <input type="submit" value="Login"/>
+</form>
+
+</body>
+</html>
