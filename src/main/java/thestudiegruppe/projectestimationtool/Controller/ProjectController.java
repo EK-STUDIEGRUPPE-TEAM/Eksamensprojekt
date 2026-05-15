@@ -23,7 +23,13 @@ public class ProjectController {
         return "project";
     }
 
-    @PostMapping("/addProject")
+    @GetMapping("/addproject")
+    public String addProject(Model model) {
+        model.addAttribute("project", new Project());
+        return "addproject";
+    }
+
+    @PostMapping("/save")
     public String add(@ModelAttribute Project project) {
         projectService.createProject(project);
         return "redirect:/project";
@@ -41,4 +47,6 @@ public class ProjectController {
         projectService.updateProject(project);
         return "redirect:/project";
     }
+
+
 }
