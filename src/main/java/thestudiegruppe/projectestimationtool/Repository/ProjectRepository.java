@@ -52,7 +52,7 @@ public class ProjectRepository {
 
 
     public Project findById(int id) {
-        String sql = "SELECT * FROM Project WHERE user_id = ?";
+        String sql = "SELECT * FROM Project WHERE project_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
     }
 
