@@ -53,7 +53,7 @@ public class UserController {
 
         /* Midlertidig redirect til signup for at teste at login virker
            Senere kan den ændres til fx dashboard eller profilside*/
-         return "redirect:/signup";
+         return "redirect:/dashboard";
     }
 
     @PostMapping("/delete/{id}")

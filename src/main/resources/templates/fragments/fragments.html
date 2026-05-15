@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- FRAGMENT KLASSE
+    Vi bruger fragment klassen til nemt at indsætte
+    html elementer uden at bruge særlig meget plads
+    eller gentage os selv hver gang
+
+    Det gør det nemmere at få overblik over HTML delen
+-->
+
+
+<!-- Vi bruger et header fragment
+    så vi ikke behøver at skrive projector
+    i toppen på hver html side -->
+<header th:fragment="headerfragment">
+    <h1>
+        Projector
+    </h1>
+    <!-- Når sessions er implementeret så kan vi
+    som i vores prototype, bruge et header fragment
+    til at display brugerens navn ved
+    at have et thymeleaf th:if der tjekker om
+    brugeren er logget ind hver html side -->
+
+</header>
+
+<!-- nav fragment så vi kan have et sidepanel
+    på hver side ligesom vores prototype-->
+<nav th:fragment="navfragment">
+    <!-- hyperlink til dashboard viewpoint-->
+    <a th:href="@{/dashboard}">Dashboard</a>
+
+    <!-- hyperlink til projekt viewpoint-->
+    <!-- fører til en projekt side
+    men vi har ikke fået implementeret endnu-->
+    <a th:href="@{/dashboard}">Projekter</a>
+
+    <!-- fører til en eventuel profilside
+    men vi har ikke fået implementeret endnu-->
+    <a th:href="@{/dashboard}">Profil</a>
+
+    <!-- fører til en eventuel log ud
+    men vi har ikke fået implementeret endnu-->
+    <a th:href="@{/dashboard}">Log ud</a>
+
+</nav>
+</html>
