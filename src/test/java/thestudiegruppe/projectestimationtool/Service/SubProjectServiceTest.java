@@ -19,9 +19,13 @@ import static thestudiegruppe.projectestimationtool.Model.Status.DONE;
 @ExtendWith(MockitoExtension.class)
 public class SubProjectServiceTest {
 
+    @Mock
+    private ProjectService projectService;
+
     //Laver fake version af repository
     @Mock
     private SubProjectRepository subProjectRepository;
+
 
     //Laver service-klasse og sætter vores fake version repository ind i den
     @InjectMocks
@@ -66,8 +70,10 @@ public class SubProjectServiceTest {
         Project project = new Project();
         SubProject subProject = new SubProject(1, "test", "SubProject calls Repo", project);
 
+        when(projectService.findProjectById(1)).thenReturn(project);
+
         //Her sætter vi vores lavet subprojekt ind i vores service
-        subProjectService.createSubProject(subProject);
+        subProjectService.createSubProject(1, subProject);
 
         //Tjekker om vores service kaldermtil repository automatisk
         verify(subProjectRepository).addSubProject(subProject);
@@ -79,8 +85,10 @@ public class SubProjectServiceTest {
         Project project = new Project();
         SubProject subProject = new SubProject(1, "test", "test for update", project);
 
+        when(projectService.findProjectById(1)).thenReturn(project);
+
         // Her kaldes update i service
-        subProjectService.updateSubProject(subProject);
+        subProjectService.updateSubProject(1, subProject);
 
         // Tjekker om repository bliver kaldt korrekt
         verify(subProjectRepository).updateSubProject(subProject);

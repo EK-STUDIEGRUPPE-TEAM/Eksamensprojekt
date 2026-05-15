@@ -1,6 +1,7 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
@@ -13,40 +14,48 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
 
 
-    public ProjectService(ProjectRepository projectRepository){
+    public ProjectService(ProjectRepository projectRepository) {
 
         this.projectRepository = projectRepository;
     }
 
-    public void createProject(Project project){
+    public void createProject(Project project) {
         projectRepository.add(project);
     }
 
-    public List<Project> findProjectByUser(User user){
+    public List<Project> findProjectByUserId(int userId) {
 
-        return projectRepository.findByUserId(user.getId());
+        List<Project> projects = projectRepository.findByUserId(userId);
+
+        if (projects.isEmpty()) {
+            throw new RuntimeException("Ingen projekter tilhører bruger med id: " + userId);
+        }
+
+        return projects;
     }
 
-    public void updateProject(Project project){
+    public void updateProject(Project project) {
 
-    projectRepository.update(project);
+        projectRepository.update(project);
 
     }
-    public void deleteProject(int id){
+
+    public void deleteProject(int id) {
         projectRepository.delete(id);
 
     }
 
-    public List<Project> findAllProjects(){
+    public List<Project> findAllProjects() {
         return projectRepository.findAll();
     }
 
     public Project findProjectById(int id) {
-
-        return projectRepository.findById(id);
+        Project project = projectRepository.findById(id);
+        if (project == null) {
+            throw new NotFoundException("Projekt", id);
+        }
+        return project;
     }
 
-    public List<Project> findAllProjectsByUserId(User user){
-        return projectRepository.findByUserId(user.getId());
-    }
+
 }
