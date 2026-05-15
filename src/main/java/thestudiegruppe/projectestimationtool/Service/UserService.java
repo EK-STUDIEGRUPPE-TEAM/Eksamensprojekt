@@ -46,7 +46,6 @@ public class UserService {
             // Vi laver database-fejlen om til vores egen custom exception.
             throw new EmailAlreadyExistsException(user.getEmail());
         }
-
     }
 
     // Finder en bruger ud fra email og password.
