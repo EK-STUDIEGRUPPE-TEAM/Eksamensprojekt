@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Addproject</title>
+</head>
+
+
+<body>
+
+<h1>Opret projekt</h1>
+
+
+<!--
+th:action="@{/project/save}"
+formularen sender data til /project/save,
+når brugeren trykker på opret projekt.
+
+Vi bruger /project/save, fordi ProjectController har @RequestMapping("/project")
+og savemetoden har @PostMapping("/save").
+
+th:object="${project}"
+Betyder at formularen arbejder med project-objektet,
+som Project sender til project.html.
+
+method="post"
+betyder at formularen sender data til backend.
+-->
+-->
+<form
+        th:action="@{/project/save}"
+        th:object="${project}"
+        method="post">
+
+
+    <div>
+
+        <label>Navn</label>
+        <input type="text" th:field="*{name}" placeholder="Projektnavn" required/>
+
+    </div>
+
+
+    <div>
+        <label>Beskrivelse</label>
+        <textarea th:field="*{description}" placeholder="Project beskrivelse"></textarea>
+
+    </div>
+
+
+
+
+    <button class="button" type="submit">Opret projekt</button>
+    <a th:href="@{/project}"> Annuller</a>
+
+
+</form>
+
+
+</body>
+</html>
