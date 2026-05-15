@@ -4,13 +4,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import thestudiegruppe.projectestimationtool.Model.User;
+import thestudiegruppe.projectestimationtool.Service.ProjectService;
+import thestudiegruppe.projectestimationtool.Service.UserService;
 
 @Controller
 public class PageController {
 
+    private final ProjectService projectService;
+    private final UserService userService;
+
+    public PageController(ProjectService projectService, UserService userService) {
+        this.projectService = projectService;
+        this.userService = userService;
+    }
+
     @GetMapping("/")
     public String index(){
-        return "homepage";
+        return "index";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model){
+        model.addAttribute("projects", projectService.findAllProjects());
+        return "dashboard";
     }
 
     @GetMapping("/login")

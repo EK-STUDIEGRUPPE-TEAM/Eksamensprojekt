@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+
+<body>
+    <!-- Bliver replacet af vores header fragment-->
+    <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+    <main>
+        <h3>Velkommen til Projector</h3>
+
+        <hr>
+
+        <!-- Login og Opret bruger knapper -->
+        <nav>
+            <a th:href="@{/login}">Login</a>
+            <a th:href="@{/signup}">Opret bruger</a>
+        </nav>
+
+    </main>
+</body>
+</html>

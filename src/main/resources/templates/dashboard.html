@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<!-- Bliver replacet af vores header fragment-->
+<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
+<!-- Bliver replacet af vores nav fragment-->
+<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
+
+<main>
+        <table>
+            <thead>
+            <tr>
+                <td>Navn</td>
+                <td>Status</td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.name}"></td>
+                <td th:text="${project.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
