@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Addtask</title>
+</head>
+<body>
+<h1>Tilføj opgave</h1>
+<main>
+
+    <!--
+    vi bruger form for at modtage input fra brugeren
+
+    th:action fortæller vores th:object som er task
+    at modellen skal sendes til vores /save metode
+    som ligger i task controller
+
+        method="post" betyder at vi sender
+        dataen til vores backend
+    -->
+    <form
+        th:action="@{/task/save}"
+        th:object="${task}"
+        method="post"
+    >
+
+    <!--
+    herefter bruger vi th:field for at binde brugerinput
+    til de forskellige felter i task
+
+    subprojectid er hidden idet man ikke skal kunne ændre det
+    -->
+        <input type="hidden" th:field="*{subProjectId}">
+        <input type="text" th:field="*{name}">
+        <input type="text" th:field="*{description}">
+        <input type="number" th:field="*{hourlyRate}">
+        <!-- Vi mangler status her -->
+        <button type="submit">Gem</button>
+    </form>
+</main>
+</body>
+</html>

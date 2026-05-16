@@ -24,8 +24,29 @@ public class TaskController {
         return "task";
     }
 
-    @PostMapping("/addTask")
-    public String add(@ModelAttribute Task task) {
+    /* vi bruger en GetMapping til addtask så vi kan vise en side
+        hvorpå formlen der sender objektet til vores save metode er     */
+    @GetMapping("/addtask/{subProjectId}")
+    // vi tager subProjectId som en pathvariable for at kunne koble tasks til et subproject
+    public String addTask(@PathVariable int subProjectId, Model model) {
+
+        // Vi laver et nyt task tomt objekt
+        Task task = new Task();
+
+/*       Her bruger vi det tomme objekt til at indsætte subproject id i
+         Vores subProjectId pathvariable kommer også i brug */
+        task.setSubProjectId(subProjectId);
+
+        // så adder vi objektet til en model attribute som vi kalder i formlen
+        model.addAttribute("task", task);
+        return "addtask";
+    }
+
+    // når brugeren trykker gem fra addtask formlen sendes det her
+    @PostMapping("/save")
+    public String save(@ModelAttribute Task task) {
+
+        // vi bruger createtask metoden til at indsætte den nye task i databasen
         taskService.createTask(task);
         return "redirect:/task/" + task.getSubProjectId();
     }
