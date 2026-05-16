@@ -35,7 +35,7 @@ public class ProjectRepository {
     }
 
     public void delete(int id) {
-        String sql = "DELETE FROM SubProject WHERE project_id = ?";
+        String sql = "DELETE FROM Project WHERE project_id = ?";
         jdbcTemplate.update(sql, id);
     }
 
@@ -52,7 +52,7 @@ public class ProjectRepository {
 
 
     public Project findById(int id) {
-        String sql = "SELECT * FROM Project WHERE user_id = ?";
+        String sql = "SELECT * FROM Project WHERE project_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
     }
 
