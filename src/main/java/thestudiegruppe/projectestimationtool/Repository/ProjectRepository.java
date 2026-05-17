@@ -21,25 +21,44 @@ public class ProjectRepository {
     }
 
 
-    public int add(Project project) {
+    public int add(Project project, int userId) {
 
+        /* Vi indsætter et nyt projekt i databasen.
+           userId kommer fra sessionen og gemmes i kolonnen user_id */
         String sql = "INSERT INTO Project(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
-        return jdbcTemplate.update(sql, project.getName(), project.getDescription(), project.getDate(), project.getUserId(), project.getStatus().name());
+        return jdbcTemplate.update(
+                sql,
+                project.getName(),
+                project.getDescription(),
+                project.getDate(),
+                userId,
+                project.getUserId(),
+                project.getStatus().name()
+        );
     }
 
     public List<Project> findAll() {
 
+        /* Henter alle projekter.
+           Denne metode bruges måske kun til admin/test,
+           fordi normale brugere kun skal se deres egne projekter */
         String sql = "SELECT * FROM Project";
 
         return jdbcTemplate.query(sql, new ProjectRowMapper());
     }
 
     public void delete(int id) {
+
+        /* Sletter projektet ud fra project_id */
         String sql = "DELETE FROM Project WHERE project_id = ?";
+
         jdbcTemplate.update(sql, id);
     }
 
     public int update(Project project) {
+
+        /* Opdaterer projektet ud fra project_id.
+           user_id gemmes også, så projektet stadig tilhører samme bruger */
         String sql = "UPDATE Project SET name = ?, description = ?, date = ?, user_id = ?, status = ? WHERE project_id = ?";
         return jdbcTemplate.update(sql,
                 project.getName(),
@@ -47,13 +66,14 @@ public class ProjectRepository {
                 project.getDate(),
                 project.getUserId(),
                 project.getStatus().name(),
-                project.getId());
+                project.getId()
+        );
     }
 
 
     public Project findById(int id) {
-        String sql = "SELECT * FROM Project WHERE user_id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
+        String sql = "SELECT * FROM Project WHERE project_id = ?";
+        return jdbcTemplate.queryForObject(sql, new ProjectRowMapper(), id);
     }
 
 
@@ -62,4 +82,5 @@ public class ProjectRepository {
 
         return jdbcTemplate.query(sql, new ProjectRowMapper(), userId);
     }
+
 }

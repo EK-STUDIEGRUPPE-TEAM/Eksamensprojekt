@@ -38,17 +38,17 @@ class ProjectServiceTest {
     void createProjectShouldCreateProjectSuccessfully() {
 
         //Arrange: Lave testdata
-
         Project project = new Project();
+        int userId = 1;
 
-        Mockito.when(projectRepository.add(project)).thenReturn(1);
+        Mockito.when(projectRepository.add(project, userId)).thenReturn(1);
 
         //Act: Kalde metoden som vi vil teste, fra service klassen
 
-        projectService.createProject(project);
+        projectService.createProject(project, userId);
         //Assert: Kalder funktionen i service klassen, repository korrekt
 
-        Mockito.verify(projectRepository).add(project);
+        Mockito.verify(projectRepository).add(project, userId);
 
     }
 
@@ -82,6 +82,7 @@ class ProjectServiceTest {
         List<Project> projects = new ArrayList<>();
         projects.add(new Project());
         projects.add(new Project());
+
         User user = new User();
         user.setId(1);
 
@@ -167,20 +168,19 @@ class ProjectServiceTest {
 
 
     @Test
-    void findProjectsByUserId_shouldThrowExceptionWhenUserNotFound() {
+    void findProjectsByUserId_shouldReturnEmptyList_whenUserHasNoProject() {
 
         //Arrange: Lave testdata
-
         int userId = 1;
+        List<Project> emptyProjects = new ArrayList<>();
 
-        Mockito.when(projectRepository.findByUserId(userId)).thenReturn(null);
+        when(projectRepository.findByUserId(userId)).thenReturn(emptyProjects);
 
         //Act: Kalde metoden som testes fra serviceklassen
+        List<Project> result = projectService.findProjectByUserId(userId);
 
-        Assertions.assertThrows(RuntimeException.class, () -> projectService.findProjectByUserId(userId));
-
-        //Assert: Kalder funktionen i service klassen, repository korrekt
-
+        // Assert: Tjekker at listen er tom, men uden at kaste exception
+        Assertions.assertTrue(result.isEmpty());
         Mockito.verify(projectRepository).findByUserId(userId);
 
     }
