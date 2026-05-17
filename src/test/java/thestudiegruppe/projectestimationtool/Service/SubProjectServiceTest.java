@@ -50,32 +50,34 @@ public class SubProjectServiceTest {
     //Tjekker om service kalder korrekt til repository
     @Test
     void deleteSubProjectShouldCallRepository() {
+        //Arrange: laver testData.
+        int subProjectId = 1;
 
         // kalder service
-        subProjectService.deleteSubProject(1);
+        subProjectService.deleteSubProject(subProjectId);
 
         // tjekker om repository er blevet kaldt med værdien 1
-        verify(subProjectRepository).deleteSubProject(1);
+        verify(subProjectRepository).deleteSubProject(subProjectId);
     }
 
     //test om createSubProject() bliver korrekt kaldt fra SubProjectService til SubProjectRepository
     @Test
     void createSubProjectShouldCallRepository() {
-
-        // Der laves et nyt projekt og addes et subProject til med testdata
+        //Arrange: Laver testdata
         Project project = new Project();
+        project.setId(1);
         SubProject subProject = new SubProject(1, "test", "SubProject calls Repo", project);
 
         //Her sætter vi vores lavet subprojekt ind i vores service
         subProjectService.createSubProject(subProject);
 
-        //Tjekker om vores service kaldermtil repository automatisk
+        //Tjekker om vores service kalder til repository automatisk
         verify(subProjectRepository).addSubProject(subProject);
     }
 
     @Test
     void updateSubProjectShouldCallRepository() {
-        // Project og Subproject oprettes som testdata
+        // Arrange: laver testdata
         Project project = new Project();
         SubProject subProject = new SubProject(1, "test", "test for update", project);
 

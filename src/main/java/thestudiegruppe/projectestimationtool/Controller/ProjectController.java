@@ -1,10 +1,12 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
+import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
 
 @Controller
@@ -18,35 +20,127 @@ public class ProjectController {
     }
 
     @GetMapping
-    public String showProjects(Model model) {
-        model.addAttribute("projects" ,projectService.findAllProjects());
+    // Viser alle projekter på project-siden
+    public String showProjects(Model model, HttpSession session) {
+
+       /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* Vi henter userId fra sessionen.
+           userId blev gemt i sessionen, da brugeren loggede ind */
+        Integer userId = SessionHelper.getLoggedInUserId(session);
+
+        /* Vi bruger userId til kun at hente de projekter,
+           der tilhører den bruger, der er logget ind */
+        model.addAttribute("projects" ,projectService.findProjectByUserId(userId));
+
+        // Returnerer project.html fra templates-mappen
         return "project";
     }
 
     @GetMapping("/addproject")
-    public String addProject(Model model) {
+    // Viser formularen til at oprette et nyt projekt
+    public String addProject(Model model, HttpSession session) {
+
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* Vi laver et tomt Project-objekt og sender det til HTML-siden.
+           Så Thymeleaf kan koble inputfelterne til project-objektets felter */
         model.addAttribute("project", new Project());
+
+        // Returnerer addproject.html fra templates-mappen
         return "addproject";
     }
 
     @PostMapping("/save")
-    public String add(@ModelAttribute Project project) {
-        projectService.createProject(project);
+    // Modtager data fra addproject-formularen og gemmer projektet
+    public String add(@ModelAttribute Project project, HttpSession session) {
+
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* Vi henter userId fra sessionen.
+           Det fortæller systemet hvilken bruger projektet skal tilhøre */
+        Integer userId = SessionHelper.getLoggedInUserId(session);
+
+        /* @ModelAttribute tager data fra HTML-formularen
+           og lægger dem ind i et Project-objekt */
+
+        /* Vi sender både project og userId videre til service-laget.
+           På den måde bliver projektet gemt med den rigtige user_id */
+        projectService.createProject(project, userId);
+
+        // Efter projektet er oprettet, sendes brugeren tilbage til projektoversigten
         return "redirect:/project";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable int id) {
+    // Sletter et projekt ud fra id'et i URL'en
+    public String delete(@PathVariable int id, HttpSession session) {
+
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:login";
+        }
+
+        /* @PathVariable henter id'et fra URL'en.
+           Fx /project/delete/3 betyder at id = 3 */
         projectService.deleteProject(id);
+
+        // Efter sletning sendes brugeren tilbage til projektoversigten
         return "redirect:/project";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable int id, @ModelAttribute Project project) {
+    // Opdaterer et projekt ud fra id'et i URL'en
+    public String update(@PathVariable int id, @ModelAttribute Project project, HttpSession session) {
+
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+         /* Vi henter userId fra sessionen.
+           Det sikrer at projektet stadig kobles til den bruger,
+           der er logget ind */
+        Integer userId = SessionHelper.getLoggedInUserId(session);
+
+        /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.
+           Derfor sætter vi id'et manuelt på project-objektet */
         project.setId(id);
+
+        /* Vi sætter også userId på projektet,
+           så update ikke mister koblingen til brugeren */
+        project.setUserId(userId);
+
+        /* Vi sender project videre til service-laget,
+           som håndterer opdateringen i databasen */
         projectService.updateProject(project);
+
+        // Efter opdatering sendes brugeren tilbage til projektoversigten
         return "redirect:/project";
     }
 
 
+    /* Lige nu bruger vi session til at sikre,
+   at kun loggede brugere kan tilgå projektfunktionerne.
+   Senere kan sessionens userId også bruges til at hente
+   og oprette projekter for den specifikke bruger. */
 }

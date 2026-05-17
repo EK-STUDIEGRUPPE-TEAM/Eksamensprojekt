@@ -1,10 +1,12 @@
 package thestudiegruppe.projectestimationtool.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.UserService;
+import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
 import java.util.List;
 
@@ -17,13 +19,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    // Tror ikke vi har brug for en showallusers ?? men tør ikke slette endnu
-//    @GetMapping
-//    public String showAllUsers(Model model) {
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "user";
-//    }
 
     @PostMapping("/signup")
     // Modtager data fra signup-formularen
@@ -40,39 +35,102 @@ public class UserController {
         // Når brugeren er oprettet, sendes de videre til login-siden
         return "redirect:/login";
     }
+
     @PostMapping("/login")
     // Modtager data fra login-formularen
-    public String logIn(@ModelAttribute User user){
+    public String login(@ModelAttribute User user, HttpSession session){
 
         /*@ModelAttribute tager email og password fra HTML-formularen
           og lægger dem ind i et User-objekt*/
 
         /* Vi bruger user.getEmail() og user.getPassword()
-           til at tjekke om brugeren findes i databasen*/
-        userService.findUserForLogIn(user.getEmail(), user.getPassword());
+           til at tjekke om brugeren findes i databasen.
+           Hvis brugeren findes, returnerer service-laget den fundne bruger*/
+        User loggedInUser = userService.findUserForLogIn(user.getEmail(), user.getPassword());
 
-        /* Midlertidig redirect til signup for at teste at login virker
-           Senere kan den ændres til fx dashboard eller profilside*/
+        /* Når brugeren er logget ind, gemmer vi brugerens id i sessionen.
+           Så kan systemet huske hvem brugeren er på de næste sider */
+        session.setAttribute("userId", loggedInUser);
+
+        // Når login lykkes, sendes brugeren videre til dashboard
          return "redirect:/dashboard";
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpSession session){
+
+        /* invalidate() sletter hele sessionen.
+           Det betyder at userId også bliver fjernet,
+           og brugeren er derfor ikke længere logget ind */
+        session.invalidate();
+        // Efter logout sendes brugeren tilbage til login-siden
+        return "redirect:/login";
+    }
+
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable int id) {
+    public String delete(@PathVariable int id, HttpSession session) {
+
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+           Hvis der ikke findes et userId i sessionen,
+           sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* Hvis brugeren er logget ind,
+           kalder vi service-laget og sletter brugeren */
         userService.deleteUser(id);
+
+        /* Når brugeren er slettet, sletter vi også sessionen.
+           Ellers kan sessionen stadig tro at brugeren er logget ind */
+        session.invalidate();
+
+        // Brugeren sendes tilbage til login-siden
         return "redirect:/login";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable int id, @ModelAttribute User user) {
+    public String update(@PathVariable int id, @ModelAttribute User user, HttpSession session) {
+
+       /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* Vi sætter id på user-objektet,
+           fordi id kommer fra URL'en og ikke fra formularen */
         user.setId(id);
+
+         /* Vi sender user videre til service-laget,
+           som håndterer selve opdateringen i databasen */
         userService.update(user);
+
+        // Efter opdatering sendes brugeren tilbage til sin profilside
         return "redirect:/user/" + id;
     }
 
-    @GetMapping("/user/{id}")
-    public String findUserById(@PathVariable int id, Model model) {
+    @GetMapping("/{id}")
+    // Finder og viser en bruger ud fra id
+    public String findUserById(@PathVariable int id, Model model, HttpSession session) {
+
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* Vi henter brugeren fra databasen ved hjælp af id'et fra URL'en */
         User user = userService.findUserById(id);
+
+        /* Vi sender user videre til profile.html,
+           så HTML-siden kan vise brugerens oplysninger */
         model.addAttribute("user", user);
+
+        // Returnerer profile.html fra templates-mappen
         return "profile";
     }
+
 }
