@@ -20,16 +20,6 @@ public class SubProjectController {
         this.subProjectService = subProjectService;
     }
 
-        /* @PathVariable henter projectId fra URL'en.
-           Fx /subproject/2 betyder at projectId = 2 */
-
-        // Henter kun delprojekter fra et projekt, som brugeren ejer
-        model.addAttribute("subprojects", subProjectService.getSubProjectsByProjectId(projectId));
-
-        // Returnerer subproject.html fra templates-mappen
-        return "subproject";
-    }
-
     @GetMapping("/addsubproject/{projectId}")
     // Viser formularen til at oprette et nyt subproject
     public String addSubProject(@PathVariable int projectId, Model model, HttpSession session) {
