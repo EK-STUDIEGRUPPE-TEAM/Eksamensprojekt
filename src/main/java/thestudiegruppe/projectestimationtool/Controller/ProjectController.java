@@ -98,6 +98,22 @@ public class ProjectController {
             return "redirect:login";
         }
 
+        /* Vi henter userId fra sessionen.
+           Det fortæller systemet hvilken bruger er logget ind */
+        int userId = SessionHelper.getLoggedInUserId(session);
+
+        /* Vi henter projekt som objekt og tilkobler det id'et
+        På den måde kan vi tjekke hvem projektet tilhører */
+        Project project = projectService.findProjectById(id);
+
+        /* Vi sammenligner projektets user id med brugeren der logget ind
+        Hvis de matcher så går vi videre og sletter det
+        Hvis de ikke matcher så sender vi brugeren tilbage uden at slette
+         */
+        if (project.getUserId() != userId) {
+            return "redirect:/project";
+        }
+
         /* @PathVariable henter id'et fra URL'en.
            Fx /project/delete/3 betyder at id = 3 */
         projectService.deleteProject(id);

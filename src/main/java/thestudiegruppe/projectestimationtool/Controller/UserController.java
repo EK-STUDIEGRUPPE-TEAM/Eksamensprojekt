@@ -50,7 +50,7 @@ public class UserController {
 
         /* Når brugeren er logget ind, gemmer vi brugerens id i sessionen.
            Så kan systemet huske hvem brugeren er på de næste sider */
-        session.setAttribute("userId", loggedInUser);
+        session.setAttribute("userId", loggedInUser.getId());
 
         // Når login lykkes, sendes brugeren videre til dashboard
          return "redirect:/dashboard";

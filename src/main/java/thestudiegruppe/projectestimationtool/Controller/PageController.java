@@ -35,10 +35,12 @@ public class PageController {
             return "redirect:/login";
         }
 
+        /* Vi henter userId fra sessionen.
+           userId blev gemt i sessionen, da brugeren loggede ind */
+        Integer userId = SessionHelper.getLoggedInUserId(session);
         /* Hvis brugeren er logget ind, henter vi projekterne fra databasen
-           og sender dem videre til dashboard.html via model.
-            Vi vil nok efter skifte findAllProjects med findProjectsByUserId.*/
-        model.addAttribute("projects", projectService.findAllProjects());
+           og sender dem videre til dashboard.html via model.   */
+        model.addAttribute("projects", projectService.findProjectByUserId(userId));
         return "dashboard";
     }
 

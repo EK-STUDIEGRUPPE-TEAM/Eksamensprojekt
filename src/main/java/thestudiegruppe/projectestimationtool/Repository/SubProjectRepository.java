@@ -34,6 +34,7 @@ public class SubProjectRepository {
         return jdbcTemplate.query(sql, new SubProjectRowMapper(), projectId);
     }
 
+    // kun admin og test
     public List<SubProject> getAllSubProjects() {
         String sql = "SELECT * FROM SubProject";
         return jdbcTemplate.query(sql, new SubProjectRowMapper());
