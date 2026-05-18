@@ -19,10 +19,10 @@ public class SubProjectService {
 
     }
 
-    public void createSubProject(int projectId, SubProject subProject) {
+    public void createSubProject(SubProject subProject) {
 
         // Opretter et delProjekt under et projekt, som brugeren ejer.
-        subProjectRepository.addSubProject(projectId, subProject);
+        subProjectRepository.addSubProject(subProject);
     }
 
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
