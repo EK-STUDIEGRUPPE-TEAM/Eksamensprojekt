@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>AlleProjekter</title>
+</head>
+
+<body>
+<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
+<table>
+  <thead>
+  <tr>
+    <td>Navn</td>
+    <td>Status</td>
+    <td>Dato oprettet</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="project : ${projects}">
+    <td th:text="${project.name}"></td>
+    <td th:text="${project.status}"></td>
+    <td th:text="${project.date}"></td>
+  </tr>
+  </tbody>
+</table>
+
+
+</body>
+</html>
