@@ -17,14 +17,15 @@ public class SubProjectRepository {
     }
 
 
-    public void addSubProject(int projectId, SubProject subProject) {
+    public void addSubProject(SubProject subProject) {
         /* Opretter kun delprojektet, hvis project_id tilhører den loggede bruger */
         String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?,?)";
 
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
-                subProject.getDescription(), projectId
+                subProject.getDescription(),
+                subProject.getProjectId()
         );
     }
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
