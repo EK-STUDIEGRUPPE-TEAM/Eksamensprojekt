@@ -48,6 +48,29 @@ public class TaskService {
         return taskRepository.getTasksBySubProjectId(subProjectId);
     }
 
+    // Metode til at hente alle tasks på et subproject og beregne total price
+    public List<Task> getTasksWithTotalPrice(int subProjectId) {
+
+        /* Vi henter alle tasks der tilhører subprojektet */
+        List<Task> tasks = taskRepository.getTasksBySubProjectId(subProjectId);
+
+         /*
+         Vi looper igennem hver task for at beregne totalprisen for alle tasks.
+          */
+        for (Task task : tasks) {
+
+            /* Vi ganger hourlyRate med estimatedHours
+                Vi bruger setter til at indsætte summen på vores totalprice variabel
+                */
+            int estimatedHours = subTaskService.calculateEstimatedHours(task.getId());
+            task.setEstimatedHours(estimatedHours);
+            task.setTotalPrice(task.getHourlyRate() * estimatedHours);
+        }
+
+        /* Vi returnerer tasks med totalprisen sat på hvert task objekt */
+        return tasks;
+    }
+
     public void deleteTask(int id) {
         taskRepository.deleteTask(id);
     }
@@ -67,39 +90,5 @@ public class TaskService {
 
         //Sletter tasks i repository og returnerer resultatet.
         return taskRepository.deleteTaskBySubProjectId(subProjectId);
-    }
-
-    //Beregner den samlede pris for alle tasks i et bestemt subProject.
-    public double calculateTaskPrice(int subProjectId) {
-        //Tjekker om subProjectId er ugyldigt.
-        //Hvis id er 0 eller mindre, kastes en exception,
-        //fordi der skal bruges et gyldigt subProject-id.
-        if (subProjectId <= 0) {
-            throw new IllegalArgumentException("SubProject id skal være større end 0");
-        }
-
-        //Variabel til at gemme den samlede pris.
-        double totalPrice = 0;
-
-        //Henter alle tasks, der hører til det valgte subProject.
-        List<Task> tasks = taskRepository.getTasksBySubProjectId(subProjectId);
-
-        //Går igennem hver task i listen.
-        for (Task task : tasks) {
-
-            //Tjekker om taskens timeløn er ugyldig.
-            //Hvis hourlyRate er mindre end 0, kaster vi en custom NegativeValueException
-            //fordi en negativ timepris ikke giver mening i prisberegning.
-            if (task.getHourlyRate() < 0) {
-                throw new NegativeValueException("Timepris");
-            }
-
-            //Lægger taskens pris til den samlede pris.
-            //Prisen beregnes som hourlyRate * estimerede timer for tasken.
-            totalPrice += task.getHourlyRate() * subTaskService.calculateEstimatedHours(task.getId());
-        }
-
-        //Returnerer den samlede beregnede pris.
-        return totalPrice;
     }
 }

@@ -20,6 +20,7 @@ VALUES ('Frontend Module', 'IN_PROGRESS', 1),
 -- Tasks
 INSERT INTO Task (name, description, status, hourlyRate, subProject_id)
 VALUES ('Create Landing Page', 'Design and code landing page UI', 'IN_PROGRESS', 45.00, 1),
+       ('Create Login Page', 'Design and code login page UI', 'DONE', 100.00, 1),
        ('Build API', 'Develop REST API for website', 'IN_PROGRESS', 60.00, 2),
        ('Login Feature', 'Implement login and registration', 'TODO', 50.00, 3),
        ('Student Dashboard', 'Create dashboard for students', 'DONE', 55.00, 4);
@@ -28,6 +29,7 @@ VALUES ('Create Landing Page', 'Design and code landing page UI', 'IN_PROGRESS',
 INSERT INTO SubTask (name, estimated_hours, status, task_id)
 VALUES ('Design wireframe', 5, 'DONE', 1),
        ('Write HTML/CSS', 8, 'IN_PROGRESS', 1),
+       ('Write HTML/CSS', 12, 'DONE', 1),
        ('Set up database routes', 6, 'IN_PROGRESS', 2),
        ('Create JWT auth', 4, 'TODO', 3),
        ('Add dashboard charts', 7, 'DONE', 4);

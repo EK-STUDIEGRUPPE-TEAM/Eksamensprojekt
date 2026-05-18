@@ -30,7 +30,7 @@
 
 
     <tr>
-        <th>Kategori</th>
+        <th></th>
         <th colspan="3">Arbejdstid</th>
         <th colspan="3">Materialer</th>
         <th colspan="3">Økonomi</th>
@@ -39,7 +39,7 @@
   <!--vi laver her alle de forskellige kollonneoverskrifter, hvori at de forskellige taskdataer ligger under.
   -->
     <tr>
-        <th></th>
+        <th>Opgaver</th>
         <th>Timer</th>
         <th>Rate</th>
         <th>Total</th>
@@ -54,12 +54,19 @@
 
   <!-- Her finder vi de tilhørende subprojejt til projektet og laver dem som overskrifter-->
 
-    <tr th:each="subproject : ${project.subProjects}">
-        <th colspan="10"
+    <tbody th:each="subproject : ${project.subProjects}">
+        <tr>
+            <th colspan="10"
             th:text="${subproject.name}"></th>
+        </tr>
 
-    </tr>
-
+        <tr th:each="task : ${subproject.tasks}">
+            <td th:text="${task.name}"></td>
+            <td th:text="${task.estimatedHours}"></td>
+            <td th:text="${task.hourlyRate}"></td>
+            <td th:text="${task.totalPrice}"></td>
+        </tr>
+    </tbody>
 
 </table>
 

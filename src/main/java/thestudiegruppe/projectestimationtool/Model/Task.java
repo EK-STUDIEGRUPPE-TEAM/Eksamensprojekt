@@ -11,6 +11,8 @@ public class Task {
     private Status status;
     private List<SubTask> subTasks;
     private int subProjectId;
+    private int estimatedHours;
+    private double totalPrice;
 
     public Task(Integer id, String name, String description, double hourlyRate, Status status, int subProjectId) {
         this.id = id;
@@ -82,5 +84,21 @@ public class Task {
 
     public void setSubProjectId(int subProjectId) {
         this.subProjectId = subProjectId;
+    }
+
+    public int getEstimatedHours() {
+        return estimatedHours;
+    }
+
+    public void setEstimatedHours(int estimatedHours) {
+        this.estimatedHours = estimatedHours;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalprice) {
+        this.totalPrice = totalprice;
     }
 }
