@@ -10,24 +10,23 @@ import java.util.List;
 @Repository
 public class SubProjectRepository {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public SubProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
-    public void addSubProject(SubProject subProject) {
+    public void addSubProject(int projectId, SubProject subProject) {
         /* Opretter kun delprojektet, hvis project_id tilhører den loggede bruger */
         String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?,?)";
 
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
-                subProject.getDescription(),
-                subProject.getProject().getId());
+                subProject.getDescription(), projectId
+        );
     }
-
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
 
         String sql = "SELECT * FROM SubProject WHERE project_id = ?";

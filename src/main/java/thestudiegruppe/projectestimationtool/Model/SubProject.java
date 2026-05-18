@@ -7,15 +7,15 @@ public class SubProject {
     private Integer id;
     private String name;
     private String description;
-    private Project project;
+    private int projectId;
     private List<Task> tasks;
 
 
-    public SubProject(Integer id, String name, String description, Project project) {
+    public SubProject(Integer id, String name, String description, int projectId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.project = project;
+        this.projectId = projectId;
     }
 
     public SubProject() {
@@ -54,12 +54,12 @@ public class SubProject {
         this.tasks = tasks;
     }
 
-    public Project getProject() {
-        return project;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
 }
