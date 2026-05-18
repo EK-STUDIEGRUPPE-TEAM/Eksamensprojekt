@@ -46,7 +46,7 @@ public class ProjectController {
     }
 
 
-    @GetMapping("project/{id}")
+    @GetMapping("/{id}")
     public String showProject(Model model, @PathVariable Integer id, HttpSession session) {
 
 
