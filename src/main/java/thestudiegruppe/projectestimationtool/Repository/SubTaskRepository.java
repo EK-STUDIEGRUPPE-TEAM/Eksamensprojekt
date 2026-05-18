@@ -26,6 +26,7 @@ public class SubTaskRepository {
                 subTask.getTaskId());
     }
 
+    // kun admin og test
     public List<SubTask> findAllSubTask() {
         String sql = "SELECT * FROM SubTask";
         return jdbcTemplate.query(sql, new SubTaskRowMapper());
