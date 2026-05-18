@@ -8,6 +8,8 @@ import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/project")
@@ -19,7 +21,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping
+    @GetMapping("/projects")
     // Viser alle projekter på project-siden
     public String showProjects(Model model, HttpSession session) {
 
@@ -33,13 +35,40 @@ public class ProjectController {
         /* Vi henter userId fra sessionen.
            userId blev gemt i sessionen, da brugeren loggede ind */
         Integer userId = SessionHelper.getLoggedInUserId(session);
+        List<Project> projectList = projectService.findProjectByUserId(userId);
 
         /* Vi bruger userId til kun at hente de projekter,
            der tilhører den bruger, der er logget ind */
-        model.addAttribute("projects" ,projectService.findProjectByUserId(userId));
+        model.addAttribute("projects" ,projectList);
 
         // Returnerer project.html fra templates-mappen
+        return "projects";
+    }
+
+
+    @GetMapping("project/{id}")
+    public String showProject(Model model, @PathVariable Integer id, HttpSession session) {
+
+
+        if(!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+
+        Integer userId = SessionHelper.getLoggedInUserId(session);
+
+        Project project = projectService.findProjectById(id);
+
+
+        //Her tjekker vi om projektet tilhører brugeren
+        if(project.getUserId() != userId){
+            return "redirect:/projects";
+        }
+
+
+        model.addAttribute("project", project);
         return "project";
+
     }
 
     @GetMapping("/addproject")
