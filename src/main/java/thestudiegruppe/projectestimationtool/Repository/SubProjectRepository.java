@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class SubProjectRepository {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public SubProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -25,9 +25,9 @@ public class SubProjectRepository {
                 sql,
                 subProject.getName(),
                 subProject.getDescription(),
-                subProject.getProject().getId());
+                subProject.getProjectId()
+        );
     }
-
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
 
         String sql = "SELECT * FROM SubProject WHERE project_id = ?";

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Repository.SubProjectRepository;
 
@@ -14,7 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static thestudiegruppe.projectestimationtool.Model.Status.DONE;
 
 @ExtendWith(MockitoExtension.class)
 public class SubProjectServiceTest {
@@ -32,8 +30,8 @@ public class SubProjectServiceTest {
     void getAllSubProjectsShouldReturnList() {
 
         //Her adder vi et project objekt og sætter dataen ind i et subProject
-        Project project = new Project();
-        SubProject subProject = new SubProject(1, "test SubProject", "test", project);
+        int projectId = 1;
+        SubProject subProject = new SubProject(1, "test SubProject", "test", projectId);
 
         // Viser at når repository bliver kaldt, så returner det test dataen
         when(subProjectRepository.getAllSubProjects()).thenReturn(List.of(subProject));
@@ -63,23 +61,26 @@ public class SubProjectServiceTest {
     //test om createSubProject() bliver korrekt kaldt fra SubProjectService til SubProjectRepository
     @Test
     void createSubProjectShouldCallRepository() {
-        //Arrange: Laver testdata
-        Project project = new Project();
-        project.setId(1);
-        SubProject subProject = new SubProject(1, "test", "SubProject calls Repo", project);
+          // ARRANGE
+        // Fake objekt som testdata
+        SubProject subProject = new SubProject();
 
-        //Her sætter vi vores lavet subprojekt ind i vores service
+        // ACT
+        // Her kalder vi på service metoden
         subProjectService.createSubProject(subProject);
 
-        //Tjekker om vores service kalder til repository automatisk
-        verify(subProjectRepository).addSubProject(subProject);
+        // ASSERT
+        /* Tjekker om service sender objektet til repository
+        Hvis den gør så hænger de sammen
+         */
+        verify(subProjectRepository, times(1)).addSubProject(subProject);
     }
 
     @Test
     void updateSubProjectShouldCallRepository() {
         // Arrange: laver testdata
-        Project project = new Project();
-        SubProject subProject = new SubProject(1, "test", "test for update", project);
+        int projectId = 1;
+        SubProject subProject = new SubProject(1, "test", "test for update", projectId);
 
         // Her kaldes update i service
         subProjectService.updateSubProject(subProject);

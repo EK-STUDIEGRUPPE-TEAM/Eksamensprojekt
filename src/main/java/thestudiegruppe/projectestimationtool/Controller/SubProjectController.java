@@ -20,28 +20,36 @@ public class SubProjectController {
         this.subProjectService = subProjectService;
     }
 
-    @GetMapping("/{projectId}")
-    // Viser alle delprojekter, der hører til et bestemt projekt
-    public String getSubProjectsByProjectId(@PathVariable int projectId, Model model, HttpSession session) {
-
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+    @GetMapping("/addsubproject/{projectId}")
+    // Viser formularen til at oprette et nyt subproject
+    public String addSubProject(@PathVariable int projectId, Model model, HttpSession session) {
+     /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
           sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
 
-        /* @PathVariable henter projectId fra URL'en.
-           Fx /subproject/2 betyder at projectId = 2 */
+        /* @PathVariable henter ProjectId fra URL'en.
+           Det bruges til at koble den nye task til det rigtige subproject */
 
-        // Henter kun delprojekter fra et projekt, som brugeren ejer
-        model.addAttribute("subprojects", subProjectService.getSubProjectsByProjectId(projectId));
+        // Vi laver et nyt tomt subproject objekt
+        SubProject subProject = new SubProject();
+
+        /* Vi sætter projectId på det tomme subProject-objekt.
+           På den måde ved formularen, hvilket project den skal høre til */
+        subProject.setProjectId(projectId);
+
+        /* Vi sender subproject-objektet videre til HTML-siden.
+           Så Thymeleaf kan koble inputfelterne til task-objektets felter */
+        model.addAttribute("subproject", subProject);
 
         // Returnerer subproject.html fra templates-mappen
-        return "subproject";
+        return "addsubproject";
     }
 
-    @PostMapping("/addSubProject")
+    
+    @PostMapping("/savesubproject")
     // Modtager data fra formularen og opretter et nyt delprojekt
     public String createSubProject(@ModelAttribute SubProject subProject, HttpSession session) {
 
@@ -59,9 +67,10 @@ public class SubProjectController {
            som håndterer logikken for at oprette delprojektet i databasen */
         subProjectService.createSubProject(subProject);
 
+
         /* Når delprojektet er oprettet, sender vi brugeren tilbage
            til siden med delprojekter for det samme projekt */
-        return "redirect:/subproject/" + subProject.getProject().getId();
+        return "redirect:/project/" + subProject.getProjectId();
     }
 
     @PostMapping("/update/{id}")
@@ -89,7 +98,7 @@ public class SubProjectController {
 
         /* Efter opdatering sendes brugeren tilbage
            til delprojektoversigten for samme projekt */
-        return "redirect:/subproject/" + subProject.getProject().getId();
+        return "redirect:/project/" + subProject.getProjectId();
     }
 
 
@@ -114,7 +123,7 @@ public class SubProjectController {
         subProjectService.deleteSubProject(id);
 
         // Efter sletning sendes brugeren tilbage til samme projekts delprojekter
-        return "redirect:/subproject/" + projectId;
+        return "redirect:/project/" + projectId;
     }
 
 
