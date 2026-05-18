@@ -61,15 +61,19 @@ public class SubProjectServiceTest {
     //test om createSubProject() bliver korrekt kaldt fra SubProjectService til SubProjectRepository
     @Test
     void createSubProjectShouldCallRepository() {
-        //Arrange: Laver testdata
-        int projectId = 1;
-        SubProject subProject = new SubProject(1, "test", "SubProject calls Repo", projectId);
+          // ARRANGE
+        // Fake objekt som testdata
+        SubProject subProject = new SubProject();
 
-        //Her sætter vi vores lavet subprojekt ind i vores service
-        subProjectService.createSubProject(projectId, subProject);
+        // ACT
+        // Her kalder vi på service metoden
+        subProjectService.createSubProject(subProject);
 
-        //Tjekker om vores service kalder til repository automatisk
-        verify(subProjectRepository).addSubProject(projectId, subProject);
+        // ASSERT
+        /* Tjekker om service sender objektet til repository
+        Hvis den gør så hænger de sammen
+         */
+        verify(subProjectRepository, times(1)).addSubProject(subProject);
     }
 
     @Test
