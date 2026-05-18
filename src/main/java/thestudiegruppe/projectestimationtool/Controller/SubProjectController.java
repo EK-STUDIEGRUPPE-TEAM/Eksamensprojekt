@@ -20,32 +20,48 @@ public class SubProjectController {
         this.subProjectService = subProjectService;
     }
 
-    @GetMapping("/{projectId}")
-    // Viser alle delprojekter, der hører til et bestemt projekt
-    public String getSubProjectsByProjectId(@PathVariable int projectId, Model model, HttpSession session) {
+        /* @PathVariable henter projectId fra URL'en.
+           Fx /subproject/2 betyder at projectId = 2 */
 
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+        // Henter kun delprojekter fra et projekt, som brugeren ejer
+        model.addAttribute("subprojects", subProjectService.getSubProjectsByProjectId(projectId));
+
+        // Returnerer subproject.html fra templates-mappen
+        return "subproject";
+    }
+
+    @GetMapping("/addsubproject/{projectId}")
+    // Viser formularen til at oprette et nyt subproject
+    public String addSubProject(@PathVariable int projectId, Model model, HttpSession session) {
+     /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
           sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
 
-        /* @PathVariable henter projectId fra URL'en.
-           Fx /subproject/2 betyder at projectId = 2 */
+        /* @PathVariable henter ProjectId fra URL'en.
+           Det bruges til at koble den nye task til det rigtige subproject */
 
-        // Henter kun delprojekter fra et projekt, som brugeren ejer
-        model.addAttribute("subprojects", subProjectService.getSubProjectsByProjectId(projectId));
-        model.addAttribute("projectId", projectId);
-        model.addAttribute("newSubProject", new SubProject());
+        // Vi laver et nyt tomt subproject objekt
+        SubProject subProject = new SubProject();
+
+        /* Vi sætter projectId på det tomme subProject-objekt.
+           På den måde ved formularen, hvilket project den skal høre til */
+        subProject.setProjectId(projectId);
+
+        /* Vi sender subproject-objektet videre til HTML-siden.
+           Så Thymeleaf kan koble inputfelterne til task-objektets felter */
+        model.addAttribute("subproject", subProject);
 
         // Returnerer subproject.html fra templates-mappen
-        return "subproject";
+        return "addsubproject";
     }
 
-    @PostMapping("/add/{projectId}")
+    
+    @PostMapping("/savesubproject")
     // Modtager data fra formularen og opretter et nyt delprojekt
-    public String createSubProject(@PathVariable int projectId, @ModelAttribute SubProject subProject, HttpSession session) {
+    public String createSubProject(@ModelAttribute SubProject subProject, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -59,17 +75,17 @@ public class SubProjectController {
 
         /* Vi sender subProject videre til service-laget,
            som håndterer logikken for at oprette delprojektet i databasen */
-        subProjectService.createSubProject(projectId, subProject);
+        subProjectService.createSubProject(subProject);
 
 
         /* Når delprojektet er oprettet, sender vi brugeren tilbage
            til siden med delprojekter for det samme projekt */
-        return "redirect:/subproject/" + projectId;
+        return "redirect:/project/" + subProject.getProjectId();
     }
 
-    @PostMapping("/update/{projectId}/{id}")
+    @PostMapping("/update/{id}")
     // Opdaterer et delprojekt ud fra id'et i URL'en
-    public String update(@PathVariable int projectId, @PathVariable int id, @ModelAttribute SubProject subProject, HttpSession session) {
+    public String update(@PathVariable int id, @ModelAttribute SubProject subProject, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -84,7 +100,6 @@ public class SubProjectController {
         /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.
            Derfor sætter vi id'et manuelt på subProject-objektet */
         subProject.setId(id);
-        subProject.setProjectId(projectId);
 
         /* Vi sender subProject videre til service-laget,
            som håndterer opdateringen i databasen,
@@ -93,7 +108,7 @@ public class SubProjectController {
 
         /* Efter opdatering sendes brugeren tilbage
            til delprojektoversigten for samme projekt */
-        return "redirect:/subproject/" + projectId;
+        return "redirect:/project/" + subProject.getProjectId();
     }
 
 
@@ -118,7 +133,7 @@ public class SubProjectController {
         subProjectService.deleteSubProject(id);
 
         // Efter sletning sendes brugeren tilbage til samme projekts delprojekter
-        return "redirect:/subproject/" + projectId;
+        return "redirect:/project/" + projectId;
     }
 
 
