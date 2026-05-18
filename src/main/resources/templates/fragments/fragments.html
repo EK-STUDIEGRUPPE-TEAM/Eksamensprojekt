@@ -18,11 +18,10 @@
     <h1>
         Projector
     </h1>
-    <!-- Når sessions er implementeret så kan vi
-    som i vores prototype, bruge et header fragment
-    til at display brugerens navn ved
-    at have et thymeleaf th:if der tjekker om
-    brugeren er logget ind hver html side -->
+
+    <!-- Vi tjekker først om brugeren er logget ind
+    Hvis de er, så bruger vi sessions til at hente brugerens navn -->
+    <p th:if="${session.userName != null}" th:text="${session.userName}"></p>
 
 </header>
 

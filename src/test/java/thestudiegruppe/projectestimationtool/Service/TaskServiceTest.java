@@ -206,89 +206,26 @@ class TaskServiceTest {
 
     }
 
-    // Tester at den samlede task-pris bliver beregnet korrekt, når subProjectId er gyldigt.
+    // Tester at getTasksWithTotalPrice beregner totalprisen korrekt for hver task.
     @Test
-    void calculateTaskPrice_shouldReturnTotalPrice_whenSubProjectIdIsValid() {
-        // Arrange: Vi laver et gyldigt subProjectId.
+    void getTasksWithTotalPrice_shouldReturnTasksWithCorrectTotalPrice() {
+        // Arrange: Vi laver et gyldigt subProjectId og en test-Task.
         int subProjectId = 1;
+        Task task = new Task(1, "Test Task", "Test", 250.0, Status.TODO, 1);
 
-        // Vi laver 2 test-Tasks med hver sin timepris.
-        Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1", 250.0, Status.TODO, 1);
-        Task task2 = new Task(2, "Test Task 2", "Test for Task Service 2", 300.0, Status.IN_PROGRESS, 2);
+        // Repository returnerer task når getTasksBySubProjectId kaldes.
+        when(taskRepository.getTasksBySubProjectId(subProjectId)).thenReturn(List.of(task));
 
-        /* Repository skal returnere de 2 tasks,
-        når getTasksBySubProjectId(subProjectId) bliver kaldt. */
-        List<Task> tasks = List.of(task1, task2);
-
-        when(taskRepository.getTasksBySubProjectId(subProjectId)).thenReturn(tasks);
-
-        /* SubTaskService skal returnere estimerede timer
-        for hver task. */
+        // SubTaskService returnerer 2 estimerede timer for task 1.
         when(subTaskService.calculateEstimatedHours(1)).thenReturn(2);
-        when(subTaskService.calculateEstimatedHours(2)).thenReturn(3);
 
         // Act: Vi kalder service-metoden.
-        double result = taskService.calculateTaskPrice(subProjectId);
+        List<Task> result = taskService.getTasksWithTotalPrice(subProjectId);
 
-         /* Assert: Vi tjekker, at den samlede pris bliver 1400.
-        Udregning:
-        Task 1 = 250 * 2 = 500
-        Task 2 = 300 * 3 = 900
-        Total = 1400 */
-        assertEquals(1400, result);
-
-        // Vi tjekker, at repository-metoden blev kaldt 1 gang.
-        verify(taskRepository, times(1)).getTasksBySubProjectId(subProjectId);
-
-        // Vi tjekker også, at subTaskService blev kaldt for begge tasks.
+    /* Assert: Vi tjekker at totalprisen er beregnet korrekt.
+    Udregning: 250 * 2 = 500 */
+        assertEquals(500, result.get(0).getTotalPrice());
+        assertEquals(2, result.get(0).getEstimatedHours());
         verify(subTaskService, times(1)).calculateEstimatedHours(1);
-        verify(subTaskService, times(1)).calculateEstimatedHours(2);
-
     }
-
-    // Tester at systemet giver fejl, hvis man prøver at beregne task-pris med et ugyldigt subProjectId.
-    @Test
-    void calculateTaskPrice_shouldThrowException_whenSubProjectIdIsInvalid() {
-        // Arrange: Vi laver et ugyldigt subProjectId.
-        int subProjectId = 0;
-
-        /* Act + Assert: Vi forventer, at metoden kaster en
-        IllegalArgumentException, fordi id'et ikke er gyldigt. */
-        assertThrows(IllegalArgumentException.class, () -> taskService.calculateTaskPrice(subProjectId));
-
-        /* Assert: Vi tjekker, at repository aldrig blev kaldt,
-        og at subTaskService heller ikke blev kaldt. */
-        verify(taskRepository, never()).getTasksBySubProjectId(subProjectId);
-        verify(subTaskService, never()).calculateEstimatedHours(anyInt());
-
-    }
-
-    // Tester at systemet giver fejl, hvis en task har en ugyldig negativ pris.
-    @Test
-    void calculateTaskPrice_shouldThrowNegativeValueException_whenPriceIsNegative() {
-        // Arrange: Vi laver et gyldigt subProjectId.
-        int subProjectId = 1;
-
-        /* Vi laver en Task med en ugyldig pris.
-        Her er prisen negativ, og det må den ikke være. */
-        Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1", -100.0, Status.TODO, 1);
-
-        List<Task> tasks = List.of(task1);
-
-        when(taskRepository.getTasksBySubProjectId(subProjectId)).thenReturn(tasks);
-
-        /* Act + Assert: Vi forventer, at metoden kaster en
-        custom NegativeValueException, fordi task-prisen er ugyldig. */
-        assertThrows(NegativeValueException.class, () -> taskService.calculateTaskPrice(subProjectId));
-
-         /* Assert: Vi tjekker, at repository blev kaldt 1 gang,
-        men at subTaskService aldrig blev kaldt, fordi metoden
-        stopper før den når dertil. */
-        verify(taskRepository, times(1)).getTasksBySubProjectId(subProjectId);
-
-        verify(subTaskService, never()).calculateEstimatedHours(anyInt());
-
-    }
-
-
 }

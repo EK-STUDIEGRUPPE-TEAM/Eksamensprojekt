@@ -3,6 +3,8 @@ package thestudiegruppe.projectestimationtool.Service;
 import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.Project;
+import thestudiegruppe.projectestimationtool.Model.SubProject;
+import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
 
@@ -12,11 +14,15 @@ import java.util.List;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final SubProjectService subProjectService;
+    private final TaskService taskService;
 
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, SubProjectService subProjectService, TaskService taskService) {
 
         this.projectRepository = projectRepository;
+        this.subProjectService = subProjectService;
+        this.taskService = taskService;
     }
 
     public void createProject(Project project, int userId) {
@@ -102,6 +108,43 @@ public class ProjectService {
         }
 
         /* Hvis projektet findes, returnerer vi det */
+        return project;
+    }
+
+    /* Vi bruger den her metode til at hente de relevante subprojects og tasks som vi skal bruge
+      for at returnere et projekt med subprojekter og tasks til projekt.html
+    */
+    public Project findProjectWithSubProjectsAndTasks(int id){
+
+        /*
+        Vi henter ét bestemt projekt ud fra projektets id
+           */
+        Project project = projectRepository.findById(id);
+
+        /*
+        Vi henter alle subprojects der tilhører projektet ud fra id'et
+         */
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProjectId(id);
+
+        /*
+        Vi looper igennem hvert subprojekt for at hente og tilkoble de tasks der hører til det
+         */
+        for (SubProject subProject : subProjects){
+
+            /*
+            Vi bruger service metoden for at tilkoble de tasks fra databasen der tilhører det aktuelle subproject
+            Service metoden beregner også total prisen
+             */
+            List<Task> tasks = taskService.getTasksWithTotalPrice(subProject.getId());
+
+            // Vi bruger setter til at indsætte task listen på vores subproject objekt
+            subProject.setTasks(tasks);
+        }
+
+        // Ligesom med subproject gjorde med tasks, så bruger vi setter til at indsætte subproject listen på project
+        project.setSubProjects(subProjects);
+
+        // Til sidst returnerer vi project med subprojects og tasks indsat
         return project;
     }
 
