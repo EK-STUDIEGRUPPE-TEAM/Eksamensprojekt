@@ -1,0 +1,65 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
+<!--
+    Denne form bruges til at opdatere brugerens profiloplysninger.
+    Når brugeren trykker på "Gem ændringer", sendes data til controllerens
+    update-metode.
+-->
+<form th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+
+    <!--
+      Label viser teksten "Navn" på siden.
+      Inputfeltet er bundet til user-objektets name-attribut.
+      Det betyder, at værdien fra feltet bliver gemt i user.name.
+  -->
+    <label>Navn</label>
+    <input type="text" th:field="*{name}">
+
+    <!--
+        Emailfeltet viser brugerens email.
+        th:field="*{email}" betyder, at feltet er bundet til user.email.
+        readonly betyder, at brugeren kan se emailen, men ikke ændre den.
+    -->
+    <label>Email</label>
+    <input type="email" th:field="*{email}" readonly>
+
+    <!--
+       Passwordfeltet er bundet til user.password.
+       type="password" gør, at passwordet ikke vises som almindelig tekst.
+   -->
+    <label>Password</label>
+    <input type="password" th:field="*{password}">
+
+    <!--
+      Denne knap sender formen.
+      Fordi method="post", bliver oplysningerne sendt som en POST-request.
+  -->
+    <button type="submit">Gem ændringer</button>
+</form>
+
+<!--
+    Denne form bruges til at slette brugerens profil.
+    Når brugeren trykker på "Slet profil", sendes en POST-request
+    til controllerens delete-metode med brugerens id i URL'en.
+-->
+<form th:action="@{/user/delete/{id}(id=${user.id})}" method="post">
+    <!--
+        onclick viser en confirm-boks, før profilen slettes.
+        Hvis brugeren trykker OK, fortsætter sletningen.
+        Hvis brugeren trykker Annuller, bliver formen ikke sendt.
+    -->
+    <button type="submit" onclick="return confirm('Er du sikker på, at du vil slette din profil?')">
+        Slet profil
+    </button>
+</form>
+
+<a th:href="@{/dashboard}">Tilbage</a>
+</body>
+</html>

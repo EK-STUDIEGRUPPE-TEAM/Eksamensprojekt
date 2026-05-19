@@ -87,7 +87,7 @@ public class UserController {
         session.invalidate();
 
         // Brugeren sendes tilbage til login-siden
-        return "redirect:/login";
+        return "redirect:/signup";
     }
 
     @PostMapping("/update/{id}")
@@ -109,12 +109,38 @@ public class UserController {
         userService.update(user);
 
         // Efter opdatering sendes brugeren tilbage til sin profilside
-        return "redirect:/user/" + id;
+        return "redirect:/user/profile";
     }
 
-    @GetMapping("/{id}")
-    // Finder og viser en bruger ud fra id
-    public String findUserById(@PathVariable int id, Model model, HttpSession session) {
+    // Eventuelt slette denne mapping Grunden er, at /profile er bedre til “min profil”,
+    // fordi den bruger userId fra sessionen.
+    // Så brugeren kan ikke bare skrive /user/1 eller /user/2 i URL’en og prøve at se andre brugere.
+
+//    @GetMapping("/{id}")
+//    // Finder og viser en bruger ud fra id
+//    public String findUserById(@PathVariable int id, Model model, HttpSession session) {
+//
+//        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+//          Hvis der ikke findes et userId i sessionen,
+//          sendes brugeren tilbage til login-siden */
+//        if (!SessionHelper.isLoggedIn(session)){
+//            return "redirect:/login";
+//        }
+//
+//        /* Vi henter brugeren fra databasen ved hjælp af id'et fra URL'en */
+//        User user = userService.findUserById(id);
+//
+//        /* Vi sender user videre til profile.html,
+//           så HTML-siden kan vise brugerens oplysninger */
+//        model.addAttribute("user", user);
+//
+//        // Returnerer profile.html fra templates-mappen
+//        return "profile";
+//    }
+
+    @GetMapping("/profile")
+    // Viser profil-siden for den bruger, der er logget ind
+    public String showProfile(Model model, HttpSession session){
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -123,14 +149,28 @@ public class UserController {
             return "redirect:/login";
         }
 
-        /* Vi henter brugeren fra databasen ved hjælp af id'et fra URL'en */
-        User user = userService.findUserById(id);
+        /*
+        Her henter vi id'et på den bruger, der er logget ind.
+        Id'et blev gemt i sessionen, da brugeren loggede ind.
+        Vi bruger Integer, fordi sessionen gemmer værdier som objekter. */
+        Integer userId = SessionHelper.getLoggedInUserId(session);
 
-        /* Vi sender user videre til profile.html,
-           så HTML-siden kan vise brugerens oplysninger */
+        /*
+        Vi bruger userId til at hente hele User-objektet fra databasen.
+        Det er nødvendigt, fordi profile.html skal bruge brugerens navn,
+        email og password. */
+        User user = userService.findUserById(userId);
+
+        /*
+        Vi sender user-objektet videre til profile.html.
+        I HTML'en kan vi derfor bruge ${user} og fx user.name,
+        user.email og user.password. */
         model.addAttribute("user", user);
 
-        // Returnerer profile.html fra templates-mappen
+         /*
+        Returnerer profile.html fra templates-mappen.
+        Spring/Thymeleaf finder automatisk filen:
+        src/main/resources/templates/profile.html */
         return "profile";
     }
 
