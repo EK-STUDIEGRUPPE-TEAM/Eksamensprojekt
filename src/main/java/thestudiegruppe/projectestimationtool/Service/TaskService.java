@@ -1,8 +1,6 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
-import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
-import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
 
@@ -48,23 +46,25 @@ public class TaskService {
         return taskRepository.getTasksBySubProjectId(subProjectId);
     }
 
-    // Metode til at hente alle tasks på et subproject og beregne total price
-    public List<Task> getTasksWithTotalPrice(int subProjectId) {
+    // Metode til at hente alle tasks på et subproject
+    // Deudover henter metoden også alle subtasks på en task og beregner total price for en task
+    public List<Task> getFullTasks(int subProjectId) {
 
         /* Vi henter alle tasks der tilhører subprojektet */
         List<Task> tasks = taskRepository.getTasksBySubProjectId(subProjectId);
 
-         /*
-         Vi looper igennem hver task for at beregne totalprisen for alle tasks.
-          */
+         // Vi looper igennem hver task for at hente subtasks og beregne totalprisen for alle tasks.
         for (Task task : tasks) {
 
-            /* Vi ganger hourlyRate med estimatedHours
-                Vi bruger setter til at indsætte summen på vores totalprice variabel
+            /* Vi ganger hourlyRate med estimatedHours for at beregne total price for en task
+                Vi bruger setter til at indsætte summen i vores totalprice variabel i task objektet
                 */
             int estimatedHours = subTaskService.calculateEstimatedHours(task.getId());
             task.setEstimatedHours(estimatedHours);
             task.setTotalPrice(task.getHourlyRate() * estimatedHours);
+
+            // Vi bruger setter til at indsætte relevante subtasks i task objektet
+            task.setSubTasks(subTaskService.getSubTasksByTaskId(task.getId()));
         }
 
         /* Vi returnerer tasks med totalprisen sat på hvert task objekt */

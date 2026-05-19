@@ -18,22 +18,41 @@
         method="post" betyder at vi sender
         dataen til vores backend
     -->
+
     <form
         th:action="@{/task/save}"
         th:object="${task}"
         method="post"
     >
-
+    <table>
     <!--
     herefter bruger vi th:field for at binde brugerinput
     til de forskellige felter i task
 
-    subprojectid er hidden idet man ikke skal kunne ændre det
+    subprojectid og projectid er hidden idet man ikke skal kunne ændre det
     -->
         <input type="hidden" th:field="*{subProjectId}">
-        <input type="text" th:field="*{name}">
-        <input type="text" th:field="*{description}">
-        <input type="number" th:field="*{hourlyRate}">
+        <input type="hidden" name="projectId" th:value="${projectId}">
+
+        <tr>
+            <th>Opgavetitel</th>
+            <th>Beskrivelse</th>
+            <th>Timepris</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <!-- step tillader decimal tal -->
+            <td><input type="text" th:field="*{name}"></td>
+            <td><input type="text" th:field="*{description}"></td>
+            <td><input type="number" th:field="*{hourlyRate}" step=".01"></td>
+            <td><select th:field="*{status}">
+                <option value="TODO">Todo</option>
+                <option value="IN_PROGRESS">Aktiv</option>
+                <option value="DONE">Færdig</option>
+                </select>
+            </td>
+        </tr>
+    </table>
         <!-- Vi mangler status her -->
         <button type="submit">Gem</button>
     </form>

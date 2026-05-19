@@ -8,8 +8,6 @@ import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/task")
 public class TaskController {
@@ -20,33 +18,14 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/{subProjectId}")
-    public String getTasksBySubProjectId(@PathVariable int subProjectId, Model model, HttpSession session) {
-
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
-        if (!SessionHelper.isLoggedIn(session)){
-            return "redirect:/login";
-        }
-
-        /* @PathVariable henter subProjectId fra URL'en.
-           Fx /task/2 betyder at subProjectId = 2 */
-
-        /* Vi bruger subProjectId til at hente alle tasks,
-           der hører til det valgte subproject */
-        model.addAttribute("tasks", taskService.getTasksBySubProjectId(subProjectId));
-
-        // Returnerer task.html fra templates-mappen
-        return "task";
-    }
-
     /* Vi bruger en GetMapping til addtask,
        så vi kan vise en side med formularen,
        hvor brugeren kan oprette en ny task */
+
+    /* @RequestParam henter projectId fra URL'en
+    så vi kan bruge det til at sende brugeren tilbage til det rigtige projekt efter save */
     @GetMapping("/addtask/{subProjectId}")
-    // Viser formularen til at oprette en ny task
-    public String addTask(@PathVariable int subProjectId, Model model, HttpSession session) {
+    public String addTask(@PathVariable int subProjectId, @RequestParam int projectId, Model model, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -69,14 +48,17 @@ public class TaskController {
            Så Thymeleaf kan koble inputfelterne til task-objektets felter */
         model.addAttribute("task", task);
 
+        /* Vi sender projectId videre til HTML-siden.
+       Så vi kan sende brugeren tilbage til det rigtige projekt efter save */
+        model.addAttribute("projectId", projectId);
+
         // Returnerer addtask.html fra templates-mappen
         return "addtask";
     }
 
-
-    @PostMapping("/save")
     // Modtager data fra addtask-formularen og gemmer tasken
-    public String save(@ModelAttribute Task task, HttpSession session) {
+    @PostMapping("/save")
+    public String save(@ModelAttribute Task task, @RequestParam int projectId, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -93,8 +75,8 @@ public class TaskController {
         taskService.createTask(task);
 
         /* Efter tasken er oprettet, sender vi brugeren tilbage
-           til task-oversigten for det samme subproject */
-        return "redirect:/task/" + task.getSubProjectId();
+           til project viewpointet */
+        return "redirect:/project/" + projectId;
     }
 
     @PostMapping("/deleteTask/{subProjectId}/{id}")
