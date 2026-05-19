@@ -5,11 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
@@ -18,8 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static thestudiegruppe.projectestimationtool.Model.Status.IN_PROGRESS;
-import static thestudiegruppe.projectestimationtool.Model.Status.TODO;
 
 
 /* Den her annotation gør at Mockito virker i testen.
@@ -206,9 +199,9 @@ class TaskServiceTest {
 
     }
 
-    // Tester at getTasksWithTotalPrice beregner totalprisen korrekt for hver task.
+    // Tester at getFullTasks beregner totalprisen korrekt for hver task.
     @Test
-    void getTasksWithTotalPrice_shouldReturnTasksWithCorrectTotalPrice() {
+    void getFullTasks_shouldReturnTasksWithCorrectTotalPrice() {
         // Arrange: Vi laver et gyldigt subProjectId og en test-Task.
         int subProjectId = 1;
         Task task = new Task(1, "Test Task", "Test", 250.0, Status.TODO, 1);
@@ -220,7 +213,7 @@ class TaskServiceTest {
         when(subTaskService.calculateEstimatedHours(1)).thenReturn(2);
 
         // Act: Vi kalder service-metoden.
-        List<Task> result = taskService.getTasksWithTotalPrice(subProjectId);
+        List<Task> result = taskService.getFullTasks(subProjectId);
 
     /* Assert: Vi tjekker at totalprisen er beregnet korrekt.
     Udregning: 250 * 2 = 500 */

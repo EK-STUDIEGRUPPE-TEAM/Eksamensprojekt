@@ -8,9 +8,9 @@
 <body>
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
 
+<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
 
 <h1 th:text="${project.name}"></h1>
-
 
 <table border="1">
 
@@ -30,27 +30,24 @@
 
 
     <tr>
-        <th></th>
+        <th>Status</th>
+        <th>Opgaver</th>
         <th colspan="3">Arbejdstid</th>
-        <th colspan="3">Materialer</th>
         <th colspan="3">Økonomi</th>
     </tr>
 
   <!--vi laver her alle de forskellige kollonneoverskrifter, hvori at de forskellige taskdataer ligger under.
   -->
     <tr>
-        <th>Opgaver</th>
+        <th></th>
+        <th></th>
         <th>Timer</th>
-        <th>Rate</th>
-        <th>Total</th>
-        <th>Enheder</th>
-        <th>Pris pr enhed</th>
+        <th>Timepris</th>
         <th>Total</th>
         <th>Budget</th>
         <th>aktuel</th>
         <th>Difference</th>
     </tr>
-
 
   <!-- Her finder vi de tilhørende subprojejt til projektet og laver dem som overskrifter-->
 
@@ -60,12 +57,21 @@
             th:text="${subproject.name}"></th>
         </tr>
 
-        <tr th:each="task : ${subproject.tasks}">
-            <td th:text="${task.name}"></td>
+        <th:block th:each="task : ${subproject.tasks}">
+        <tr>
+            <td th:text="${task.status}"></td>
+            <td><u th:text="${task.name}"></u></td>
             <td th:text="${task.estimatedHours}"></td>
-            <td th:text="${task.hourlyRate}"></td>
-            <td th:text="${task.totalPrice}"></td>
+            <td th:text="${task.hourlyRate} + ' KR.'"></td>
+            <td th:text="${task.totalPrice} + ' KR.'"></td>
         </tr>
+        <tr th:each="subtask : ${task.subTasks}">
+            <td th:text="${subtask.status}"></td>
+            <td style="padding-left: 2em" th:text="${subtask.name}"></td>
+            <td th:text="${subtask.estimatedHours}"></td>
+            <td colspan="7"></td>
+        </tr>
+        </th:block>
     </tbody>
 
 </table>

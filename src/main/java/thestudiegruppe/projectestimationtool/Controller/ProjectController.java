@@ -57,7 +57,7 @@ public class ProjectController {
 
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
-        Project project = projectService.findProjectWithSubProjectsAndTasks(id);
+        Project project = projectService.findFullProject(id);
 
 
         //Her tjekker vi om projektet tilhører brugeren
