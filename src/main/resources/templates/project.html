@@ -8,9 +8,14 @@
 <body>
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
 
+<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
 
+<!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
 <h1 th:text="${project.name}"></h1>
 
+<!--<a th:href="@{/}">Opret delprojekt</a>-->
+
+<!--<a th:href="@{/users}">Opret delopgave</a>-->
 
 <table border="1">
 
@@ -26,25 +31,24 @@
 
 </table>
 
+<!-- Tabellen viser projektets subprojekter, tasks og subtasks -->
 <table border="1">
 
 
     <tr>
-        <th></th>
+        <th>Status</th>
+        <th>Opgaver</th>
         <th colspan="3">Arbejdstid</th>
-        <th colspan="3">Materialer</th>
         <th colspan="3">Økonomi</th>
     </tr>
 
   <!--vi laver her alle de forskellige kollonneoverskrifter, hvori at de forskellige taskdataer ligger under.
   -->
     <tr>
-        <th>Opgaver</th>
+        <th></th>
+        <th></th>
         <th>Timer</th>
-        <th>Rate</th>
-        <th>Total</th>
-        <th>Enheder</th>
-        <th>Pris pr enhed</th>
+        <th>Timepris</th>
         <th>Total</th>
         <th>Budget</th>
         <th>aktuel</th>
@@ -52,20 +56,43 @@
     </tr>
 
 
-  <!-- Her finder vi de tilhørende subprojejt til projektet og laver dem som overskrifter-->
-
+    <!-- Vi looper igennem hvert subprojekt der tilhører det korrekte projekt -->
     <tbody th:each="subproject : ${project.subProjects}">
+
+    <!-- Her laver vi de hentede dem subprojekter som overskrifter for -->
         <tr>
             <th colspan="10"
             th:text="${subproject.name}"></th>
         </tr>
 
-        <tr th:each="task : ${subproject.tasks}">
-            <td th:text="${task.name}"></td>
+    <tr>
+        <td>
+            <a th:href="@{/task/addtask/{subProjectId}(subProjectId=${subproject.id}, projectId=${project.id})}">Opret opgave</a>
+        </td>
+    </tr>
+
+    <!-- Vi bruger th:block til at sætte task og subtask rækkerne sammen -->
+        <th:block th:each="task : ${subproject.tasks}">
+
+            <!-- Vi viser vi task rækken med status, navn, timer, timepris og total -->
+        <tr>
+            <td th:text="${task.status}"></td>
+            <td><u th:text="${task.name}"></u></td>
             <td th:text="${task.estimatedHours}"></td>
-            <td th:text="${task.hourlyRate}"></td>
-            <td th:text="${task.totalPrice}"></td>
+            <td th:text="${task.hourlyRate} + ' KR.'"></td>
+            <td th:text="${task.totalPrice} + ' KR.'"></td>
         </tr>
+
+            <!-- Vi looper igennem hver subtask der tilhører den korrekte task -->
+        <tr th:each="subtask : ${task.subTasks}">
+            <td th:text="${subtask.status}"></td>
+            <!-- padding-left rykker subtask navnet til højre fra task navnet
+             På den måde kan vi nemt skelne mellem subtask og tasks-->
+            <td style="padding-left: 2em" th:text="${subtask.name}"></td>
+            <td th:text="${subtask.estimatedHours}"></td>
+            <td colspan="7"></td>
+        </tr>
+        </th:block>
     </tbody>
 
 </table>

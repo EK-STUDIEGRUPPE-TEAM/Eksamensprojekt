@@ -21,7 +21,7 @@
 
     <!-- Vi tjekker først om brugeren er logget ind
     Hvis de er, så bruger vi sessions til at hente brugerens navn -->
-    <p th:if="${session.userName != null}" th:text="${session.userName}"></p>
+    <h3 th:if="${session.userName != null}" th:text="${session.userName}"></h3>
 
 </header>
 
@@ -40,9 +40,10 @@
     men vi har ikke fået implementeret endnu-->
     <a th:href="@{/dashboard}">Profil</a>
 
-    <!-- fører til en eventuel log ud
-    men vi har ikke fået implementeret endnu-->
-    <a th:href="@{/dashboard}">Log ud</a>
+    <!-- fører til logout postmapping som logger brugeren ud af sessionen-->
+    <form th:action="@{/user/logout}" method="post">
+        <button type="submit">Log ud</button>
+    </form>
 
 </nav>
 </html>

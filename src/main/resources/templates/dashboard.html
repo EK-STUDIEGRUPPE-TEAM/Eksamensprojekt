@@ -12,20 +12,18 @@
 <nav th:replace="~{fragments/fragments :: navfragment}"></nav>
 
 <main>
-        <table>
-            <thead>
-            <tr>
-                <td>Navn</td>
-                <td>Status</td>
-            </tr>
-            </thead>
-            <tbody></tbody>
-            <tr th:each="project : ${projects}">
-                <td th:text="${project.name}"></td>
-                <td th:text="${project.status}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </main>
+    <table>
+        <tr>
+            <th>Projekter i alt</th>
+            <th>Afsluttede projekter</th>
+            <th>Aktive projekter</th>
+        </tr>
+        <tr>
+            <td th:text="${totalprojects}"></td>
+            <td th:text="${completedprojects}"></td>
+            <td th:text="${activeprojects}"></td>
+        </tr>
+    </table>
+</main>
 </body>
 </html>
