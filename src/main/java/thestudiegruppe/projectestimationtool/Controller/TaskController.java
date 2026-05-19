@@ -8,8 +8,6 @@ import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/task")
 public class TaskController {

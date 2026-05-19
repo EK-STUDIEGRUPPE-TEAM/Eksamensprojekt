@@ -8,7 +8,6 @@ import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
-import thestudiegruppe.projectestimationtool.Service.UserService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
 import java.util.List;
