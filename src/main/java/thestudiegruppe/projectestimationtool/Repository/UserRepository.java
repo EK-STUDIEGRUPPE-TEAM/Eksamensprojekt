@@ -49,8 +49,8 @@ public class UserRepository {
     }
 
     public void update(User user){
-        String sql = "UPDATE Users SET name = ? WHERE user_id = ?";
+        String sql = "UPDATE Users SET name = ?, password = ? WHERE user_id = ?";
 
-        jdbcTemplate.update(sql, user.getName(), user.getId());
+        jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getId());
     }
 }

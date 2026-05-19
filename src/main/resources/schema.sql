@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Project (
     date DATE,
     status VARCHAR(50),
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS SubProject (
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS SubProject (
     description VARCHAR(200),
     status VARCHAR(50),
     project_id INT,
-    FOREIGN KEY (project_id) REFERENCES Project(project_id)
+    FOREIGN KEY (project_id) REFERENCES Project(project_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS Task (
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS Task (
     status VARCHAR(50),
     hourlyRate DECIMAL(10,2),
     subProject_id INT,
-    FOREIGN KEY (subProject_id) REFERENCES SubProject(subProject_id)
+    FOREIGN KEY (subProject_id) REFERENCES SubProject(subProject_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS SubTask (
@@ -47,5 +47,5 @@ CREATE TABLE IF NOT EXISTS SubTask (
     estimated_hours INT,
     status VARCHAR(50),
     task_id INT,
-    FOREIGN KEY (task_id) REFERENCES Task(task_id)
+    FOREIGN KEY (task_id) REFERENCES Task(task_id) ON DELETE CASCADE
     );
