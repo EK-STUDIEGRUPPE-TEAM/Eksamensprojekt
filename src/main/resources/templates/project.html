@@ -14,7 +14,9 @@
 <h1 th:text="${project.name}"></h1>
 
 <!--<a th:href="@{/}">Opret delprojekt</a>-->
-
+<a th:href="@{/subproject/addsubproject/{projectId}(projectId=${project.id})}">
+    Opret delprojekt
+</a>
 <!--<a th:href="@{/users}">Opret delopgave</a>-->
 
 <table border="1">
