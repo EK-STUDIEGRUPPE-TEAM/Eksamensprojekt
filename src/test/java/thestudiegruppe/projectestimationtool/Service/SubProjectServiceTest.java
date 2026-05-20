@@ -31,7 +31,7 @@ public class SubProjectServiceTest {
 
         //Her adder vi et project objekt og sætter dataen ind i et subProject
         int projectId = 1;
-        SubProject subProject = new SubProject(1, "test SubProject", "test", projectId);
+        SubProject subProject = new SubProject(1, "test SubProject", projectId);
 
         // Viser at når repository bliver kaldt, så returner det test dataen
         when(subProjectRepository.getAllSubProjects()).thenReturn(List.of(subProject));
@@ -80,7 +80,7 @@ public class SubProjectServiceTest {
     void updateSubProjectShouldCallRepository() {
         // Arrange: laver testdata
         int projectId = 1;
-        SubProject subProject = new SubProject(1, "test", "test for update", projectId);
+        SubProject subProject = new SubProject(1, "test", projectId);
 
         // Her kaldes update i service
         subProjectService.updateSubProject(subProject);

@@ -13,7 +13,6 @@ public class SubProjectRowMapper implements RowMapper<SubProject> {
         SubProject subProject = new SubProject(
                 rs.getInt("subProject_id"),
                 rs.getString("name"),
-                rs.getString("description"),
                 rs.getInt("project_id")
         );
 

@@ -6,15 +6,13 @@ public class SubProject {
 
     private Integer id;
     private String name;
-    private String description;
     private int projectId;
     private List<Task> tasks;
 
 
-    public SubProject(Integer id, String name, String description, int projectId) {
+    public SubProject(Integer id, String name, int projectId) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.projectId = projectId;
     }
 
@@ -35,14 +33,6 @@ public class SubProject {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
 
     }
 
