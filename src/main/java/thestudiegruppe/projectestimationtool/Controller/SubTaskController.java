@@ -41,6 +41,7 @@ public class SubTaskController {
         return "subtask";
     }
 
+
     @PostMapping("/addSubTask")
     // Modtager data fra formularen og opretter en ny subtask
     public String createSubTask(@ModelAttribute SubTask subTask, HttpSession session) {

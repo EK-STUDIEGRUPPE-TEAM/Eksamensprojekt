@@ -77,21 +77,18 @@
             <!-- Vi viser vi task rækken med status, navn, timer, timepris og total -->
         <tr>
             <td th:text="${task.status}"></td>
-            <td><u th:text="${task.name}"></u></td>
+            <td>
+                <a th:href="@{/task/{id}(id=${task.id})}"
+                 th:text="${task.name}">
+                </a>
+            </td>
             <td th:text="${task.estimatedHours}"></td>
             <td th:text="${task.hourlyRate} + ' KR.'"></td>
             <td th:text="${task.totalPrice} + ' KR.'"></td>
         </tr>
 
-            <!-- Vi looper igennem hver subtask der tilhører den korrekte task -->
-        <tr th:each="subtask : ${task.subTasks}">
-            <td th:text="${subtask.status}"></td>
-            <!-- padding-left rykker subtask navnet til højre fra task navnet
-             På den måde kan vi nemt skelne mellem subtask og tasks-->
-            <td style="padding-left: 2em" th:text="${subtask.name}"></td>
-            <td th:text="${subtask.estimatedHours}"></td>
-            <td colspan="7"></td>
-        </tr>
+
+
         </th:block>
     </tbody>
 

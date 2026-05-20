@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
@@ -221,4 +223,27 @@ class TaskServiceTest {
         assertEquals(2, result.get(0).getEstimatedHours());
         verify(subTaskService, times(1)).calculateEstimatedHours(1);
     }
+
+
+    @Test
+    void getTaskByIdShouldReturnTaskSuccessfully() {
+
+        //Arrange: Lave testdata
+        Task task = new Task();
+        task.setId(1);
+
+        Mockito.when(taskRepository.findById(task.getId())).thenReturn(task);
+
+        //Act: Kalde metoden som testes fra serviceklassen
+
+        taskService.findTaskById(task.getId());
+
+        //Assert: Kalder funktionen i service klassen, repository korrekt
+
+        Mockito.verify(taskRepository).findById((task.getId()));
+
+    }
+
+
+
 }

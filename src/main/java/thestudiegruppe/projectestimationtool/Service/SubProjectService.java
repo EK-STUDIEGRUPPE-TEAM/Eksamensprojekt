@@ -2,6 +2,8 @@ package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
+import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.SubProjectRepository;
@@ -50,6 +52,26 @@ public class SubProjectService {
 
         // Vi returnerer subprojects med tasks og subtasks indsat på hvert subproject objekt
         return subProjects;
+    }
+
+    public SubProject findSubProjectById(int id) {
+
+        /* Denne metode bruges til at finde ét bestemt subProjekt
+           ud fra subProjektets id */
+
+        SubProject subProject = subProjectRepository.findById(id);
+
+        /* Hvis repository ikke finder et subProjekt,
+           kaster vi vores egen NotFoundException.
+
+           Det gør vi, så systemet kan håndtere fejlen pænt,
+           fx med en 404-side */
+        if (subProject == null) {
+            throw new NotFoundException("SubProjekt", id);
+        }
+
+        /* Hvis projektet findes, returnerer vi det */
+        return subProject;
     }
 
     public List<SubProject> getAllSubProjects() {

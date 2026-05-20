@@ -4,23 +4,74 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import thestudiegruppe.projectestimationtool.Model.Project;
+import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.Task;
+import thestudiegruppe.projectestimationtool.Service.ProjectService;
+import thestudiegruppe.projectestimationtool.Service.SubProjectService;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
+import thestudiegruppe.projectestimationtool.Service.UserService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/task")
 public class TaskController {
 
     private final TaskService taskService;
+    private final SubProjectService subProjectService;
+    private final ProjectService projectService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService,  SubProjectService subProjectService, ProjectService projectService) {
         this.taskService = taskService;
+        this.subProjectService = subProjectService;
+        this.projectService = projectService;
+
     }
 
     /* Vi bruger en GetMapping til addtask,
        så vi kan vise en side med formularen,
        hvor brugeren kan oprette en ny task */
+
+
+
+    @GetMapping("/{id}")
+    public String showTask(Model model, @PathVariable Integer id, HttpSession session) {
+
+
+        if(!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        Integer userId = SessionHelper.getLoggedInUserId(session);
+
+        Task task = taskService.findFullTask(id);
+
+
+        //Her tjekker vi om projektet tilhører brugeren
+        if(task == null){
+            return "redirect:/projects";
+        }
+
+
+        SubProject subProject = subProjectService.findSubProjectById(task.getSubProjectId());
+
+        Project project = projectService.findProjectById(subProject.getProjectId());
+
+
+
+        if(project.getUserId() != userId){
+
+            return "redirect:/projects";
+        }
+
+        model.addAttribute("task", task);
+        return "task";
+
+
+    }
+
 
     /* @RequestParam henter projectId fra URL'en
     så vi kan bruge det til at sende brugeren tilbage til det rigtige projekt efter save */

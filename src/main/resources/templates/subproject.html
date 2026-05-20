@@ -12,7 +12,6 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Description</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -25,14 +24,6 @@
                    th:value="${subProject.name}"
                    th:form="'updateForm-' + ${subProject.id}">
         </td>
-
-        <td>
-            <input type="text"
-                   name="description"
-                   th:value="${subProject.description}"
-                   th:form="'updateForm-' + ${subProject.id}">
-        </td>
-
         <td>
             <form th:id="'updateForm-' + ${subProject.id}"
                   th:action="@{/subproject/update/{projectId}/{id}(projectId=${projectId}, id=${subProject.id})}"
@@ -57,11 +48,6 @@
 
     <label>Name:</label>
     <input type="text" th:field="*{name}" required>
-
-    <br><br>
-
-    <label>Description:</label>
-    <input type="text" th:field="*{description}" required>
 
     <br><br>
 
