@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.Project;
+import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,6 +31,10 @@ class ProjectServiceTest {
 
     @Mock
     private ProjectRepository projectRepository;
+    
+    
+    @Mock
+    private SubProjectService subProjectService;
 
     @InjectMocks
     private ProjectService projectService;
@@ -166,6 +172,60 @@ class ProjectServiceTest {
         Mockito.verify(projectRepository).findById(projectId);
     }
 
+
+    // Tester at findFullProject returnerer et projekt med de korrekte subprojekter sat på.
+    @Test
+    void findFullProject_shouldReturnProjectWithSubProjects() {
+        // Arrange: Vi laver et projekt og et subprojekt, der hører til det.
+        Project project = new Project();
+        project.setId(1);
+
+        SubProject subProject = new SubProject();
+        subProject.setProjectId(1);
+
+        List<SubProject> subProjects = List.of(subProject);
+
+        // Repository returnerer projekte og subProjectService returnerer subprojekterne.
+        when(projectRepository.findById(1)).thenReturn(project);
+        when(subProjectService.getFullSubProjects(1)).thenReturn(subProjects);
+
+        // Act: Vi kalder service-metoden.
+        Project result = projectService.findFullProject(1);
+
+        /* Assert: Vi tjekker at subprojektlisten er sat korrekt på projekt-objektet. */
+        assertEquals(subProjects, result.getSubProjects());
+        verify(subProjectService, Mockito.times(1)).getFullSubProjects(1);
+    }
+
+    // Tester at projectsWithStatusCount returnerer det korrekte antal projekter med en bestemt status.
+    @Test
+    void projectsWithStatusCount_shouldReturnCorrectCount_whenProjectsMatchStatus() {
+
+        //Arrange: Vi laver 3 projekter hvor 2 har status TODO og 1 har status DONE.
+        int userId = 1;
+        Project project1 = new Project();
+        project1.setStatus(Status.TODO);
+
+        Project project2 = new Project();
+        project2.setStatus(Status.TODO);
+
+        Project project3 = new Project();
+        project3.setStatus(Status.DONE);
+
+        /* Vi samler dem i en liste, som repository skal returnere
+        når findByUserId(userId) bliver kaldt. */
+        List<Project> projects = List.of(project1, project2, project3);
+
+        when(projectRepository.findByUserId(userId)).thenReturn(projects);
+
+        //Act: Vi kalder service metoden med status TODO
+        int result = projectService.projectsWithStatusCount(userId, Status.TODO);
+
+        /* Assert: Vi tjekker, at resultatet er 2,
+        fordi kun 2 ud af 3 projekter har status TODO */
+        assertEquals(2, result);
+        verify(projectRepository).findByUserId(userId);
+    }
 
     @Test
     void findProjectsByUserId_shouldReturnEmptyList_whenUserHasNoProject() {

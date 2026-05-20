@@ -62,6 +62,10 @@
         <td th:text="${subtask.estimatedHours}"></td>
         <td colspan="2"></td>
         <td colspan="3" th:text="${subtask.description}"></td>
+        <td><form th:action="@{/subtask/delete/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}" method="post">
+            <button>Slet delopgave</button>
+        </form></td>
+        <td><a th:href="@{/subtask/update/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}">Rediger delopgave</a></td>
     </tr>
     <tr>
         <td>

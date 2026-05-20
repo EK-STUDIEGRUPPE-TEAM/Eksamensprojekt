@@ -23,6 +23,9 @@ public class SubProjectServiceTest {
     @Mock
     private SubProjectRepository subProjectRepository;
 
+    @Mock
+    private TaskService taskService;
+
     //Laver service-klasse og sætter vores fake version repository ind i den
     @InjectMocks
     private SubProjectService subProjectService;
@@ -121,6 +124,33 @@ public class SubProjectServiceTest {
 
     }
 
+    // Tester at getFullSubProjects returnerer subprojekter med de korrekte tasks sat på.
+    @Test
+    void getFullSubProjects_shouldReturnSubProjectsWithTasks() {
+        // Arrange: Vi laver et subprojekt og en task, der hører til det.
+        SubProject subProject = new SubProject();
+        subProject.setId(1);
+
+        Task task = new Task();
+        task.setSubProjectId(1);
+
+        List<SubProject> subProjects = List.of(subProject);
+        List<Task> tasks = List.of(task);
+
+        // Repository returnerer subprojektet og taskService returnerer tasks for subprojektet.
+        when(subProjectRepository.getSubProjectsByProjectId(1)).thenReturn(subProjects);
+        when(taskService.getFullTasks(1)).thenReturn(tasks);
+
+        // Act: Vi kalder service metoden.
+        List<SubProject> result = subProjectService.getFullSubProjects(1);
+
+        /* Assert: Vi tjekker at listen indeholder 1 subprojekt,
+        og at task-listen er sat korrekt på subprojekt objektet. */
+        assertEquals(1, result.size());
+        assertEquals(tasks, result.get(0).getTasks());
+        verify(taskService, times(1)).getFullTasks(1);
+    }
+
     @Test
     void getSubProjectByIdShouldReturnSubProjectSuccessfully() {
 
@@ -128,7 +158,7 @@ public class SubProjectServiceTest {
         SubProject subProject = new SubProject();
         subProject.setId(1);
 
-        Mockito.when(subProjectRepository.findById(subProject.getId())).thenReturn(subProject);
+        when(subProjectRepository.findById(subProject.getId())).thenReturn(subProject);
 
         //Act: Kalde metoden som testes fra serviceklassen
 
@@ -136,7 +166,7 @@ public class SubProjectServiceTest {
 
         //Assert: Kalder funktionen i service klassen, repository korrekt
 
-        Mockito.verify(subProjectRepository).findById((subProject.getId()));
+        verify(subProjectRepository).findById((subProject.getId()));
 
     }
 }

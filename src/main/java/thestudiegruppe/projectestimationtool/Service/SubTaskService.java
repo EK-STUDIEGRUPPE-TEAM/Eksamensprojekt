@@ -28,6 +28,10 @@ public class SubTaskService {
         return subTaskRepository.findSubTaskByTaskId(taskId);
     }
 
+    public SubTask getSubTaskById(int id) {
+        return subTaskRepository.findSubTaskById(id);
+    }
+
     public void deleteSubTask(int id) {
         subTaskRepository.deleteSubTask(id);
     }

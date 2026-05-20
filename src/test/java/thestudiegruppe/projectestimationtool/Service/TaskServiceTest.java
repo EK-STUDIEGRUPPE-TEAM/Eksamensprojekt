@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
+import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
 
@@ -161,6 +162,35 @@ class TaskServiceTest {
         /* Assert: Vi tjekker også, at repository-metoden aldrig blev kaldt,
         fordi servicen skal stoppe før det. */
         verify(taskRepository, never()).getTasksBySubProjectId(subProjectId);
+    }
+
+    // Tester at getFullTasks returnerer en task med de korrekte subtasks sat på.
+    @Test
+    void getFullTasks_shouldReturnTaskWithSubtasks(){
+        // Arrange: Vi laver et test task objekt og en test subtask der hører til den
+        Task task = new Task();
+        task.setId(1);
+
+        SubTask subTask = new SubTask();
+        subTask.setTaskId(1);
+
+        List<Task> tasks = List.of(task);
+        List<SubTask> subTasks = List.of(subTask);
+
+        when(taskRepository.getTasksBySubProjectId(1)).thenReturn(tasks);
+
+        // subTaskService returnerer subtasklisten og 0 estimerede timer
+        when(subTaskService.calculateEstimatedHours(1)).thenReturn(0);
+        when(subTaskService.getSubTasksByTaskId(1)).thenReturn(subTasks);
+
+        // Act: Vi kalder service metoden
+        List<Task> result = taskService.getFullTasks(1);
+
+        /* Assert: Vi tjekker at listen indeholder 1 task,
+        og at subtasklisten er sat korrekt på task-objektet */
+        assertEquals(1, result.size());
+        assertEquals(subTasks, result.get(0).getSubTasks());
+        verify(subTaskService, times(1)).getSubTasksByTaskId(1);
     }
 
     // Tester at tasks bliver slettet korrekt ud fra et gyldigt subProjectId, og at antal slettede tasks returneres.

@@ -33,5 +33,7 @@
         </table>
         <button type="submit">Gem</button>
     </form>
+    <!-- Tilbage knap sender brugeren til task oversigten-->
+    <a th:href="@{/task/{taskId}(taskId=${subtask.taskId})}">Tilbage</a>
 </body>
 </html>

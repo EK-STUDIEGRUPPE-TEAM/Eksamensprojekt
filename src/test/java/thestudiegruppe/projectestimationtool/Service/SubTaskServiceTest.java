@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
+import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
 
@@ -73,6 +75,24 @@ class SubTaskServiceTest {
 
         // Her bruger vi verify til at teste om metoden kører 1 gang
         verify(repository, times(1)).findAllSubTask();
+    }
+
+    @Test
+    void getSubtaskById_ShouldReturnSubTaskSuccessfully() {
+
+        //Arrange: Lave testdata
+        SubTask subTask = new SubTask();
+        subTask.setId(1);
+
+        when(repository.findSubTaskById(subTask.getId())).thenReturn(subTask);
+
+        //Act: Kalde metoden som testes fra serviceklassen
+
+        service.getSubTaskById(subTask.getId());
+
+        //Assert: Kalder funktionen i service klassen, repository korrekt
+
+        verify(repository).findSubTaskById((subTask.getId()));
     }
 
     @Test
