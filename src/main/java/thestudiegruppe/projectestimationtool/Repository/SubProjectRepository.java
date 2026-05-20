@@ -2,7 +2,9 @@ package thestudiegruppe.projectestimationtool.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Mapper.ProjectRowMapper;
 import thestudiegruppe.projectestimationtool.Mapper.SubProjectRowMapper;
+import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 
 import java.util.List;
@@ -39,6 +41,8 @@ public class SubProjectRepository {
         return jdbcTemplate.query(sql, new SubProjectRowMapper());
     }
 
+
+
     public void updateSubProject(SubProject subProject) {
         String sql = "UPDATE SubProject SET name = ? WHERE subProject_id = ?";
 
@@ -46,6 +50,11 @@ public class SubProjectRepository {
                 sql,
                 subProject.getName(),
                 subProject.getId());
+    }
+
+    public SubProject findById(int id) {
+        String sql = "SELECT * FROM SubProject WHERE subProject_id = ?";
+    return jdbcTemplate.queryForObject(sql, new SubProjectRowMapper(), id);
     }
 
     public void deleteSubProject(int id) {

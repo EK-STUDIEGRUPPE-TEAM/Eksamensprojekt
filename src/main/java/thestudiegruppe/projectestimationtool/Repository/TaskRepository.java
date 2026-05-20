@@ -2,7 +2,9 @@ package thestudiegruppe.projectestimationtool.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import thestudiegruppe.projectestimationtool.Mapper.ProjectRowMapper;
 import thestudiegruppe.projectestimationtool.Mapper.TaskRowMapper;
+import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Task;
 
 import java.util.List;
@@ -45,4 +47,10 @@ public class TaskRepository {
         String sql = "DELETE FROM Task WHERE subProject_id = ?";
         return jdbcTemplate.update(sql, subProjectId);
     }
+
+    public Task findById(int id) {
+        String sql = "SELECT * FROM Task WHERE task_id = ?";
+        return jdbcTemplate.queryForObject(sql, new TaskRowMapper(), id);
+    }
+
 }

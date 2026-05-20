@@ -1,6 +1,10 @@
 package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
+import thestudiegruppe.projectestimationtool.Model.Project;
+import thestudiegruppe.projectestimationtool.Model.SubProject;
+import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
 
@@ -91,4 +95,44 @@ public class TaskService {
         //Sletter tasks i repository og returnerer resultatet.
         return taskRepository.deleteTaskBySubProjectId(subProjectId);
     }
+
+    public Task findTaskById(int id) {
+
+        /* Denne metode bruges til at finde en bestemt task
+           ud fra taskens id */
+
+        Task task = taskRepository.findById(id);
+
+        /* Hvis repository ikke finder et projekt,
+           kaster vi vores egen NotFoundException.
+
+           Det gør vi, så systemet kan håndtere fejlen pænt,
+           fx med en 404-side */
+        if (task == null) {
+            throw new NotFoundException("Task", id);
+        }
+
+        /* Hvis projektet findes, returnerer vi det */
+        return task;
+    }
+
+    public Task findFullTask(int id){
+
+        // Vi henter ét bestemt projekt ud fra projektets id
+        Task task = taskRepository.findById(id);
+
+        /*
+        Vi henter alle subprojects der tilhører projektet ud fra projektets id
+        Service metoden returnerer fulde subproject objekter med tasks og subtasks indsat
+         */
+        List<SubTask> subTasks = subTaskService.getSubTasksByTaskId(id);
+
+        // Vi bruger setter til at indsætte subproject listen på project
+        task.setSubTasks(subTasks);
+
+        // Til sidst returnerer vi project med subprojects og tasks indsat
+        return task;
+    }
+
+
 }
