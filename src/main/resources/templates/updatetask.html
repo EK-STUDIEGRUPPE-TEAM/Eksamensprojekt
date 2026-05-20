@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Task</title>
+</head>
+<body>
+<h1>Redigere Task</h1>
+<main>
+
+  <!--
+  vi bruger form til at modtage de nye ændringer
+  fra brugeren
+
+  th:action sender tasken til vores update metode
+  i task controlleren
+
+  {id} bruges fordi vi skal vide hvilken task
+  der skal redigeres
+
+  method="post" betyder at vi sender
+  dataen til backend
+  -->
+  <form th:action="@{/task/update/{id}(id=${task.id})}" th:object="${task}" method="post">
+
+    <!--
+ subProjectId er hidden fordi brugeren ikke skal ændre det
+
+ vi bruger det kun til at sende brugeren tilbage
+ til den rigtige task-oversigt efter update
+ -->
+    <input type="hidden" th:field="*{subProjectId}">
+
+    <!--
+th:field binder inputfelterne til task objektet
+
+fordi vi har th:object="${task}",
+skal vi kun skrive fx *{name}
+og ikke *{task.name}
+-->
+    <table>
+      <tr>
+        <th>Opgavetitel</th>
+        <th>Beskrivelse</th>
+        <th>Timepris</th>
+        <th>Status</th>
+      </tr>
+
+      <tr>
+        <td>
+          <input type="text" th:field="*{name}">
+        </td>
+
+        <td>
+          <input type="text" th:field="*{description}">
+        </td>
+
+        <td>
+          <input type="number" th:field="*{hourlyRate}" step="0.01">
+        </td>
+
+        <td>
+          <select th:field="*{status}">
+            <option value="TODO">Todo</option>
+            <option value="IN_PROGRESS">Aktiv</option>
+            <option value="DONE">Færdig</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+
+    <!--
+når brugeren trykker gem,
+sendes de ændrede data til update metoden
+-->
+    <button type="submit">Gem</button>
+  </form>
+</main>
+</body>
+</html>
