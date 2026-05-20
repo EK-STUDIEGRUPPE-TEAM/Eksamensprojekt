@@ -24,7 +24,6 @@ public class SubProjectRepository {
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
-                subProject.getDescription(),
                 subProject.getProjectId()
         );
     }
@@ -46,7 +45,6 @@ public class SubProjectRepository {
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
-                subProject.getDescription(),
                 subProject.getId());
     }
 
