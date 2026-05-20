@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
+import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.SubProjectRepository;
 
 import java.util.List;
@@ -116,6 +118,25 @@ public class SubProjectServiceTest {
         // Vi tjekker også, at repository-metoden blev kaldt præcis 1 gang.
         verify(subProjectRepository, times(1)).getSubProjectsByProjectId(projectId);
 
+
+    }
+
+    @Test
+    void getSubProjectByIdShouldReturnSubProjectSuccessfully() {
+
+        //Arrange: Lave testdata
+        SubProject subProject = new SubProject();
+        subProject.setId(1);
+
+        Mockito.when(subProjectRepository.findById(subProject.getId())).thenReturn(subProject);
+
+        //Act: Kalde metoden som testes fra serviceklassen
+
+        subProjectService.findSubProjectById(subProject.getId());
+
+        //Assert: Kalder funktionen i service klassen, repository korrekt
+
+        Mockito.verify(subProjectRepository).findById((subProject.getId()));
 
     }
 }
