@@ -41,10 +41,35 @@ public class SubTaskController {
         return "subtask";
     }
 
+    @GetMapping("/addsubtask/{taskId}")
+    public String addSubTask(@PathVariable int taskId, Model model, HttpSession session){
 
-    @PostMapping("/addSubTask")
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        // Opretter tomt subtask objekt
+        SubTask subTask = new SubTask();
+
+        // setter task id fra vores PathVariable til objektet
+        subTask.setTaskId(taskId);
+
+        // Adder det tomme subtask objekt til formlen
+        model.addAttribute("subtask", subTask);
+
+        // adder task id til formlen
+        model.addAttribute("taskId", taskId);
+
+        // returnerer addsubtask templaten
+        return "addsubtask";
+    }
+
+    @PostMapping("/save")
     // Modtager data fra formularen og opretter en ny subtask
-    public String createSubTask(@ModelAttribute SubTask subTask, HttpSession session) {
+    public String saveSubTask(@ModelAttribute SubTask subTask, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -61,8 +86,8 @@ public class SubTaskController {
         subTaskService.createSubTask(subTask);
 
         /* Når subtasken er oprettet, sender vi brugeren tilbage
-           til siden med subtasks for den samme task */
-        return "redirect:/subtask/" + subTask.getTaskId();
+           til task siden */
+        return "redirect:/task/" + subTask.getTaskId();
     }
 
     @PostMapping("/update/{id}")

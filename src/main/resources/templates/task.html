@@ -13,10 +13,6 @@
 <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
 <h1 th:text="${task.name}"></h1>
 
-<!--<a th:href="@{/}">Opret delprojekt</a>-->
-
-<!--<a th:href="@{/users}">Opret delopgave</a>-->
-
 <table border="1">
 
     <tr>
@@ -66,7 +62,11 @@
         <td th:text="${subtask.estimatedHours}"></td>
         <td colspan="2"></td>
         <td colspan="3" th:text="${subtask.description}"></td>
-
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{/subtask/addsubtask/{taskId}(taskId=${task.id})}">Opret delopgave</a>
+        </td>
     </tr>
 </table>
 </body>
