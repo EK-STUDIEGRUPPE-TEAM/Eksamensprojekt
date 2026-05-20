@@ -19,12 +19,11 @@ public class SubProjectRepository {
 
     public void addSubProject(SubProject subProject) {
         /* Opretter kun delprojektet, hvis project_id tilhører den loggede bruger */
-        String sql = "INSERT INTO SubProject(name, description, project_id) VALUES(?,?,?)";
+        String sql = "INSERT INTO SubProject(name, project_id) VALUES(?,?)";
 
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
-                subProject.getDescription(),
                 subProject.getProjectId()
         );
     }
@@ -41,12 +40,11 @@ public class SubProjectRepository {
     }
 
     public void updateSubProject(SubProject subProject) {
-        String sql = "UPDATE SubProject SET name = ?, description = ? WHERE subProject_id = ?";
+        String sql = "UPDATE SubProject SET name = ? WHERE subProject_id = ?";
 
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
-                subProject.getDescription(),
                 subProject.getId());
     }
 
