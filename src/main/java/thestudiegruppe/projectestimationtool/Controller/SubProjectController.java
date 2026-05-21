@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
+import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Service.SubProjectService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
@@ -74,9 +75,24 @@ public class SubProjectController {
         return "redirect:/project/" + projectId;
     }
 
-    @PostMapping("/update/{projectId}/{id}")
+    @GetMapping("/update/{projectId}/{id}")
+    public String updateSubProject(@PathVariable int projectId, @PathVariable int id, Model model, HttpSession session) {
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        /* @PathVariable henter id'et fra URL'en.
+           Fx /subproject/update/5 betyder at id = 5 */
+        SubProject subProject = subProjectService.findSubProjectById(id);
+        model.addAttribute("subproject", subProject);
+
+        model.addAttribute("projectId", projectId);
+        return "updatesubproject";
+    }
+
+    @PostMapping("saveUpdate")
     // Opdaterer et delprojekt ud fra id'et i URL'en
-    public String update(@PathVariable int projectId, @PathVariable int id, @ModelAttribute SubProject subProject, HttpSession session) {
+    public String saveUpdate(@ModelAttribute SubProject subProject, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -85,13 +101,6 @@ public class SubProjectController {
             return "redirect:/login";
         }
 
-        /* @PathVariable henter id'et fra URL'en.
-           Fx /subproject/update/5 betyder at id = 5 */
-
-        /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.
-           Derfor sætter vi id'et manuelt på subProject-objektet */
-        subProject.setId(id);
-        subProject.setProjectId(projectId);
         /* Vi sender subProject videre til service-laget,
            som håndterer opdateringen i databasen,
            kun hvis delProjektet ligger under brugerens projekt. */
@@ -99,7 +108,7 @@ public class SubProjectController {
 
         /* Efter opdatering sendes brugeren tilbage
            til delprojektoversigten for samme projekt */
-        return "redirect:/project/" + projectId;
+        return "redirect:/project/" + subProject.getProjectId();
     }
 
 
