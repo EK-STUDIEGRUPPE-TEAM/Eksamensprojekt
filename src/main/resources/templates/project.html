@@ -13,11 +13,9 @@
 <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
 <h1 th:text="${project.name}"></h1>
 
-<!--<a th:href="@{/}">Opret delprojekt</a>-->
 <a th:href="@{/subproject/addsubproject/{projectId}(projectId=${project.id})}">
     Opret delprojekt
 </a>
-<!--<a th:href="@{/users}">Opret delopgave</a>-->
 
 <table border="1">
 
@@ -65,7 +63,12 @@
         <tr>
             <th colspan="10"
             th:text="${subproject.name}"></th>
+            <th><form th:action="@{/subproject/delete/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}" method="post">
+                <button>Slet delprojekt</button>
+            </form></th>
+            <td><a th:href="@{/subproject/update/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}">Rediger delproject</a></td>
         </tr>
+
 
     <tr>
         <td>

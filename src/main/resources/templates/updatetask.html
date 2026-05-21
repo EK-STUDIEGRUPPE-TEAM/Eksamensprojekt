@@ -75,6 +75,8 @@ sendes de ændrede data til update metoden
 -->
     <button type="submit">Gem</button>
   </form>
+  <!-- Tilbage knap sender brugeren til task oversigten-->
+  <a th:href="@{/task/{Id}(Id=${id})}">Tilbage</a>
 </main>
 </body>
 </html>

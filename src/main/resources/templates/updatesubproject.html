@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>updatesubtask</title>
+</head>
+<body>
+
+<!-- update formlen der sendes til saveUpdate som gemmer ændringer til databasen-->
+<form th:action="@{/subproject/saveUpdate}"
+      th:object="${subproject}" method="post">
+
+  <!-- Vi henter først id og taskId så vores update gemmer den rigtige subtask og på den rigtige task-->
+  <input type="hidden" th:field="*{id}">
+  <input type="hidden" th:field="*{projectId}">
+  <table>
+
+    <tr>
+      <th>Delprojekt titel</th>
+    </tr>
+
+    <tr>
+      <td><input type="text" th:field="*{name}"></td>
+    </tr>
+  </table>
+  <button type="submit">Gem</button>
+</form>
+<!-- Tilbage knap sender brugeren til task oversigten-->
+<a th:href="@{/project/{projectId}(projectId=${subproject.projectId})}">Tilbage</a>
+</body>
+</html>
