@@ -9,10 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
-import thestudiegruppe.projectestimationtool.Model.Project;
-import thestudiegruppe.projectestimationtool.Model.SubProject;
-import thestudiegruppe.projectestimationtool.Model.Status;
-import thestudiegruppe.projectestimationtool.Model.User;
+import thestudiegruppe.projectestimationtool.Model.*;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
 
 import java.time.LocalDate;
@@ -20,10 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -246,5 +242,58 @@ class ProjectServiceTest {
 
     }
 
+    @Test
+    void getTotalEstimatedHoursOfWholeProject_shouldReturnTotalEstimatedHours() {
+        // Arrange: Vi laver testdata til ét project med ét subproject og to tasks
+        int projectId = 1;
+
+        Project project = new Project();
+
+        Task task1 = new Task();
+        task1.setEstimatedHours(3);
+
+        Task task2 = new Task();
+        task2.setEstimatedHours(5);
+
+        SubProject subProject = new SubProject();
+        subProject.setTasks(List.of(task1, task2));
+
+        // Vi mocker de metoder, som findFullProject() bruger
+        when(projectRepository.findById(projectId)).thenReturn(project);
+        when(subProjectService.getFullSubProjects(projectId)).thenReturn(List.of(subProject));
+
+        // Act: Vi kalder metoden, der skal testes
+        double result = projectService.getTotalEstimatedHoursOfWholeProject(projectId);
+
+        // Assert: 3 + 5 = 8 timer
+        assertEquals(8.0, result, 0.001);
+    }
+
+    @Test
+    void getTotalPriceOfWholeProject_shouldReturnTotalPrice() {
+        // Arrange: Vi laver testdata til ét project med ét subproject og to tasks
+        int projectId = 1;
+
+        Project project = new Project();
+
+        Task task1 = new Task();
+        task1.setTotalPrice(600);
+
+        Task task2 = new Task();
+        task2.setTotalPrice(1000);
+
+        SubProject subProject = new SubProject();
+        subProject.setTasks(List.of(task1, task2));
+
+        // Vi mocker de metoder, som findFullProject() bruger
+        when(projectRepository.findById(projectId)).thenReturn(project);
+        when(subProjectService.getFullSubProjects(projectId)).thenReturn(List.of(subProject));
+
+        // Act: Vi kalder metoden, der skal testes
+        double result = projectService.getTotalPriceOfWholeProject(projectId);
+
+        // Assert: 600 + 1000 = 1600 kr.
+        assertEquals(1600.0, result, 0.001);
+    }
 
 }

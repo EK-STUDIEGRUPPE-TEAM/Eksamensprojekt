@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -21,7 +21,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/projects")
+    @GetMapping
     // Viser alle projekter på project-siden
     public String showProjects(Model model, HttpSession session) {
 
@@ -58,6 +58,9 @@ public class ProjectController {
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
         Project project = projectService.findFullProject(id);
+        // Her kalder vi summary-metoderne fra ProjectService
+        double totalEstimatedHours = projectService.getTotalEstimatedHoursOfWholeProject(id);
+        double totalPrice = projectService.getTotalPriceOfWholeProject(id);
 
 
         //Her tjekker vi om projektet tilhører brugeren
@@ -67,6 +70,9 @@ public class ProjectController {
 
 
         model.addAttribute("project", project);
+        // Her sender vi projektet og summary-tallene videre til HTML-siden
+        model.addAttribute("totalEstimatedHours", totalEstimatedHours);
+        model.addAttribute("totalPrice", totalPrice);
         return "project";
 
     }
@@ -113,10 +119,10 @@ public class ProjectController {
         projectService.createProject(project, userId);
 
         // Efter projektet er oprettet, sendes brugeren tilbage til projektoversigten
-        return "redirect:/project";
+        return "redirect:/projects";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     // Sletter et projekt ud fra id'et i URL'en
     public String delete(@PathVariable int id, HttpSession session) {
 
@@ -140,7 +146,7 @@ public class ProjectController {
         Hvis de ikke matcher så sender vi brugeren tilbage uden at slette
          */
         if (project.getUserId() != userId) {
-            return "redirect:/project";
+            return "redirect:/projects";
         }
 
         /* @PathVariable henter id'et fra URL'en.
@@ -148,7 +154,24 @@ public class ProjectController {
         projectService.deleteProject(id);
 
         // Efter sletning sendes brugeren tilbage til projektoversigten
-        return "redirect:/project";
+        return "redirect:/projects";
+    }
+
+    @GetMapping("/update/{id}")
+    public String showUpdatePage(@PathVariable int id,
+                                 Model model,
+                                 HttpSession session) {
+
+        if(!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        Project project =
+                projectService.findProjectById(id);
+
+        model.addAttribute("project", project);
+
+        return "updateproject";
     }
 
     @PostMapping("/update/{id}")
@@ -167,20 +190,22 @@ public class ProjectController {
            der er logget ind */
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
-        /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.
-           Derfor sætter vi id'et manuelt på project-objektet */
+
+        // Hent eksisterende projekt
+        Project existingProject =
+                projectService.findProjectById(id);
+
+        // Behold gamle værdier
         project.setId(id);
 
-        /* Vi sætter også userId på projektet,
-           så update ikke mister koblingen til brugeren */
         project.setUserId(userId);
 
-        /* Vi sender project videre til service-laget,
-           som håndterer opdateringen i databasen */
+        project.setDate(existingProject.getDate());
+
         projectService.updateProject(project);
 
         // Efter opdatering sendes brugeren tilbage til projektoversigten
-        return "redirect:/project";
+        return "redirect:/projects";
     }
 
 

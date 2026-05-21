@@ -3,11 +3,10 @@ package thestudiegruppe.projectestimationtool.Service;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
-import thestudiegruppe.projectestimationtool.Model.Project;
-import thestudiegruppe.projectestimationtool.Model.Status;
-import thestudiegruppe.projectestimationtool.Model.SubProject;
+import thestudiegruppe.projectestimationtool.Model.*;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,16 +24,9 @@ public class ProjectService {
 
     public void createProject(Project project, int userId) {
 
-        /* Denne metode bruges til at oprette et nyt projekt.
-           Vi modtager både project og userId.
+        project.setDate(LocalDate.now());
 
-           project kommer fra formularen.
-           userId kommer fra sessionen og fortæller,
-           hvilken bruger projektet skal tilhøre */
-
-        /* Vi sender project og userId videre til repository-laget.
-           Repository-laget står for selve SQL-koden,
-           som indsætter projektet i databasen med den rigtige user_id */
+        project.setStatus(Status.TODO);
 
         projectRepository.add(project, userId);
     }
@@ -147,6 +139,49 @@ public class ProjectService {
         }
         // Til sidst returnerer vi en sum på hvor mange har den specifikke status
         return count;
+    }
+
+    public double getTotalEstimatedHoursOfWholeProject(int projectId){
+        // Starter totalen på 0, så vi kan lægge timerne sammen.
+        double totalEstimatedHour = 0;
+
+        // Henter hele projektet med subprojects og tasks indsat.
+        Project project = findFullProject(projectId);
+
+        // Går igennem alle subprojects i projektet.
+        for (SubProject subProject : project.getSubProjects()){
+
+            // Går igennem alle tasks i hvert subproject.
+            for (Task task : subProject.getTasks()){
+
+                // Lægger taskens estimerede timer til den samlede total.
+                totalEstimatedHour += task.getEstimatedHours();
+            }
+        }
+        // Returnerer alle estimerede timer for hele projektet.
+        return totalEstimatedHour;
+    }
+
+    public double getTotalPriceOfWholeProject(int projectId){
+        // Starter totalprisen på 0, så vi kan lægge priserne sammen.
+        double totalPrice = 0;
+
+        // Henter hele projektet med subprojects og tasks indsat.
+        Project project = findFullProject(projectId);
+
+        // Går igennem alle subprojects i projektet.
+        for (SubProject subProject : project.getSubProjects()){
+
+            // Går igennem alle tasks i hvert subproject.
+            for (Task task : subProject.getTasks()){
+
+                // Lægger taskens totalpris til projektets samlede pris.
+                totalPrice += task.getTotalPrice();
+            }
+        }
+
+        // Returnerer den samlede pris for hele projektet.
+        return totalPrice;
     }
 
 }
