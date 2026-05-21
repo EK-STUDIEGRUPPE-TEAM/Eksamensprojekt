@@ -99,5 +99,9 @@ public class Project {
         this.status = status;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
 
 }

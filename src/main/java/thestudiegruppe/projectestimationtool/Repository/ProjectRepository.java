@@ -32,7 +32,6 @@ public class ProjectRepository {
                 project.getDescription(),
                 project.getDate(),
                 userId,
-                project.getUserId(),
                 project.getStatus().name()
         );
     }
