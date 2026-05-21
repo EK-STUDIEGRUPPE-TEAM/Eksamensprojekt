@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Project</title>
+</head>
+<body>
+<h1>Rediger projekt</h1>
+<main>
+
+    <!--
+    vi bruger form til at modtage de nye ændringer
+    fra brugeren
+
+    th:action sender tasken til vores update metode
+    i task controlleren
+
+    {id} bruges fordi vi skal vide hvilken task
+    der skal redigeres
+
+    method="post" betyder at vi sender
+    dataen til backend
+    -->
+    <form th:action="@{/projects/update/{id}(id=${project.id})}" th:object="${project}" method="post">
+
+
+        <table>
+            <tr>
+                <th>Navn</th>
+                <th>beskrivelse</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="text" th:field="*{name}">
+                </td>
+
+                <td>
+                    <input type="text" th:field="*{description}">
+                </td>
+
+                <td>
+                    <select th:field="*{status}">
+                        <option value="TODO">Todo</option>
+                        <option value="IN_PROGRESS">Aktiv</option>
+                        <option value="DONE">Færdig</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+
+        <button type="submit">Gem</button>
+    </form>
+</main>
+</body>
+</html>

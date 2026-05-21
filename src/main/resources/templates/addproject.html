@@ -8,6 +8,11 @@
 
 <body>
 
+<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
+<!-- Bliver replacet af vores nav fragment-->
+<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
+
 <h1>Opret projekt</h1>
 
 
@@ -26,9 +31,8 @@ som Project sender til project.html.
 method="post"
 betyder at formularen sender data til backend.
 -->
--->
 <form
-        th:action="@{/project/save}"
+        th:action="@{/projects/save}"
         th:object="${project}"
         method="post">
 
@@ -42,7 +46,7 @@ betyder at formularen sender data til backend.
 
     <div>
         <label>Beskrivelse</label>
-        <textarea th:field="*{description}" placeholder="Project beskrivelse"></textarea>
+        <textarea th:field="*{description}" placeholder="Projekt beskrivelse"></textarea>
 
     </div>
 
@@ -50,7 +54,7 @@ betyder at formularen sender data til backend.
 
 
     <button class="button" type="submit">Opret projekt</button>
-    <a th:href="@{/project}"> Annuller</a>
+    <a th:href="@{/projects}"> Annuller</a>
 
 
 </form>
