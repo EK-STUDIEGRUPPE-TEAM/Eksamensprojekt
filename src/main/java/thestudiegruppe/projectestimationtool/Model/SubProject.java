@@ -33,7 +33,6 @@ public class SubProject {
 
     public void setName(String name) {
         this.name = name;
-
     }
 
     public List<Task> getTasks() {

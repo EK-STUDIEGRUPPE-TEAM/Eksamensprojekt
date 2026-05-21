@@ -67,6 +67,7 @@ public class TaskController {
         }
 
         model.addAttribute("task", task);
+        model.addAttribute("projectId", project.getId());
         return "task";
 
 
@@ -141,6 +142,12 @@ public class TaskController {
             return "redirect:/login";
         }
 
+        // Vi har subProjectId, men vi skal bruge projectId
+        SubProject subProject = subProjectService.findSubProjectById(subProjectId);
+
+        // Derfor henter vi projectId fra subProject
+        int projectId = subProject.getProjectId();
+
         /* @PathVariable henter både subProjectId og id fra URL'en.
            subProjectId bruges til at vide, hvilken side vi skal tilbage til.
            id bruges til at vide, hvilken task der skal slettes */
@@ -149,8 +156,9 @@ public class TaskController {
            som sletter tasken i databasen */
         taskService.deleteTask(id);
 
-        // Efter sletning sendes brugeren tilbage til samme subprojects tasks
-        return "redirect:/task/" + subProjectId;
+        // Efter sletning sendes brugeren tilbage til samme subprojects tasks,
+        // Nu kan vi sende brugeren tilbage til det rigtige projekt
+        return "redirect:/project/" + projectId;
     }
 
     @PostMapping("/update/{id}")
@@ -173,9 +181,40 @@ public class TaskController {
            som håndterer opdateringen i databasen */
         taskService.updateTask(task);
 
-        /* Efter opdatering sendes brugeren tilbage
-           til task-oversigten for samme subproject */
-        return "redirect:/task/" + task.getSubProjectId();
+        /* Vi redirecter tilbage til taskens eget id.
+        subProjectId bruges ikke her, fordi /task/{id}
+        skal modtage et task-id og ikke et subproject-id.*/
+        return "redirect:/task/" + id;
+    }
+
+    @GetMapping("/update/{id}")
+    public String showUpdateTask(@PathVariable int id, Model model, HttpSession session) {
+
+        /*
+    tjekker om brugeren er logget ind
+    hvis ikke, sendes brugeren til login
+    */
+        if (!SessionHelper.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+
+         /*
+    finder tasken ud fra id'et
+    så de gamle værdier kan vises i formularen
+    */
+        Task task = taskService.findTaskById(id);
+
+         /*
+    sender task objektet til html-siden
+    så Thymeleaf kan bruge det i th:object
+    */
+        model.addAttribute("task", task);
+
+
+    /*
+    viser updatetask.html
+    */
+        return "updatetask";
     }
 
     /* Vi bruger session til at beskytte task-funktionerne.

@@ -21,7 +21,7 @@ public class TaskService {
         this.subTaskService = subTaskService;
     }
 
-    //Opretter en ny tasj i databasen.
+    //Opretter en ny task i databasen.
     public void createTask(Task task) {
         //Tjekker om task er null.
         //Hvis task er null, kaste en exception,
