@@ -69,7 +69,7 @@ public class SubProjectController {
 
         /* Når delprojektet er oprettet, sender vi brugeren tilbage
            til siden med delprojekter for det samme projekt */
-        return "redirect:/project/" + projectId;
+        return "redirect:/projects/" +projectId;
     }
 
     @GetMapping("/update/{projectId}/{id}")
@@ -105,7 +105,7 @@ public class SubProjectController {
 
         /* Efter opdatering sendes brugeren tilbage
            til delprojektoversigten for samme projekt */
-        return "redirect:/project/" + subProject.getProjectId();
+        return "redirect:/projects/" +subProject.getProjectId();
     }
 
 
@@ -130,7 +130,7 @@ public class SubProjectController {
         subProjectService.deleteSubProject(id);
 
         // Efter sletning sendes brugeren tilbage til samme projekts delprojekter
-        return "redirect:/project/" + projectId;
+        return "redirect:/projects/" +projectId;
     }
 
 

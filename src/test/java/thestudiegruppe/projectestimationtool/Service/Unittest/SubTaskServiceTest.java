@@ -33,6 +33,7 @@ class SubTaskServiceTest {
         // ARRANGE
         // Fake objekt som testdata
         SubTask subTask = new SubTask();
+        subTask.setEstimatedHours(10);
 
         // ACT
         // Her kalder vi på service metoden
@@ -139,6 +140,7 @@ class SubTaskServiceTest {
         // ARRANGE
         // Ett fake objekt som testdata
         SubTask subTask = new SubTask();
+        subTask.setEstimatedHours(10);
 
         // ACT
         // Her kalder vi på service metoden
@@ -191,22 +193,25 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void calculateEstimatedHours_ShouldThrowNegativeValueException_WhenHoursAreNegative() {
+    void createSubTask_ShouldThrowNegativeValueException_WhenHoursAreNegative() {
         // ARRANGE
         // Fake testdata med negative timer
-        List<SubTask> subTasks = List.of(
-                new SubTask(1, "Test", "Test desc", -10, DONE, 1)
-        );
-
-        // ACT
-        /* Her bruger vi when().thenReturn til at få vores repository
-        til at returnere vores variabel med testdataen
-        */
-        when(repository.findSubTaskByTaskId(1)).thenReturn(subTasks);
+        SubTask subTask = new SubTask(1, "Test", "Test desc", -10, DONE, 1);
 
         // ASSERT
-        // Tester at negative timer kaster en custom NegativeValueException
-        assertThrows(NegativeValueException.class, () -> service.calculateEstimatedHours(1));
+        // Tester at negative timer kaster en custom NegativeValueException ved oprettelse
+        assertThrows(NegativeValueException.class, () -> service.createSubTask(subTask));
+    }
+
+    @Test
+    void updateSubTask_ShouldThrowNegativeValueException_WhenHoursAreNegative() {
+        // ARRANGE
+        // Fake testdata med negative timer
+        SubTask subTask = new SubTask(1, "Test", "Test desc", -10, DONE, 1);
+
+        // ASSERT
+        // Tester at negative timer kaster en custom NegativeValueException ved opdatering
+        assertThrows(NegativeValueException.class, () -> service.updateSubTask(subTask));
     }
 
 

@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.*;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
@@ -156,17 +157,17 @@ class ProjectServiceTest {
         //Arrange: Lave testdata
         int projectId = 1;
 
-        Mockito.when(projectRepository.findById(projectId)).thenReturn(null);
+        when(projectRepository.findById(projectId)).thenThrow(new EmptyResultDataAccessException(1));
 
 
         //Act: Kalde metoden som testes fra serviceklassen
 
-        Assertions.assertThrows(NotFoundException.class, () -> projectService.findProjectById(projectId));
+        assertThrows(NotFoundException.class, () -> projectService.findProjectById(projectId));
 
 
         //Assert: Kalder funktionen i service klassen, repository korrekt
 
-        Mockito.verify(projectRepository).findById(projectId);
+        verify(projectRepository).findById(projectId);
     }
 
 

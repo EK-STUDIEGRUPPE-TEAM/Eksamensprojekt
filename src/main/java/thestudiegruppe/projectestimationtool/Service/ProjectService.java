@@ -1,5 +1,6 @@
 package thestudiegruppe.projectestimationtool.Service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.*;
@@ -85,40 +86,46 @@ public class ProjectService {
         /* Denne metode bruges til at finde ét bestemt projekt
            ud fra projektets id */
 
-        Project project = projectRepository.findById(id);
-
         /* Hvis repository ikke finder et projekt,
-           kaster vi vores egen NotFoundException.
+           kaster vi vores egen NotFoundException. */
 
-           Det gør vi, så systemet kan håndtere fejlen pænt,
-           fx med en 404-side */
-        if (project == null) {
-            throw new NotFoundException("Projekt", id);
+           // Vi bruger try/catch, fordi vi først skal prøve at finde projektet i databasen.
+           // Hvis databasen ikke finder et projekt, fanger catch fejlen.
+        try {
+            /* Hvis projektet findes, returnerer vi det */
+            return projectRepository.findById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new NotFoundException("Projektet", id);
         }
-
-        /* Hvis projektet findes, returnerer vi det */
-        return project;
     }
 
     /* Vi bruger den her metode til at hente de relevante subprojects og tasks som vi skal bruge
       for at returnere et projekt med subprojekter og tasks til projekt.html
     */
     public Project findFullProject(int id){
+         /* Hvis repository ikke finder et projekt,
+           kaster vi vores egen NotFoundException. */
 
-        // Vi henter ét bestemt projekt ud fra projektets id
-        Project project = projectRepository.findById(id);
+        // Vi bruger try/catch, fordi vi først skal prøve at finde projektet i databasen.
+        // Hvis databasen ikke finder et projekt, fanger catch fejlen.
+        Project project;
 
-        /*
-        Vi henter alle subprojects der tilhører projektet ud fra projektets id
-        Service metoden returnerer fulde subproject objekter med tasks og subtasks indsat
-         */
-        List<SubProject> subProjects = subProjectService.getFullSubProjects(id);
+        try {
+            project = projectRepository.findById(id);
+        } catch (EmptyResultDataAccessException exception) {
+            throw new NotFoundException("Projektet", id);
+        }
+             /*
+            Vi henter alle subprojects der tilhører projektet ud fra projektets id
+            Service metoden returnerer fulde subproject objekter med tasks og subtasks indsat
+            */
+            List<SubProject> subProjects = subProjectService.getFullSubProjects(id);
 
-        // Vi bruger setter til at indsætte subproject listen på project
-        project.setSubProjects(subProjects);
+            // Vi bruger setter til at indsætte subproject listen på project
+            project.setSubProjects(subProjects);
 
-        // Til sidst returnerer vi project med subprojects og tasks indsat
-        return project;
+            // Til sidst returnerer vi project med subprojects og tasks indsat
+            return project;
     }
 
     // Tæller hvor mange projekter har en specifik status til dashboard

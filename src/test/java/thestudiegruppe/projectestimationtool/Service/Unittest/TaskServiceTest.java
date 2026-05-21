@@ -43,6 +43,7 @@ class TaskServiceTest {
     void createTask_shouldCallRepositoryCreateTask_whenTaskIsNotNull() {
         //Arrange: Der oprettes en ny Task, som ikke er null.
         Task task = new Task();
+        task.setHourlyRate(100);
 
         //Act: Metoden bliver kaldt.
         taskService.createTask(task);
@@ -111,6 +112,7 @@ class TaskServiceTest {
     void updateTask_shouldCallRepositoryUpdate() {
         // Arrange: Vi laver en Task, som kan opdateres.
         Task task = new Task();
+        task.setHourlyRate(100);
 
         // Act: Vi kalder updateSubTask() i service-klassen.
         taskService.updateTask(task);

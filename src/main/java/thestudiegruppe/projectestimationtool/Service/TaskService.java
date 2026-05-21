@@ -1,9 +1,9 @@
 package thestudiegruppe.projectestimationtool.Service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
-import thestudiegruppe.projectestimationtool.Model.Project;
-import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
@@ -29,6 +29,11 @@ public class TaskService {
         //fordi metoden ikke kan oprette en tom task.
         if (task == null) {
             throw new IllegalArgumentException("Task må ikke være null");
+        }
+        // Hvis hourlyRate er 0 eller mindre kaster vi en custom NegativeValueException
+        // fordi en timepris på 0 eller derunder ikke giver mening.
+        if (task.getHourlyRate() <= 0) {
+            throw new NegativeValueException("Timepris");
         }
         //Sender task videre til repository, som gemmer den i databasen.
         taskRepository.addTask(task);
@@ -81,6 +86,11 @@ public class TaskService {
     }
 
     public void updateTask(Task task) {
+        // Hvis hourlyRate er 0 eller mindre kaster vi en custom NegativeValueException
+        // fordi en timepris på 0 eller derunder ikke giver mening.
+        if (task.getHourlyRate() <= 0) {
+            throw new NegativeValueException("Timepris");
+        }
         taskRepository.updateTask(task);
     }
 
@@ -101,38 +111,41 @@ public class TaskService {
 
         /* Denne metode bruges til at finde en bestemt task
            ud fra taskens id */
+        try {
+            Task task = taskRepository.findById(id);
 
-        Task task = taskRepository.findById(id);
-
+            /* Hvis projektet findes, returnerer vi det */
+            return task;
+        } catch (EmptyResultDataAccessException e) {
         /* Hvis repository ikke finder et projekt,
            kaster vi vores egen NotFoundException.
 
            Det gør vi, så systemet kan håndtere fejlen pænt,
            fx med en 404-side */
-        if (task == null) {
-            throw new NotFoundException("Task", id);
+            throw new NotFoundException("Opgaven", id);
         }
-
-        /* Hvis projektet findes, returnerer vi det */
-        return task;
     }
 
     public Task findFullTask(int id){
+        Task task;
+        try {
+            // Vi henter ét bestemt projekt ud fra projektets id
+            task = taskRepository.findById(id);
 
-        // Vi henter ét bestemt projekt ud fra projektets id
-        Task task = taskRepository.findById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Opgaven", id);
+        }
+            /*
+            Vi henter alle subprojects der tilhører projektet ud fra projektets id
+            Service metoden returnerer fulde subproject objekter med tasks og subtasks indsat
+            */
+            List<SubTask> subTasks = subTaskService.getSubTasksByTaskId(id);
 
-        /*
-        Vi henter alle subprojects der tilhører projektet ud fra projektets id
-        Service metoden returnerer fulde subproject objekter med tasks og subtasks indsat
-         */
-        List<SubTask> subTasks = subTaskService.getSubTasksByTaskId(id);
+            // Vi bruger setter til at indsætte subproject listen på project
+            task.setSubTasks(subTasks);
 
-        // Vi bruger setter til at indsætte subproject listen på project
-        task.setSubTasks(subTasks);
-
-        // Til sidst returnerer vi project med subprojects og tasks indsat
-        return task;
+            // Til sidst returnerer vi project med subprojects og tasks indsat
+            return task;
     }
 
 

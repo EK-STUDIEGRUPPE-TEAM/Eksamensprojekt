@@ -237,7 +237,7 @@ class UserServiceTest {
         når findUserById(userId) bliver kaldt.
         Det simulerer situationen, hvor brugeren ikke findes.
          */
-        when(userRepository.findUserById(userId)).thenReturn(null);
+        when(userRepository.findUserById(userId)).thenThrow(new EmptyResultDataAccessException(1));
 
         /*Act: Vi forventer, at metoden kaster en custom UserNotFoundException,
         når repository ikke finder nogen user.
