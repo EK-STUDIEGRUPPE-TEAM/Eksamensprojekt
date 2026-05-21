@@ -7,6 +7,7 @@ import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,16 +25,9 @@ public class ProjectService {
 
     public void createProject(Project project, int userId) {
 
-        /* Denne metode bruges til at oprette et nyt projekt.
-           Vi modtager både project og userId.
+        project.setDate(LocalDate.now());
 
-           project kommer fra formularen.
-           userId kommer fra sessionen og fortæller,
-           hvilken bruger projektet skal tilhøre */
-
-        /* Vi sender project og userId videre til repository-laget.
-           Repository-laget står for selve SQL-koden,
-           som indsætter projektet i databasen med den rigtige user_id */
+        project.setStatus(Status.TODO);
 
         projectRepository.add(project, userId);
     }
