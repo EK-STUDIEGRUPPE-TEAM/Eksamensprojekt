@@ -1,7 +1,9 @@
 package thestudiegruppe.projectestimationtool.Service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
+import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
 
@@ -17,6 +19,11 @@ public class SubTaskService {
     }
 
     public void createSubTask(SubTask subTask) {
+        // Hvis estimatedHours er 0 eller mindre kaster vi en custom NegativeValueException
+        // fordi negative timer eller 0 timer ikke giver mening i tidsberegning.
+        if (subTask.getEstimatedHours() <= 0) {
+            throw new NegativeValueException("Timer");
+        }
         subTaskRepository.addSubTask(subTask);
     }
 
@@ -29,7 +36,16 @@ public class SubTaskService {
     }
 
     public SubTask getSubTaskById(int id) {
-        return subTaskRepository.findSubTaskById(id);
+         /* Hvis repository ikke finder et projekt,
+           kaster vi vores egen NotFoundException. */
+
+        // Vi bruger try/catch, fordi vi først skal prøve at finde projektet i databasen.
+        // Hvis databasen ikke finder et projekt, fanger catch fejlen.
+        try{
+            return subTaskRepository.findSubTaskById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new NotFoundException("Delopgaven", id);
+        }
     }
 
     public void deleteSubTask(int id) {
@@ -37,6 +53,11 @@ public class SubTaskService {
     }
 
     public void updateSubTask(SubTask subTask) {
+        // Hvis estimatedHours er 0 eller mindre kaster vi en custom NegativeValueException
+        // fordi negative timer eller 0 timer ikke giver mening i tidsberegning.
+        if (subTask.getEstimatedHours() <= 0) {
+            throw new NegativeValueException("Timer");
+        }
         subTaskRepository.updateSubTask(subTask);
     }
 
@@ -56,11 +77,6 @@ public class SubTaskService {
         //Går igennem hver subTask i listen mens den beregner timerne.
         for (SubTask subTask : subTasks) {
 
-            // Hvis estimatedHours er mindre end 0 kaster vi en custom NegativeValueException
-            // fordi negative timer ikke giver mening i tidsberegning.
-            if (subTask.getEstimatedHours() < 0) {
-                throw new NegativeValueException("Timer");
-            }
             // Lægger timerne sammen i vores variabel som sum.
             totalHours += subTask.getEstimatedHours();
         }
