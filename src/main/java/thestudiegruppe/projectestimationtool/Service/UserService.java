@@ -86,7 +86,7 @@ public class UserService {
         } catch (EmptyResultDataAccessException e){
             // Hvis ingen bruger findes, betyder det at login er forkert.
             // Vi laver Spring-fejlen om til vores egen custom exception.
-            throw new NotFoundException("Bruger", id);
+            throw new NotFoundException("Brugeren", id);
         }
     }
 }

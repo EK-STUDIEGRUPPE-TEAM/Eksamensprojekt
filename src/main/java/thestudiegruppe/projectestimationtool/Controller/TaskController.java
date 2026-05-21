@@ -128,7 +128,7 @@ public class TaskController {
 
         /* Efter tasken er oprettet, sender vi brugeren tilbage
            til project viewpointet */
-        return "redirect:/project/" + projectId;
+        return "redirect:/projects/" + projectId;
     }
 
     @PostMapping("/deleteTask/{subProjectId}/{id}")
@@ -158,7 +158,7 @@ public class TaskController {
 
         // Efter sletning sendes brugeren tilbage til samme subprojects tasks,
         // Nu kan vi sende brugeren tilbage til det rigtige projekt
-        return "redirect:/project/" + projectId;
+        return "redirect:/projects/" + projectId;
     }
 
     @PostMapping("/update/{id}")

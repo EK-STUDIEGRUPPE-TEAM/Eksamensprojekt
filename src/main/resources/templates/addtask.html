@@ -44,7 +44,7 @@
             <!-- step tillader decimal tal -->
             <td><input type="text" th:field="*{name}"></td>
             <td><input type="text" th:field="*{description}"></td>
-            <td><input type="number" th:field="*{hourlyRate}" step=".01"></td>
+            <td><input type="number" th:field="*{hourlyRate}" min="1" step=".01"></td>
             <td><select th:field="*{status}">
                 <option value="TODO">Todo</option>
                 <option value="IN_PROGRESS">Aktiv</option>
@@ -56,6 +56,7 @@
         <!-- Vi mangler status her -->
         <button type="submit">Gem</button>
     </form>
+    <a th:href="@{/projects/{id}(id=${projectId})}">Tilbage</a>
 </main>
 </body>
 </html>

@@ -6,7 +6,9 @@
 </head>
 <body>
 <h1>Noget gik galt</h1>
-<p th:text="${message}">En fejl opstod.</p>
+//Viser custom exception besked eller hardcodet generic exception besked fra global exception handler
+<p th:text="${message}"></p>
+//Går tilbage til dashboard (eller til login skærm hvis brugeren ikke er logget ind)
 <a href="/dashboard">Gå tilbage</a>
 </body>
 </html>
