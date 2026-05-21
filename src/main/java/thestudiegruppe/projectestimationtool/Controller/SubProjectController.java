@@ -5,11 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
-import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Service.SubProjectService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/subproject")
