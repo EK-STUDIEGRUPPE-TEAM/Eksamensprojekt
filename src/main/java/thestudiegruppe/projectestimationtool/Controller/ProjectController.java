@@ -58,6 +58,9 @@ public class ProjectController {
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
         Project project = projectService.findFullProject(id);
+        // Her kalder vi summary-metoderne fra ProjectService
+        double totalEstimatedHours = projectService.getTotalEstimatedHoursOfWholeProject(id);
+        double totalPrice = projectService.getTotalPriceOfWholeProject(id);
 
 
         //Her tjekker vi om projektet tilhører brugeren
@@ -67,6 +70,9 @@ public class ProjectController {
 
 
         model.addAttribute("project", project);
+        // Her sender vi projektet og summary-tallene videre til HTML-siden
+        model.addAttribute("totalEstimatedHours", totalEstimatedHours);
+        model.addAttribute("totalPrice", totalPrice);
         return "project";
 
     }

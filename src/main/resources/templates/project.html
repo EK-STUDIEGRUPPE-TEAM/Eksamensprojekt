@@ -26,7 +26,15 @@
     <tr>
         <th>Dato oprettet</th>
         <td th:text="${project.date}"></td>
+    </tr>
+    <tr>
+        <th>Estimerede timer i alt</th>
+        <td th:text="${totalEstimatedHours}"></td>
+    </tr>
 
+    <tr>
+        <th>Total pris</th>
+        <td th:text="${totalPrice} + ' KR.'"></td>
     </tr>
 
 </table>

@@ -16,6 +16,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final SubTaskService subTaskService;
 
+
     public TaskService(TaskRepository taskRepository, SubTaskService subTaskService) {
         this.taskRepository = taskRepository;
         this.subTaskService = subTaskService;
@@ -133,6 +134,7 @@ public class TaskService {
         // Til sidst returnerer vi project med subprojects og tasks indsat
         return task;
     }
+
 
 
 }
