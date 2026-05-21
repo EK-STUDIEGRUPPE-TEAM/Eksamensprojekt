@@ -37,6 +37,11 @@ public class SubTaskRepository {
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
+    public SubTask findSubTaskById(int id) {
+        String sql = "SELECT * FROM SubTask WHERE subTask_id = ?";
+        return jdbcTemplate.queryForObject(sql, new SubTaskRowMapper(), id);
+    }
+
     public void deleteSubTask(int id) {
         String sql = "DELETE FROM SubTask WHERE subTask_id = ?";
         jdbcTemplate.update(sql, id);

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>addsubtask</title>
+</head>
+<body>
+
+    <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
+    <form   th:action="@{/subtask/save}"
+            th:object="${subtask}" method="post">
+
+        <table>
+            <td><input type="hidden" th:field="*{taskId}"></td>
+            <tr>
+                <th>Delopgavetitel</th>
+                <th>Beskrivelse</th>
+                <th>Antal estimerede timer</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td><input type="text" th:field="*{name}"></td>
+                <td><input type="text" th:field="*{description}"></td>
+                <td><input type="number" th:field="*{estimatedHours}"></td>
+                <td><select th:field="*{status}">
+                        <option value="TODO">Todo</option>
+                        <option value="IN_PROGRESS">Aktiv</option>
+                        <option value="DONE">Færdig</option>
+                </select>
+            </td>
+            </tr>
+        </table>
+        <button type="submit">Gem</button>
+    </form>
+    <!-- Tilbage knap sender brugeren til task oversigten-->
+    <a th:href="@{/task/{taskId}(taskId=${subtask.taskId})}">Tilbage</a>
+</body>
+</html>

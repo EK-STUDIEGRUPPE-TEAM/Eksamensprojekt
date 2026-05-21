@@ -41,10 +41,35 @@ public class SubTaskController {
         return "subtask";
     }
 
+    @GetMapping("/addsubtask/{taskId}")
+    public String addSubTask(@PathVariable int taskId, Model model, HttpSession session){
 
-    @PostMapping("/addSubTask")
+        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
+          Hvis der ikke findes et userId i sessionen,
+          sendes brugeren tilbage til login-siden */
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        // Opretter tomt subtask objekt
+        SubTask subTask = new SubTask();
+
+        // setter task id fra vores PathVariable til objektet
+        subTask.setTaskId(taskId);
+
+        // Adder det tomme subtask objekt til formlen
+        model.addAttribute("subtask", subTask);
+
+        // adder task id til formlen
+        model.addAttribute("taskId", taskId);
+
+        // returnerer addsubtask templaten
+        return "addsubtask";
+    }
+
+    @PostMapping("/save")
     // Modtager data fra formularen og opretter en ny subtask
-    public String createSubTask(@ModelAttribute SubTask subTask, HttpSession session) {
+    public String saveSubTask(@ModelAttribute SubTask subTask, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -61,35 +86,32 @@ public class SubTaskController {
         subTaskService.createSubTask(subTask);
 
         /* Når subtasken er oprettet, sender vi brugeren tilbage
-           til siden med subtasks for den samme task */
-        return "redirect:/subtask/" + subTask.getTaskId();
+           til task siden */
+        return "redirect:/task/" + subTask.getTaskId();
     }
 
-    @PostMapping("/update/{id}")
-    // Opdaterer en subtask ud fra id'et i URL'en
-    public String update(@PathVariable int id, @ModelAttribute SubTask subTask, HttpSession session) {
-
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
+    @GetMapping("/update/{taskId}/{id}")
+    public String updateSubTask(@PathVariable int taskId, @PathVariable int id, Model model, HttpSession session) {
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
 
-        /* @PathVariable henter id'et fra URL'en.
-           Fx /subtask/update/5 betyder at id = 5 */
+        SubTask subTask = subTaskService.getSubTaskById(id);
+        model.addAttribute("subtask", subTask);
 
-        /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.
-           Derfor sætter vi id'et manuelt på subTask-objektet */
-        subTask.setId(id);
+        model.addAttribute("taskId", taskId);
+        return "updatesubtask";
+    }
 
-        /* Vi sender subTask videre til service-laget,
-           som håndterer opdateringen i databasen */
+    @PostMapping("/saveUpdate")
+    public String saveUpdate(@ModelAttribute SubTask subTask, HttpSession session) {
+        if (!SessionHelper.isLoggedIn(session)){
+            return "redirect:/login";
+        }
+
         subTaskService.updateSubTask(subTask);
 
-        /* Efter opdatering sendes brugeren tilbage
-           til subtask-oversigten for samme task */
-        return "redirect:/subtask/" + subTask.getTaskId();
+        return "redirect:/task/" + subTask.getTaskId();
     }
 
     @PostMapping("/delete/{taskId}/{id}")
@@ -107,12 +129,13 @@ public class SubTaskController {
            taskId bruges til at vide, hvilken side vi skal tilbage til.
            id bruges til at vide, hvilken subtask der skal slettes */
 
+
         /* Vi sender id'et videre til service-laget,
            som sletter subtasken i databasen */
         subTaskService.deleteSubTask(id);
 
         // Efter sletning sendes brugeren tilbage til samme tasks subtasks
-        return "redirect:/subtask/" + taskId;
+        return "redirect:/task/" + taskId;
     }
 
     /* Vi bruger session til at beskytte subtask-funktionerne.
