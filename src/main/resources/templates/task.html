@@ -10,9 +10,26 @@
 
 <nav th:replace="~{fragments/fragments :: navfragment}"></nav>
 
+<!-- Tilbage-knap kun på denne side -->
+<a th:href="@{/project/{id}(id=${projectId})}">
+    Tilbage til projekt
+</a>
+
 <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
 <h1 th:text="${task.name}"></h1>
 
+<!-- Knap der sender brugeren til rediger-siden for den valgte task -->
+<a th:href="@{/task/update/{id}(id=${task.id})}">
+    <button type="button">Rediger task</button>
+</a>
+
+<!--
+Delete bruger form og method="post",
+fordi vi ændrer/sletter data i databasen.
+-->
+<form th:action="@{/task/deleteTask/{subProjectId}/{id}(subProjectId=${task.subProjectId}, id=${task.id})}" method="post">
+    <button type="submit">Slet task</button>
+</form>
 <!--<a th:href="@{/}">Opret delprojekt</a>-->
 
 <!--<a th:href="@{/users}">Opret delopgave</a>-->
