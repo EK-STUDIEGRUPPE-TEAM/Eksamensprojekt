@@ -48,10 +48,10 @@ public class SubProjectController {
         return "addsubproject";
     }
 
-    
-    @PostMapping("/savesubproject")
+
+    @PostMapping("/add/{projectId}")
     // Modtager data fra formularen og opretter et nyt delprojekt
-    public String createSubProject(@ModelAttribute SubProject subProject, HttpSession session) {
+    public String createSubProject(@PathVariable int projectId, @ModelAttribute SubProject subProject, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -65,17 +65,18 @@ public class SubProjectController {
 
         /* Vi sender subProject videre til service-laget,
            som håndterer logikken for at oprette delprojektet i databasen */
+        subProject.setProjectId(projectId);
         subProjectService.createSubProject(subProject);
 
 
         /* Når delprojektet er oprettet, sender vi brugeren tilbage
            til siden med delprojekter for det samme projekt */
-        return "redirect:/project/" + subProject.getProjectId();
+        return "redirect:/project/" + projectId;
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update/{projectId}/{id}")
     // Opdaterer et delprojekt ud fra id'et i URL'en
-    public String update(@PathVariable int id, @ModelAttribute SubProject subProject, HttpSession session) {
+    public String update(@PathVariable int projectId, @PathVariable int id, @ModelAttribute SubProject subProject, HttpSession session) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -90,7 +91,7 @@ public class SubProjectController {
         /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.
            Derfor sætter vi id'et manuelt på subProject-objektet */
         subProject.setId(id);
-
+        subProject.setProjectId(projectId);
         /* Vi sender subProject videre til service-laget,
            som håndterer opdateringen i databasen,
            kun hvis delProjektet ligger under brugerens projekt. */
@@ -98,7 +99,7 @@ public class SubProjectController {
 
         /* Efter opdatering sendes brugeren tilbage
            til delprojektoversigten for samme projekt */
-        return "redirect:/project/" + subProject.getProjectId();
+        return "redirect:/project/" + projectId;
     }
 
 

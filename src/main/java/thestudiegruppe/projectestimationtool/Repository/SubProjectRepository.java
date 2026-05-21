@@ -21,7 +21,7 @@ public class SubProjectRepository {
 
     public void addSubProject(SubProject subProject) {
         /* Opretter kun delprojektet, hvis project_id tilhører den loggede bruger */
-        String sql = "INSERT INTO SubProject(name, project_id) VALUES(?,?,?)";
+        String sql = "INSERT INTO SubProject(name, project_id) VALUES(?,?)";
 
         jdbcTemplate.update(
                 sql,
