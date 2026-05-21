@@ -1,5 +1,6 @@
 package thestudiegruppe.projectestimationtool.Service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.Project;
@@ -93,19 +94,17 @@ public class ProjectService {
         /* Denne metode bruges til at finde ét bestemt projekt
            ud fra projektets id */
 
-        Project project = projectRepository.findById(id);
-
         /* Hvis repository ikke finder et projekt,
-           kaster vi vores egen NotFoundException.
+           kaster vi vores egen NotFoundException. */
 
-           Det gør vi, så systemet kan håndtere fejlen pænt,
-           fx med en 404-side */
-        if (project == null) {
+           // Vi bruger try/catch, fordi vi først skal prøve at finde projektet i databasen.
+           // Hvis databasen ikke finder et projekt, fanger catch fejlen.
+        try {
+            /* Hvis projektet findes, returnerer vi det */
+            return projectRepository.findById(id);
+        } catch (EmptyResultDataAccessException e){
             throw new NotFoundException("Projekt", id);
         }
-
-        /* Hvis projektet findes, returnerer vi det */
-        return project;
     }
 
     /* Vi bruger den her metode til at hente de relevante subprojects og tasks som vi skal bruge
