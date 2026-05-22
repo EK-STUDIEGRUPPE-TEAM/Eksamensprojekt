@@ -36,21 +36,17 @@ betyder at formularen sender data til backend.
         th:object="${project}"
         method="post">
 
-
-
     <table>
-
-
         <tr>
             <th>Navn</th>
             <th>Beskrivelse</th>
+            <th>Budget</th>
             <th>Status</th>
-
         </tr>
-
         <tr>
-            <td> <input type="text" th:field="*{name}" placeholder="Projektnavn" required/></td>
-            <td><textarea th:field="*{description}" placeholder="Projekt beskrivelse"></textarea> </td>
+            <td><input type="text" th:field="*{name}"></td>
+            <td><input type="text" th:field="*{description}"></td>
+            <td><input type="text" th:field="*{budget}"></td>
             <td><select th:field="*{status}">
                 <option value="TODO">Todo</option>
                 <option value="IN_PROGRESS">Aktiv</option>
@@ -58,14 +54,9 @@ betyder at formularen sender data til backend.
             </select>
             </td>
         </tr>
-
     </table>
-
-
     <button class="button" type="submit">Opret projekt</button>
     <a th:href="@{/projects}"> Annuller</a>
-
-
 </form>
 
 
