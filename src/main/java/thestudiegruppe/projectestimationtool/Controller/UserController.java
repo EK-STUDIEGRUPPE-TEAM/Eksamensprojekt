@@ -8,8 +8,6 @@ import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.UserService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {

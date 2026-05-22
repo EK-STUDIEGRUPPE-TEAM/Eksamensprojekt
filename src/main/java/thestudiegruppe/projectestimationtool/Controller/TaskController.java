@@ -10,10 +10,7 @@ import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
 import thestudiegruppe.projectestimationtool.Service.SubProjectService;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
-import thestudiegruppe.projectestimationtool.Service.UserService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/task")

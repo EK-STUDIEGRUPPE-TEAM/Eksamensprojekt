@@ -26,7 +26,11 @@ public class UserRepository {
     public void signUp(User user) {
         String sql = "INSERT INTO Users(name, email, password) VALUES(?,?,?)";
 
-        jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword());
+        jdbcTemplate.update(
+                sql,
+                user.getName(),
+                user.getEmail(),
+                user.getPassword());
     }
 
     public User findUserForLogIn(String email, String password){
@@ -51,6 +55,10 @@ public class UserRepository {
     public void update(User user){
         String sql = "UPDATE Users SET name = ?, password = ? WHERE user_id = ?";
 
-        jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getId());
+        jdbcTemplate.update(
+                sql,
+                user.getName(),
+                user.getPassword(),
+                user.getId());
     }
 }

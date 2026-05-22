@@ -1,4 +1,4 @@
-package thestudiegruppe.projectestimationtool.Service;
+package thestudiegruppe.projectestimationtool.Service.Unittest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,11 +10,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import thestudiegruppe.projectestimationtool.Exception.EmailAlreadyExistsException;
 import thestudiegruppe.projectestimationtool.Exception.InvalidLoginException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
-import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.UserRepository;
+import thestudiegruppe.projectestimationtool.Service.UserService;
 
-import java.util.EmptyStackException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

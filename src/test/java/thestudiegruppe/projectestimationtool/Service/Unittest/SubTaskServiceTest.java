@@ -1,15 +1,14 @@
-package thestudiegruppe.projectestimationtool.Service;
+package thestudiegruppe.projectestimationtool.Service.Unittest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
-import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
 import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
+import thestudiegruppe.projectestimationtool.Service.SubTaskService;
 
 import java.util.List;
 
