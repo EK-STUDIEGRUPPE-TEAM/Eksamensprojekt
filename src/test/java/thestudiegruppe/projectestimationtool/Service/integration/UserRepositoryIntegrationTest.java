@@ -13,11 +13,20 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
+
 @SpringBootTest
+
+// @ActiveProfiles("test") gør, at testen bruger application-test.properties.
+// Derfor bruger testen H2-databasen i stedet for den normale database.
 @ActiveProfiles("test")
+
+// @Sql kører h2init.sql før hver testmetode.
+// Det gør, at databasen starter med de samme testdata hver gang.
 @Sql(scripts = "classpath:h2init.sql", executionPhase = BEFORE_TEST_METHOD)
 public class UserRepositoryIntegrationTest {
 
+    // @Autowired får Spring til at indsætte UserRepository automatisk.
+    // Så vi kan bruge den rigtige repository i testen uden at skrive new.
     @Autowired
     private UserRepository userRepository;
 
@@ -31,7 +40,10 @@ public class UserRepositoryIntegrationTest {
         List<User> users = userRepository.getAllUsers();
 
         //Assert: Tjekker at der kommer 2 users tilbage fra testdatabasen.
-        assertThat(users).hasSize(2);
+        assertThat(users)
+                .extracting(User::getName)
+                .contains("Test", "Abbas");
+
     }
 
     @Test
@@ -107,8 +119,11 @@ public class UserRepositoryIntegrationTest {
         int userId = 1;
 
         // Arrange: Vi laver et User-objekt med samme id, men med de nye værdier, som databasen skal opdateres med.
-        User user = new User();
-        user.setId(userId);
+
+        //User user = new User();
+
+        User user = userRepository.findUserById(userId);
+        //user.setId(userId);
         user.setName("test12");
         user.setPassword("12");
 
