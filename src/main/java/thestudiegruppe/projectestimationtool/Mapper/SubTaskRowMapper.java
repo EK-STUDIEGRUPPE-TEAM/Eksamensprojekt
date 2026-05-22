@@ -11,7 +11,7 @@ public class SubTaskRowMapper implements RowMapper<SubTask> {
 
     public SubTask mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        SubTask subTask = new SubTask(
+        return new SubTask(
                 rs.getInt("subTask_id"),
                 rs.getString("name"),
                 rs.getString("description"),
@@ -19,8 +19,6 @@ public class SubTaskRowMapper implements RowMapper<SubTask> {
                 Status.valueOf(rs.getString("status")),
                 rs.getInt("task_id")
         );
-
-        return subTask;
     }
 
 }

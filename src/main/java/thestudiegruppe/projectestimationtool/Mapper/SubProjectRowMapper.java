@@ -10,13 +10,11 @@ public class SubProjectRowMapper implements RowMapper<SubProject> {
 
     public SubProject mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        SubProject subProject = new SubProject(
+        return new SubProject(
                 rs.getInt("subProject_id"),
                 rs.getString("name"),
                 rs.getInt("project_id")
         );
-
-        return subProject;
     }
 }
 
