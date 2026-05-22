@@ -42,6 +42,16 @@ CREATE TABLE IF NOT EXISTS Task (
     FOREIGN KEY (subProject_id) REFERENCES SubProject(subProject_id) ON DELETE CASCADE
     );
 
+CREATE TABLE IF NOT EXISTS SubTask (
+                                       subTask_id INT AUTO_INCREMENT PRIMARY KEY,
+                                       name VARCHAR(100),
+    description VARCHAR(200),
+    estimated_hours INT,
+    status VARCHAR(50),
+    task_id INT,
+    FOREIGN KEY (task_id) REFERENCES Task(task_id) ON DELETE CASCADE
+    );
+
 INSERT INTO Users (user_id, name, email, password)
 VALUES (1, 'Test', 'test@mail.com', '1234');
 
@@ -65,3 +75,9 @@ VALUES (1, 'Test Task 1', 'Task description 1', 'TODO', 250.00, 1);
 
 INSERT INTO Task (task_id, name, description, status, hourlyRate, subProject_id)
 VALUES (2, 'Test Task 2', 'Task description 2', 'IN_PROGRESS', 300.00, 1);
+
+INSERT INTO SubTask (subTask_id, name, description, estimated_hours, status, task_id)
+VALUES (1, 'Test SubTask 1', 'SubTask description 1', 5, 'TODO', 1);
+
+INSERT INTO SubTask (subTask_id, name, description, estimated_hours, status, task_id)
+VALUES (2, 'Test SubTask 2', 'SubTask description 2', 3, 'IN_PROGRESS', 1);

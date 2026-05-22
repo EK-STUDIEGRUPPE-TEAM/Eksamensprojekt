@@ -1,4 +1,4 @@
-package thestudiegruppe.projectestimationtool.Service.integration;
+package thestudiegruppe.projectestimationtool.Service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
-import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
 
 import java.time.LocalDate;
@@ -26,7 +25,7 @@ public class ProjectRepositoryIntegrationTest {
 
 
    @Test
-    void findAll(){
+    void findAll_ShouldReturnProjectsFromDatabase(){
        //Arrange: Vi henter som regel bare den data der allerede ligger inde i h2init.sql.
 
 
@@ -45,7 +44,7 @@ public class ProjectRepositoryIntegrationTest {
    }
 
    @Test
-    void addProject(){
+    void addProject_ShouldSaveNewProjectInDatabase(){
        //Arrange: Lav testData.
        Project project = new Project();
        project.setName("Test Project 3");
@@ -69,7 +68,7 @@ public class ProjectRepositoryIntegrationTest {
    }
 
    @Test
-    void deleteProject(){
+    void deleteProject_ShouldDeleteProjectFromDatabase(){
        //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
        int projectId = 1;
 
@@ -86,7 +85,7 @@ public class ProjectRepositoryIntegrationTest {
    }
 
    @Test
-    void findById(){
+    void findById_ShouldReturnProject_WhenProjectExists(){
        //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
        int projectId = 1;
 
@@ -101,7 +100,7 @@ public class ProjectRepositoryIntegrationTest {
    }
 
    @Test
-    void updateProject(){
+    void updateProject_ShouldUpdateProjectInDatabase(){
        //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
        int projectId = 1;
 
@@ -134,7 +133,7 @@ public class ProjectRepositoryIntegrationTest {
    }
 
    @Test
-    void findProjectByUserId(){
+    void findProjectByUserId_ShouldReturnProjectsForUser(){
        //Arrange: Vi vælger et userId, som allerede har projekter i h2init.sql.
        int userId = 1;
 
