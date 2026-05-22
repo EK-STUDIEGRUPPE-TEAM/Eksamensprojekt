@@ -25,14 +25,15 @@ public class ProjectRepository {
 
         /* Vi indsætter et nyt projekt i databasen.
            userId kommer fra sessionen og gemmes i kolonnen user_id */
-        String sql = "INSERT INTO Project(name, description, date, user_id, status) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Project(name, description, date, budget, status, user_id) VALUES(?,?,?,?,?,?)";
         return jdbcTemplate.update(
                 sql,
                 project.getName(),
                 project.getDescription(),
                 project.getDate(),
-                userId,
-                project.getStatus().name()
+                project.getBudget(),
+                project.getStatus().name(),
+                userId
         );
     }
 
@@ -58,13 +59,14 @@ public class ProjectRepository {
 
         /* Opdaterer projektet ud fra project_id.
            user_id gemmes også, så projektet stadig tilhører samme bruger */
-        String sql = "UPDATE Project SET name = ?, description = ?, date = ?, user_id = ?, status = ? WHERE project_id = ?";
+        String sql = "UPDATE Project SET name = ?, description = ?, date = ?, budget = ?, status = ?, user_id = ? WHERE project_id = ?";
         return jdbcTemplate.update(sql,
                 project.getName(),
                 project.getDescription(),
                 project.getDate(),
-                project.getUserId(),
+                project.getBudget(),
                 project.getStatus().name(),
+                project.getUserId(),
                 project.getId()
         );
     }

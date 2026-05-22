@@ -10,17 +10,19 @@ public class Project {
     private String description;
     private LocalDate date;
     private List<SubProject> subProjects;
-    private int userId;
+    private double budget;
     private Status status;
+    private int userId;
 
-    public Project(Integer id, String name, String description, LocalDate date, int userId, Status status) {
+    public Project(Integer id, String name, String description, LocalDate date, double budget, Status status, int userId) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
-        this.userId = userId;
+        this.budget = budget;
         this.status = status;
+        this.userId = userId;
     }
 
     public Project(String name, String description, int userId, Status status) {
@@ -103,5 +105,11 @@ public class Project {
         this.date = date;
     }
 
+    public double getBudget() {
+        return budget;
+    }
 
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
 }

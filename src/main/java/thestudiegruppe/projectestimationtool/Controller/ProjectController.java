@@ -62,6 +62,8 @@ public class ProjectController {
         double totalEstimatedHours = projectService.getTotalEstimatedHoursOfWholeProject(id);
         double totalPrice = projectService.getTotalPriceOfWholeProject(id);
 
+        // Så finder vi differencen
+        double difference = projectService.getProjectDifference(id);
 
         //Her tjekker vi om projektet tilhører brugeren
         if(project.getUserId() != userId){
@@ -73,6 +75,7 @@ public class ProjectController {
         // Her sender vi projektet og summary-tallene videre til HTML-siden
         model.addAttribute("totalEstimatedHours", totalEstimatedHours);
         model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("difference", difference);
         return "project";
 
     }

@@ -51,6 +51,7 @@ public class ProjectRepositoryIntegrationTest {
        project.setDescription("Test description 3");
        project.setDate(LocalDate.of(2026,5, 24));
        project.setStatus(Status.DONE);
+       project.setBudget(100);
        int userId = 1;
 
        //Act: Gemmer et nyt projekt i H2-databasen.
@@ -110,6 +111,7 @@ public class ProjectRepositoryIntegrationTest {
        project.setDescription("Test description Update 1");
        project.setDate(LocalDate.of(2027,5, 22));
        project.setStatus(Status.TODO);
+       project.setBudget(100);
        project.setUserId(1);
 
        //Act: Opdaterer projektet i H2-databasen.
@@ -127,6 +129,7 @@ public class ProjectRepositoryIntegrationTest {
        assertThat(updatedProject.getDescription()).isEqualTo("Test description Update 1");
        assertThat(updatedProject.getDate()).isEqualTo(LocalDate.of(2027,5, 22));
        assertThat(updatedProject.getStatus()).isEqualTo(Status.TODO);
+       assertThat(updatedProject.getBudget()).isEqualTo(100);
    }
 
    @Test
