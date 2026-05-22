@@ -1,11 +1,10 @@
-package thestudiegruppe.projectestimationtool.Service.integration;
+package thestudiegruppe.projectestimationtool.Service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.SubProject;
 import thestudiegruppe.projectestimationtool.Repository.SubProjectRepository;
 
@@ -13,7 +12,6 @@ import java.util.List;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SpringBootTest
@@ -87,20 +85,18 @@ public class SubProjectRepositoryIntegrationsTest {
     }
 
     @Test
-    void updateSubProject_shouldUpdateASubproject(){
-        // Arrange: vi henter et subproject fra databasen og ændrer dataen
+    void updateSubProject_ShouldUpdateSubProjectInDatabase() {
+        // Arrange: Vi henter et subproject fra databasen og ændrer navnet.
         SubProject subProject = subProjectRepository.findById(1);
         subProject.setName("Opdateret Subproject");
-        subProject.setProjectId(2);
 
-        // Act: Vi indsætter den nye data ved brug af update
+        // Act: Vi opdaterer subprojectet i H2-databasen.
         subProjectRepository.updateSubProject(subProject);
 
-        // Assert: Vi tjekker om dataen er blevet opdateret
-        assertThat(subProject)
-                .extracting(SubProject::getName).isEqualTo("Opdateret Subproject");
+        // Assert: Vi henter subprojectet igen og tjekker den nye værdi.
+        SubProject updatedSubProject = subProjectRepository.findById(1);
 
-        assertNotEquals(1, subProject.getProjectId());
+        assertThat(updatedSubProject.getName()).isEqualTo("Opdateret Subproject");
     }
 
     @Test

@@ -1,4 +1,4 @@
-package thestudiegruppe.projectestimationtool.Service.integration;
+package thestudiegruppe.projectestimationtool.Service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
-    void findUserForLogIn(){
+    void findUserForLogIn_ShouldReturnUser_WhenEmailAndPasswordMatch(){
         //Arrange: Vi bruger email og password fra en user, der allerede findes i h2init.sql.
         String email = "test@mail.com";
         String password = "1234";
@@ -86,7 +86,7 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
-    void delete(){
+    void delete_ShouldDeleteUserFromDatabase(){
         //Arrange: Vi vælger et userId, som allerede findes i h2init.sql.
         int userId = 1;
 
@@ -103,7 +103,7 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
-    void findUserById(){
+    void findUserById_ShouldReturnUser_WhenUserExists(){
         //Arrange: Vi vælger et userId, som allerede findes i h2init.sql.
         int userId = 1;
 
@@ -118,7 +118,7 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
-    void update(){
+    void update_ShouldUpdateUserInDatabase(){
         //Arrange: Vi vælger en user, som allerede findes i h2init.sql.
         int userId = 1;
 
