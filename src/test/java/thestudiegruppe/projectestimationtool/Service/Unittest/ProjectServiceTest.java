@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.*;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
@@ -54,6 +55,22 @@ class ProjectServiceTest {
 
         Mockito.verify(projectRepository).add(project, userId);
 
+    }
+
+    @Test
+    void createProject_shouldReturnExceptionWhenVBudgetIsNegative(){
+        // Arrange: Vi laver testdata
+        Project project = new Project();
+        project.setBudget(-1);
+        int userId = 1;
+
+        // Act: Vi gør så vores exception bliver kastet når projektet bliver lavet
+        assertThrows(NegativeValueException.class, () -> {
+            projectService.createProject(project, userId);
+        });
+
+        // Assert: Vi bruger verify til at være sikker på at der aldrig blev addet til repository
+        verify(projectRepository, never()).add(project, userId);
     }
 
 
@@ -115,6 +132,22 @@ class ProjectServiceTest {
         //Assert: Kalder funktionen i service klassen, repository korrekt
 
         Mockito.verify(projectRepository).update(project);
+    }
+
+    @Test
+    void updateProject_shouldReturnExceptionWhenVBudgetIsNegative(){
+        // Arrange: Vi laver testdata
+        Project project = new Project();
+        project.setBudget(-1);
+
+        // Act: Vi gør så vores exception bliver kastet når projektet bliver opdateret
+
+        assertThrows(NegativeValueException.class, () -> {
+            projectService.updateProject(project);
+        });
+
+        // Assert: Vi bruger verify til at være sikker på at update data adlrig blev sendt til repository
+        verify(projectRepository, never()).update(project);
     }
 
     @Test
@@ -295,6 +328,35 @@ class ProjectServiceTest {
 
         // Assert: 600 + 1000 = 1600 kr.
         assertEquals(1600.0, result, 0.001);
+    }
+
+    @Test
+    void getProjectDifference(){
+        // Arrange: Vi laver testdata til ét project med ét subproject og to tasks
+        int projectId = 1;
+
+        Project project = new Project();
+        project.setBudget(3000);
+
+        Task task1 = new Task();
+        task1.setTotalPrice(500);
+
+        Task task2 = new Task();
+        task2.setTotalPrice(1000);
+
+        SubProject subProject = new SubProject();
+        subProject.setTasks(List.of(task1, task2));
+
+        // Vi mocker de metoder, som findFullProject() bruger
+        when(projectRepository.findById(projectId)).thenReturn(project);
+        when(subProjectService.getFullSubProjects(projectId)).thenReturn(List.of(subProject));
+
+        // Act: Vi kalder metoden, der skal testes
+        double result = projectService.getProjectDifference(projectId);
+
+        // Assert
+        assertEquals(1500, result);
+        assertNotNull(result);
     }
 
 }

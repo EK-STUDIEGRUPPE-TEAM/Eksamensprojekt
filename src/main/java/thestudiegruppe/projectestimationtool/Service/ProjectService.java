@@ -207,6 +207,6 @@ public class ProjectService {
     Project project = findProjectById(projectId);
     double budget = project.getBudget();
     double totalprice = getTotalPriceOfWholeProject(projectId);
-    return totalprice - budget;
+    return budget - totalprice;
     }
 }
