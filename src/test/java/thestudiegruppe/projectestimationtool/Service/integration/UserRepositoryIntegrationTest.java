@@ -39,6 +39,10 @@ public class UserRepositoryIntegrationTest {
         //Act: Kalder metoden der henter alle users fra databasen.
         List<User> users = userRepository.getAllUsers();
 
+        //Assert: Vi tjekker, at h2init.sql har oprettet 2 users.
+        assertThat(users)
+                .hasSize(2);
+
         //Assert: Tjekker at der kommer 2 users tilbage fra testdatabasen.
         assertThat(users)
                 .extracting(User::getName)

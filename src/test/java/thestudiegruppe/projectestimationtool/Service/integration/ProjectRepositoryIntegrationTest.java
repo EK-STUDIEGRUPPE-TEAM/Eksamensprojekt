@@ -27,13 +27,17 @@ public class ProjectRepositoryIntegrationTest {
 
    @Test
     void findAll(){
-       //Arrange: Vi henter som regelt bare den data der allerede ligger inde i h2init.sql.
+       //Arrange: Vi henter som regel bare den data der allerede ligger inde i h2init.sql.
 
 
-       //Act:
+       //Act: Henter alle projekter fra H2-databasen.
        List<Project> projects = projectRepository.findAll();
 
-       //Assert:
+       //Assert: Vi tjekker, at h2init.sql har oprettet 2 projekter.
+      assertThat(projects)
+              .hasSize(2);
+
+       //Assert: Tjekker at testprojekterne fra h2init.sql findes.
        assertThat(projects)
                .extracting(Project::getName)
                .contains("Test Project 1", "Test Project 2");
@@ -50,12 +54,14 @@ public class ProjectRepositoryIntegrationTest {
        project.setStatus(Status.DONE);
        int userId = 1;
 
-       //Act: Kalder metoden der gemmer et nyt project.
+       //Act: Gemmer et nyt projekt i H2-databasen.
        projectRepository.add(project, userId);
 
-       //Assert:
+
+      //Assert: Henter alle projekter igen efter add.
        List<Project> projects = projectRepository.findAll();
 
+       //Assert: Tjekker at det nye projekt findes i databasen.
        assertThat(projects)
                .extracting(Project::getName)
                .contains("Test Project 3");
@@ -66,13 +72,13 @@ public class ProjectRepositoryIntegrationTest {
        //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
        int projectId = 1;
 
-       //Act:
+       //Act: Sletter projektet med det valgte id.
        projectRepository.delete(projectId);
 
-       //Assert:
+      // Assert: Henter alle projekter efter delete.
        List<Project> projects = projectRepository.findAll();
 
-       //Assert:
+      //Assert: Tjekker at projektets id ikke længere findes.
        assertThat(projects)
                .extracting(Project::getId)
                .doesNotContain(projectId);
@@ -83,61 +89,68 @@ public class ProjectRepositoryIntegrationTest {
        //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
        int projectId = 1;
 
-       //Act:
+       //Act: Finder et projekt ud fra id.
        Project foundProject = projectRepository.findById(projectId);
 
-       //Assert:
+      // Assert: Tjekker at der faktisk blev fundet et projekt.
        assertThat(foundProject).isNotNull();
 
-       //Assert:
+      // Assert: Tjekker at projektets id matcher det id, vi søgte efter.
        assertThat(foundProject.getId()).isEqualTo(projectId);
    }
 
-//   @Test
-//    void updateProject(){
-//       //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
-//       int projectId = 1;
-//
-//       //Arrange:
-//       Project project = new Project();
-//       project.setName("Test Project Update 1");
-//       project.setDescription("Test description Update 1");
-//       project.setDate(LocalDate.of(2027,5, 22));
-//       project.setStatus(Status.TODO);
-//
-//       //Act:
-//       projectRepository.update(project);
-//
-//       //Assert:
-//       Project updatedProject = projectRepository.findById(projectId);
-//
-//       //Assert:
-//       assertThat(updatedProject).isNotNull();
-//
-//       //Assert:
-//       assertThat(updatedProject.getId()).isEqualTo(projectId);
-//       assertThat(updatedProject.getName()).isEqualTo("Test Project Update 1");
-//       assertThat(updatedProject.getDescription()).isEqualTo("Test description Update 1");
-//       assertThat(updatedProject.getDate()).isEqualTo(LocalDate.of(2027,5, 22));
-//       assertThat(updatedProject.getStatus()).isEqualTo(Status.TODO);
-//   }
+   @Test
+    void updateProject(){
+       //Arrange: Vi vælger et projectId, som allerede findes i h2init.sql.
+       int projectId = 1;
 
-//   @Test
-//    void findProjectByUserId(){
-//       //Arrange:
-//       int userId = 1;
-//
-//       //Act:
-//       List<Project> foundProject = projectRepository.findByUserId(userId);
-//
-//       //Arrange:
-//       assertThat(foundProject).isNotNull();
-//
-//       //Arrange:
-//       assertThat(foundProject).isEqualTo()
-//
-//
-//   }
+       //Arrange:
+       Project project = new Project();
+       project.setId(projectId);
+       project.setName("Test Project Update 1");
+       project.setDescription("Test description Update 1");
+       project.setDate(LocalDate.of(2027,5, 22));
+       project.setStatus(Status.TODO);
+       project.setUserId(1);
+
+       //Act: Opdaterer projektet i H2-databasen.
+       projectRepository.update(project);
+
+       //Assert: Henter projektet igen og tjekker de nye værdier.
+       Project updatedProject = projectRepository.findById(projectId);
+
+      // Assert: Tjekker at projektet stadig findes efter update.
+       assertThat(updatedProject).isNotNull();
+
+      // Assert: Tjekker at projektet har de nye værdier fra update.
+       assertThat(updatedProject.getId()).isEqualTo(projectId);
+       assertThat(updatedProject.getName()).isEqualTo("Test Project Update 1");
+       assertThat(updatedProject.getDescription()).isEqualTo("Test description Update 1");
+       assertThat(updatedProject.getDate()).isEqualTo(LocalDate.of(2027,5, 22));
+       assertThat(updatedProject.getStatus()).isEqualTo(Status.TODO);
+   }
+
+   @Test
+    void findProjectByUserId(){
+       //Arrange: Vi vælger et userId, som allerede har projekter i h2init.sql.
+       int userId = 1;
+
+       //Act: Vi henter alle projekter, der tilhører userId 1.
+       List<Project> foundProjects = projectRepository.findByUserId(userId);
+
+       //Assert: Vi tjekker, at listen ikke er null.
+       assertThat(foundProjects).isNotNull();
+
+       //Assert: Vi tjekker, at der er 2 projekter for userId 1.
+      assertThat(foundProjects).hasSize(2);
+
+      //Assert: Vi tjekker, at alle projekterne faktisk tilhører userId 1.
+      assertThat(foundProjects)
+              .extracting(Project::getUserId)
+              .containsOnly(userId);
+
+
+   }
 
 
 }
