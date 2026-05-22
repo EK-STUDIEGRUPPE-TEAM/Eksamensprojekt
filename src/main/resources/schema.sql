@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Project (
     description VARCHAR(200),
     date DATE,
     status VARCHAR(50),
+    budget DECIMAL(10, 2) DEFAULT 0.00,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
     );

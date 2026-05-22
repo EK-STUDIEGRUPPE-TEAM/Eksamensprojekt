@@ -18,6 +18,7 @@ CREATE TABLE Project
     name        VARCHAR(100),
     description VARCHAR(200),
     date        DATE,
+    budget     DECIMAL(10, 2) DEFAULT 0.00,
     status      VARCHAR(50),
     user_id     INT,
     FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
@@ -47,11 +48,11 @@ VALUES (1, 'Test', 'test@mail.com', '1234');
 INSERT INTO Users (user_id, name, email, password)
 VALUES (2, 'Abbas', 'abbas@mail.com', 'AH123');
 
-INSERT INTO Project (project_id, name, description, date, status, user_id)
-VALUES (1, 'Test Project 1', 'Test description 1', '2026-05-22', 'TODO', 1);
+INSERT INTO Project (project_id, name, description, date, status, budget, user_id)
+VALUES (1, 'Test Project 1', 'Test description 1', '2026-05-22', 'TODO', 100, 1);
 
-INSERT INTO Project (project_id, name, description, date, status, user_id)
-VALUES (2, 'Test Project 2', 'Test description 2', '2026-05-23', 'IN_PROGRESS', 1);
+INSERT INTO Project (project_id, name, description, date, status, budget, user_id)
+VALUES (2, 'Test Project 2', 'Test description 2', '2026-05-23', 'IN_PROGRESS', 100, 1);
 
 INSERT INTO SubProject (subProject_id, name, status, project_id)
 VALUES (1, 'Test SubProject 1', 'DONE', 1);

@@ -2,6 +2,7 @@ package thestudiegruppe.projectestimationtool.Service;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import thestudiegruppe.projectestimationtool.Exception.NegativeValueException;
 import thestudiegruppe.projectestimationtool.Exception.NotFoundException;
 import thestudiegruppe.projectestimationtool.Model.*;
 import thestudiegruppe.projectestimationtool.Repository.ProjectRepository;
@@ -28,6 +29,11 @@ public class ProjectService {
 
         project.setStatus(Status.TODO);
 
+        // Hvis budget er minde end 0 kaster vi en custom exception
+        if (project.getBudget() < 0) {
+            throw new NegativeValueException("Budget");
+        }
+
         projectRepository.add(project, userId);
     }
 
@@ -52,6 +58,11 @@ public class ProjectService {
 
         /* Denne metode bruges til at opdatere et projekt.
            Project-objektet indeholder de nye værdier fra formularen */
+
+        // Hvis budget er minde end 0 kaster vi en custom exception
+        if (project.getBudget() < 0) {
+            throw new NegativeValueException("Budget");
+        }
 
         /* Vi sender projektet videre til repository-laget,
            som opdaterer projektet i databasen */
@@ -192,4 +203,10 @@ public class ProjectService {
         return totalPrice;
     }
 
+    public double getProjectDifference(int projectId){
+    Project project = findProjectById(projectId);
+    double budget = project.getBudget();
+    double totalprice = getTotalPriceOfWholeProject(projectId);
+    return budget - totalprice;
+    }
 }
