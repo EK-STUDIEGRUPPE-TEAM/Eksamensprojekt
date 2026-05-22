@@ -31,14 +31,22 @@
         <th>Estimerede timer i alt</th>
         <td th:text="${totalEstimatedHours}"></td>
     </tr>
-
-    <tr>
-        <th>Total pris</th>
-        <td th:text="${totalPrice} + ' KR.'"></td>
-    </tr>
-
 </table>
 
+<table border="1">
+    <tr>
+        <th>Budget</th>
+        <td th:text="${project.budget} + ' KR. '"></td>
+    </tr>
+    <tr>
+        <th>Aktuel pris</th>
+        <td th:text="${totalPrice} + ' KR. '"></td>
+    </tr>
+    <tr>
+        <th>Difference</th>
+        <td th:text="${difference} + ' KR. '"></td>
+    </tr>
+</table>
 <!-- Tabellen viser projektets subprojekter, tasks og subtasks -->
 <table border="1">
 
@@ -58,9 +66,6 @@
         <th>Timer</th>
         <th>Timepris</th>
         <th>Total</th>
-        <th>Budget</th>
-        <th>aktuel</th>
-        <th>Difference</th>
     </tr>
 
 

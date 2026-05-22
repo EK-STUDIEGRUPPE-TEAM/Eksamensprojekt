@@ -28,31 +28,23 @@
             <tr>
                 <th>Navn</th>
                 <th>beskrivelse</th>
+                <th>Budget</th>
                 <th>Status</th>
             </tr>
-
             <tr>
-                <td>
-                    <input type="text" th:field="*{name}">
-                </td>
-
-                <td>
-                    <input type="text" th:field="*{description}">
-                </td>
-
-                <td>
-                    <select th:field="*{status}">
+                <td><input type="text" th:field="*{name}"></td>
+                <td><input type="text" th:field="*{description}"></td>
+                <td><input type="text" th:field="*{budget}"></td>
+                <td><select th:field="*{status}">
                         <option value="TODO">Todo</option>
                         <option value="IN_PROGRESS">Aktiv</option>
                         <option value="DONE">Færdig</option>
-                    </select>
-                </td>
+                </select></td>
             </tr>
         </table>
-
-
         <button type="submit">Gem</button>
     </form>
+    <a th:href="@{/projects}"> Annuller</a>
 </main>
 </body>
 </html>
