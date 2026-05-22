@@ -356,7 +356,7 @@ class ProjectServiceTest {
 
         // Assert
         assertEquals(1500, result);
-        assertNotNull(result);
+        assertTrue(result > 0);
     }
 
 }
