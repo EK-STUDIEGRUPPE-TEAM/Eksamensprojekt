@@ -58,3 +58,9 @@ VALUES (1, 'Test SubProject 1', 'DONE', 1);
 
 INSERT INTO SubProject (subProject_id, name, status, project_id)
 VALUES (2, 'Test SubProject 2', 'IN_PROGRESS', 1);
+
+INSERT INTO Task (task_id, name, description, status, hourlyRate, subProject_id)
+VALUES (1, 'Test Task 1', 'Task description 1', 'TODO', 250.00, 1);
+
+INSERT INTO Task (task_id, name, description, status, hourlyRate, subProject_id)
+VALUES (2, 'Test Task 2', 'Task description 2', 'IN_PROGRESS', 300.00, 1);
