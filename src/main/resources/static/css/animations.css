@@ -221,6 +221,16 @@
     }
 }
 
+/* RUL IND FRA HØJRE (blurred) */
+@-webkit-keyframes roll-in-blurred-right {
+    0%   { -webkit-transform: translateX(1000px) rotate(720deg); transform: translateX(1000px) rotate(720deg); -webkit-filter: blur(50px); filter: blur(50px); opacity: 0; }
+    100% { -webkit-transform: translateX(0) rotate(0deg);        transform: translateX(0) rotate(0deg);        -webkit-filter: blur(0);    filter: blur(0);    opacity: 1; }
+}
+@keyframes roll-in-blurred-right {
+    0%   { -webkit-transform: translateX(1000px) rotate(720deg); transform: translateX(1000px) rotate(720deg); -webkit-filter: blur(50px); filter: blur(50px); opacity: 0; }
+    100% { -webkit-transform: translateX(0) rotate(0deg);        transform: translateX(0) rotate(0deg);        -webkit-filter: blur(0);    filter: blur(0);    opacity: 1; }
+}
+
 /* BOUNCE IND FRA HØJRE  */
 @-webkit-keyframes bounce-in-right {
     0%   { -webkit-transform: translateX(600px); transform: translateX(600px); -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; opacity: 0; }

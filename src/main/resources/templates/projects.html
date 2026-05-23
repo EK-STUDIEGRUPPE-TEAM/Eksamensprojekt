@@ -34,7 +34,7 @@
                 <td th:text="${project.date}"></td>
                 <td th:text="${project.deadline}"></td>
                 <td><a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id})}">Rediger</a></td>
-                <td><a class="btn-delete" th:href="@{/projects/delete/{id}(id=${project.id})}">Slet</a></td>
+                <td><a class="btn-delete" th:href="@{/projects/delete/{id}(id=${project.id})}" onclick="return confirm('Er du sikker på du vil slette denne opgave?')">Slet projekt</a></td>
             </tr>
         </tbody>
     </table>

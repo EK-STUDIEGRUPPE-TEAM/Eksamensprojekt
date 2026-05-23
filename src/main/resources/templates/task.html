@@ -21,10 +21,10 @@
         <div class="task-left-col">
             <h1 th:text="${task.name}"></h1>
             <div class="form-actions" style="margin-bottom: 24px;">
-                <a class="btn-edit" th:href="@{/task/update/{id}(id=${task.id})}">Rediger task</a>
+                <a class="btn-edit" th:href="@{/task/update/{id}(id=${task.id})}">Rediger opgaven</a>
                 <!-- Delete bruger form og method="post", fordi vi ændrer/sletter data i databasen. -->
                 <form th:action="@{/task/deleteTask/{subProjectId}/{id}(subProjectId=${task.subProjectId}, id=${task.id})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn-sm-danger">Slet task</button>
+                    <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette denne opgave?')">Slet opgaven</button>
                 </form>
             </div>
             <table class="info-table">
@@ -73,7 +73,7 @@
                 <td th:text="${subtask.description}"></td>
                 <td>
                     <form th:action="@{/subtask/delete/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn-sm-danger">Slet</button>
+                        <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette denne delopgave?')">Slet delopgaven</button>
                     </form>
                 </td>
                 <td><a class="btn-edit" th:href="@{/subtask/update/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}">Rediger</a></td>

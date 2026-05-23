@@ -11,6 +11,8 @@
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
+    <!-- Tilbage-knap kun på denne side -->
+    <a class="btn-back" th:href="@{/projects}">Tilbage til projekter</a>
     <div class="page-title-row">
         <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
     <h1 th:text="${project.name}"></h1>
@@ -62,7 +64,7 @@
             <div class="subproject-actions">
                 <a class="btn-create-sm" th:href="@{/task/addtask/{subProjectId}(subProjectId=${subproject.id}, projectId=${project.id})}">+ Opret opgave</a>
                 <form th:action="@{/subproject/delete/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}" method="post">
-                    <button type="submit" class="btn-sm-danger">Slet delprojekt</button>
+                    <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette dette delprojekt?')">Slet delprojekt</button>
                 </form>
                 <a class="btn-edit" th:href="@{/subproject/update/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}">Rediger</a>
             </div>

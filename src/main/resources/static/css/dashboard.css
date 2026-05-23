@@ -54,7 +54,7 @@
     display: block;
     height: 2px;
     margin-top: 8px;
-    background: linear-gradient(to right, rgba(36, 61, 44, 0.35), transparent);
+    background: linear-gradient(to right, rgba(64, 47, 29, 0.5), transparent);
     border-radius: 2px;
 }
 
@@ -98,6 +98,6 @@ a.stat-card {
 }
 
 .stat-card:nth-child(3) {
-    -webkit-animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.41s both;
-            animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.41s both;
+    -webkit-animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.38s both;
+            animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.38s both;
 }
