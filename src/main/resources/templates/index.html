@@ -8,13 +8,17 @@
 </head>
 <body>
 
-<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+<header>
+    <a class="header-logo" style="visibility: hidden;">
+        <h1>PROJECTOR</h1>
+    </a>
+</header>
 
 <div class="hero">
     <!-- Lille overtitel over glaslogoet -->
     <p class="hero-overtitle">Velkommen til</p>
     <!-- Glassmorphism logo med 3D perspektiv — kun på forsiden -->
-    <div class="projector-hero-logo">PROJECTOR_</div>
+    <div class="projector-hero-logo">PROJECTOR<span class="cursor">_</span></div>
     <p>Beregn smartere. Byg stærkere.</p>
     <!-- Login og Opret bruger knapper -->
     <div class="hero-actions">
