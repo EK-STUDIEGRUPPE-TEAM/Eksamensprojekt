@@ -8,6 +8,7 @@ import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -91,6 +92,8 @@ public class ProjectController {
             return "redirect:/login";
         }
 
+
+
         /* Vi laver et tomt Project-objekt og sender det til HTML-siden.
            Så Thymeleaf kan koble inputfelterne til project-objektets felter */
         model.addAttribute("project", new Project());
@@ -101,13 +104,20 @@ public class ProjectController {
 
     @PostMapping("/save")
     // Modtager data fra addproject-formularen og gemmer projektet
-    public String add(@ModelAttribute Project project, HttpSession session) {
+    public String add(@ModelAttribute Project project, HttpSession session, Model model) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
           sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
+        }
+
+        if(project.getDeadline().isBefore(LocalDate.now())){
+
+            model.addAttribute("error","Deadline må ikke være før dags dato");
+
+            return "addproject";
         }
 
         /* Vi henter userId fra sessionen.
@@ -169,6 +179,8 @@ public class ProjectController {
             return "redirect:/login";
         }
 
+
+
         Project project =
                 projectService.findProjectById(id);
 
@@ -179,7 +191,7 @@ public class ProjectController {
 
     @PostMapping("/update/{id}")
     // Opdaterer et projekt ud fra id'et i URL'en
-    public String update(@PathVariable int id, @ModelAttribute Project project, HttpSession session) {
+    public String update(@PathVariable int id, @ModelAttribute Project project, HttpSession session, Model model) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -187,6 +199,14 @@ public class ProjectController {
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
+
+        if(project.getDeadline().isBefore(LocalDate.now())){
+
+            model.addAttribute("error","Deadline må ikke være før dags dato");
+
+            return "updateproject";
+        }
+
 
          /* Vi henter userId fra sessionen.
            Det sikrer at projektet stadig kobles til den bruger,

@@ -9,17 +9,20 @@ public class Project {
     private String name;
     private String description;
     private LocalDate date;
+    private LocalDate deadline;
     private List<SubProject> subProjects;
     private double budget;
     private Status status;
     private int userId;
 
-    public Project(Integer id, String name, String description, LocalDate date, double budget, Status status, int userId) {
+
+    public Project(Integer id, String name, String description, LocalDate date, LocalDate deadline, double budget, Status status, int userId) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
+        this.deadline = deadline;
         this.budget = budget;
         this.status = status;
         this.userId = userId;
@@ -112,4 +115,14 @@ public class Project {
     public void setBudget(double budget) {
         this.budget = budget;
     }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
 }
+
+

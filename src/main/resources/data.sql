@@ -5,10 +5,10 @@ VALUES ('Oliver', 'Oliver@gmail.com', 'test'),
        ('Charlie Brown', 'charlie@example.com', 'charlie123');
 
 -- Projects
-INSERT INTO Project (name, description, date, status, budget, user_id)
-VALUES ('Website Redesign', 'Redesign company website for better UX', '2026-05-01', 'IN_PROGRESS', 10000, 1),
-       ('Mobile App', 'Develop a task tracking mobile app', '2026-05-03', 'TODO', 3000, 2),
-       ('School Platform', 'Build an online learning platform', '2026-05-05', 'DONE', 99999, 3);
+INSERT INTO Project (name, description, date, deadline, status, budget, user_id)
+VALUES ('Website Redesign', 'Redesign company website for better UX', '2026-05-01','2026-05-29', 'IN_PROGRESS', 10000, 1),
+       ('Mobile App', 'Develop a task tracking mobile app', '2026-05-03','2026-05-30', 'TODO', 3000, 2),
+       ('School Platform', 'Build an online learning platform', '2026-05-05', '2026-06-23','DONE', 99999, 3);
 
 -- SubProjects
 INSERT INTO SubProject (name, status, project_id)

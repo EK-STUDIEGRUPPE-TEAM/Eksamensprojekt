@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS Project (
     name VARCHAR(100),
     description VARCHAR(200),
     date DATE,
+    deadline DATE NOT NULL,
     status VARCHAR(50),
     budget DECIMAL(10, 2) DEFAULT 0.00,
     user_id INT,

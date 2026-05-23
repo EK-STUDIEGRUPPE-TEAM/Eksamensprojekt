@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>Rediger projekt</h1>
+
+<p th:if="${error}"
+   th:text="${error}">
+</p>
+
 <main>
 
     <!--
@@ -28,12 +33,14 @@
             <tr>
                 <th>Navn</th>
                 <th>beskrivelse</th>
+                <th>Deadline</th>
                 <th>Budget</th>
                 <th>Status</th>
             </tr>
             <tr>
                 <td><input type="text" th:field="*{name}"></td>
                 <td><input type="text" th:field="*{description}"></td>
+                <td><input type="date" th:field="*{deadline}"></td>
                 <td><input type="text" th:field="*{budget}"></td>
                 <td><select th:field="*{status}">
                         <option value="TODO">Todo</option>
