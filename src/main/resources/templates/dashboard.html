@@ -11,7 +11,7 @@
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
 
 <!-- Bliver replacet af vores nav fragment-->
-<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
+<nav th:replace="~{fragments/fragments :: navfragment('dashboard')}"></nav>
 
 <main>
     <div class="dashboard-hero">
@@ -20,19 +20,23 @@
     </div>
 
     <div class="stat-cards">
-        <div class="stat-card">
+        <!-- Hvert kort linker til projektoversigten -->
+        <a class="stat-card" th:href="@{/projects}">
             <div class="stat-label">Projekter i alt</div>
             <div class="stat-value" th:text="${totalprojects}"></div>
-        </div>
-        <div class="stat-card">
+        </a>
+        <a class="stat-card" th:href="@{/projects}">
             <div class="stat-label">Afsluttede projekter</div>
             <div class="stat-value" th:text="${completedprojects}"></div>
-        </div>
-        <div class="stat-card">
+        </a>
+        <a class="stat-card" th:href="@{/projects}">
             <div class="stat-label">Aktive projekter</div>
             <div class="stat-value" th:text="${activeprojects}"></div>
-        </div>
+        </a>
     </div>
+
+    <!-- CTA-link med bounce-animation efter kortene er landet -->
+    <a class="projects-cta" th:href="@{/projects}">Gå til mine projekter</a>
 </main>
 </body>
 </html>

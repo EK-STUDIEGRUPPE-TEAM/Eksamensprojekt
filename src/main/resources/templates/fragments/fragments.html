@@ -23,18 +23,17 @@
 
 <!-- nav fragment så vi kan have et sidepanel
     på hver side ligesom vores prototype-->
-<nav th:fragment="navfragment">
+<nav th:fragment="navfragment(currentPage)">
     <!-- hyperlink til dashboard viewpoint-->
-    <a th:href="@{/dashboard}">Oversigt</a>
+    <a th:href="@{/dashboard}" th:classappend="${currentPage == 'dashboard'} ? 'nav-active'">Oversigt</a>
 
     <!-- hyperlink til projekt viewpoint-->
-    <!-- fører til en projekt side
-    men vi har ikke fået implementeret endnu-->
-    <a th:href="@{/projects}">Projekter</a>
+    <!-- fører til en projekt side -->
+    <a th:href="@{/projects}" th:classappend="${currentPage == 'projects'} ? 'nav-active'">Projekter</a>
 
-    <!-- fører til en eventuel profilside
-    men vi har ikke fået implementeret endnu-->
-    <a th:href="@{/user/profile}">Profil</a>
+    <!-- hyperlink til profil viewpoint-->
+    <!-- fører til profilside -->
+    <a th:href="@{/user/profile}" th:classappend="${currentPage == 'profile'} ? 'nav-active'">Profil</a>
 
     <!-- fører til logout postmapping som logger brugeren ud af sessionen-->
     <form th:action="@{/user/logout}" method="post">

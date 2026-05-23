@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Opgave</title>
     <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/pagefade.css">
 </head>
 <body>
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
-<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
+<nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
     <!-- Tilbage-knap kun på denne side -->
-    <a class="btn-back" th:href="@{/projects/{id}(id=${projectId})}">← Tilbage til projekt</a>
+    <a class="btn-back" th:href="@{/projects/{id}(id=${projectId})}">Tilbage til projekt</a>
 
     <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
     <h1 th:text="${task.name}"></h1>
@@ -37,7 +38,7 @@
             </tr>
             <tr>
                 <th>Status</th>
-                <td th:text="${task.status}"></td>
+                <td th:text="${task.status.displayName}"></td>
             </tr>
         </tbody>
     </table>
@@ -53,8 +54,6 @@
                 <th>Status</th>
                 <th>Navn</th>
                 <th>Timer</th>
-                <th>Timepris</th>
-                <th>Total</th>
                 <th>Beskrivelse</th>
                 <th colspan="2"></th>
             </tr>
@@ -62,10 +61,9 @@
         <tbody>
             <!-- Vi looper igennem hver subtask der tilhører den korrekte task -->
             <tr th:each="subtask : ${task.subTasks}">
-                <td th:text="${subtask.status}"></td>
+                <td th:text="${subtask.status.displayName}"></td>
                 <td th:text="${subtask.name}"></td>
                 <td th:text="${subtask.estimatedHours}"></td>
-                <td colspan="2"></td>
                 <td th:text="${subtask.description}"></td>
                 <td>
                     <form th:action="@{/subtask/delete/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}" method="post" style="display:inline;">

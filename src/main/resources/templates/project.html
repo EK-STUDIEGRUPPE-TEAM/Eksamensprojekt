@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Projekt</title>
     <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/pagefade.css">
 </head>
 <body>
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
-<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
+<nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
     <div class="page-title-row">
@@ -81,7 +82,7 @@
             <tbody>
                 <!-- Vi viser vi task rækken med status, navn, timer, timepris og total -->
                 <tr th:each="task : ${subproject.tasks}">
-                    <td th:text="${task.status}"></td>
+                    <td th:text="${task.status.displayName}"></td>
                     <td><a th:href="@{/task/{id}(id=${task.id})}" th:text="${task.name}"></a></td>
                     <td th:text="${task.estimatedHours}"></td>
                     <td th:text="${task.hourlyRate} + ' KR.'"></td>
