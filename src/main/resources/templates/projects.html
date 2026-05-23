@@ -25,6 +25,7 @@
         <th>Navn</th>
         <th>Status</th>
         <th>Dato oprettet</th>
+        <th>Deadline</th>
         <th colspan="2"></th>
     </tr>
     </thead>
@@ -35,6 +36,7 @@
         </td>
         <td th:text="${project.status}"></td>
         <td th:text="${project.date}"></td>
+        <td th:text="${project.deadline}"></td>
         <td>
             <a th:href="@{/projects/update/{id}(id=${project.id})}">Rediger</a>
         </td>

@@ -50,6 +50,7 @@ public class ProjectRepositoryIntegrationTest {
        project.setName("Test Project 3");
        project.setDescription("Test description 3");
        project.setDate(LocalDate.of(2026,5, 24));
+       project.setDeadline(LocalDate.of(2026,5, 27));
        project.setStatus(Status.DONE);
        project.setBudget(100);
        int userId = 1;
@@ -110,6 +111,7 @@ public class ProjectRepositoryIntegrationTest {
        project.setName("Test Project Update 1");
        project.setDescription("Test description Update 1");
        project.setDate(LocalDate.of(2027,5, 22));
+       project.setDeadline(LocalDate.of(2027,5, 23));
        project.setStatus(Status.TODO);
        project.setBudget(100);
        project.setUserId(1);

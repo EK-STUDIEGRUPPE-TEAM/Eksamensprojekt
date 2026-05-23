@@ -34,6 +34,7 @@ public class ProjectService {
             throw new NegativeValueException("Budget");
         }
 
+
         projectRepository.add(project, userId);
     }
 
@@ -63,6 +64,7 @@ public class ProjectService {
         if (project.getBudget() < 0) {
             throw new NegativeValueException("Budget");
         }
+
 
         /* Vi sender projektet videre til repository-laget,
            som opdaterer projektet i databasen */
