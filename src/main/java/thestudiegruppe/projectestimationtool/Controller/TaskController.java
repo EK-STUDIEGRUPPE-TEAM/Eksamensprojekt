@@ -12,6 +12,8 @@ import thestudiegruppe.projectestimationtool.Service.SubProjectService;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/task")
 public class TaskController {
@@ -107,13 +109,20 @@ public class TaskController {
 
     // Modtager data fra addtask-formularen og gemmer tasken
     @PostMapping("/save")
-    public String save(@ModelAttribute Task task, @RequestParam int projectId, HttpSession session) {
+    public String save(@ModelAttribute Task task, @RequestParam int projectId, HttpSession session, Model model) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
           sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
+        }
+
+        if(task.getDeadline().isBefore(LocalDate.now())){
+
+            model.addAttribute("error","Deadline må ikke være før dags dato");
+
+            return "addtask";
         }
 
         /* @ModelAttribute tager data fra HTML-formularen
@@ -160,13 +169,20 @@ public class TaskController {
 
     @PostMapping("/update/{id}")
     // Opdaterer en task ud fra id'et i URL'en
-    public String update(@PathVariable int id, @ModelAttribute Task task, HttpSession session) {
+    public String update(@PathVariable int id, @ModelAttribute Task task, HttpSession session, Model model) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
           sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
+        }
+
+        if(task.getDeadline().isBefore(LocalDate.now())){
+
+            model.addAttribute("error","Deadline må ikke være før dags dato");
+
+            return "updatetask";
         }
 
         /* Id'et kommer fra URL'en og ikke nødvendigvis fra formularen.

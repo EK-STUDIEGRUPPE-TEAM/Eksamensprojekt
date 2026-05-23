@@ -19,8 +19,8 @@ public class TaskRepository {
     }
 
     public void addTask(Task task) {
-        String sql = "INSERT INTO Task (name, description, hourlyRate, status, subProject_id) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus().name(), task.getSubProjectId());
+        String sql = "INSERT INTO Task (name, description, deadline, hourlyRate, status, subProject_id) VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getDeadline(), task.getHourlyRate(), task.getStatus().name(), task.getSubProjectId());
     }
 
     public List<Task> getAllTasks() {
@@ -39,8 +39,8 @@ public class TaskRepository {
     }
 
     public int updateTask(Task task) {
-        String sql = "UPDATE Task SET name = ?, description = ?, hourlyRate = ?, status = ? WHERE task_id = ?";
-        return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourlyRate(), task.getStatus().name(), task.getId());
+        String sql = "UPDATE Task SET name = ?, description = ?, deadline = ?, hourlyRate = ?, status = ? WHERE task_id = ?";
+        return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getDeadline(), task.getHourlyRate(), task.getStatus().name(), task.getId());
     }
 
     public int deleteTaskBySubProjectId(int subProjectId) {

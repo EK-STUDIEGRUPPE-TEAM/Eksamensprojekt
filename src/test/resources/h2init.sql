@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS Task (
     task_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     description VARCHAR(200),
+    deadline DATE,
     status VARCHAR(50),
     hourlyRate DECIMAL(10,2),
     subProject_id INT,
@@ -71,11 +72,11 @@ VALUES (1, 'Test SubProject 1', 'DONE', 1);
 INSERT INTO SubProject (subProject_id, name, status, project_id)
 VALUES (2, 'Test SubProject 2', 'IN_PROGRESS', 1);
 
-INSERT INTO Task (task_id, name, description, status, hourlyRate, subProject_id)
-VALUES (1, 'Test Task 1', 'Task description 1', 'TODO', 250.00, 1);
+INSERT INTO Task (task_id, name, description, deadline, status, hourlyRate, subProject_id)
+VALUES (1, 'Test Task 1', 'Task description 1', '2026-05-30','TODO', 250.00, 1);
 
-INSERT INTO Task (task_id, name, description, status, hourlyRate, subProject_id)
-VALUES (2, 'Test Task 2', 'Task description 2', 'IN_PROGRESS', 300.00, 1);
+INSERT INTO Task (task_id, name, description, deadline, status, hourlyRate, subProject_id)
+VALUES (2, 'Test Task 2', 'Task description 2','2026-05-30', 'IN_PROGRESS', 300.00, 1);
 
 INSERT INTO SubTask (subTask_id, name, description, estimated_hours, status, task_id)
 VALUES (1, 'Test SubTask 1', 'SubTask description 1', 5, 'TODO', 1);

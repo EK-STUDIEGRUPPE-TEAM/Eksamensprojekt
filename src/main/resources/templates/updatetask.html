@@ -6,6 +6,13 @@
 </head>
 <body>
 <h1>Redigere Task</h1>
+
+
+<!-- Hvis valgte deadline er før dags dato, ville dette blive kaldt-->
+
+<p th:if="${error}"
+   th:text="${error}">
+</p>
 <main>
 
   <!--
@@ -42,6 +49,7 @@ og ikke *{task.name}
       <tr>
         <th>Opgavetitel</th>
         <th>Beskrivelse</th>
+        <th>Deadline</th>
         <th>Timepris</th>
         <th>Status</th>
       </tr>
@@ -53,6 +61,10 @@ og ikke *{task.name}
 
         <td>
           <input type="text" th:field="*{description}">
+        </td>
+
+        <td>
+          <input type="date" th:field="*{deadline}" required>
         </td>
 
         <td>

@@ -15,6 +15,7 @@ public class TaskRowMapper implements RowMapper<Task> {
                 rs.getInt("task_id"),
                 rs.getString("name"),
                 rs.getString("description"),
+                rs.getDate("deadline").toLocalDate(),
                 rs.getDouble("hourlyRate"),
                 Status.valueOf(rs.getString("status")),
                 rs.getInt("subProject_id")

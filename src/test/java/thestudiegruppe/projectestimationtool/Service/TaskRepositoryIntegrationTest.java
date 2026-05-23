@@ -9,6 +9,7 @@ import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.Task;
 import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +47,7 @@ public class TaskRepositoryIntegrationTest {
         Task task = new Task();
         task.setName("Test Task 3");
         task.setDescription("Task description 3");
+        task.setDeadline(LocalDate.of(2027,5, 22));
         task.setStatus(Status.DONE);
         task.setHourlyRate(100.0);
         task.setSubProjectId(1);
@@ -109,6 +111,7 @@ public class TaskRepositoryIntegrationTest {
         task.setId(taskId);
         task.setName("Test Task 4");
         task.setDescription("Task description 4");
+        task.setDeadline(LocalDate.of(2027,5, 22));
         task.setStatus(Status.IN_PROGRESS);
         task.setHourlyRate(500.0);
         task.setSubProjectId(1);
@@ -126,6 +129,7 @@ public class TaskRepositoryIntegrationTest {
         assertThat(updatedTask.getId()).isEqualTo(taskId);
         assertThat(updatedTask.getName()).isEqualTo("Test Task 4");
         assertThat(updatedTask.getDescription()).isEqualTo("Task description 4");
+        assertThat(updatedTask.getDeadline()).isEqualTo(LocalDate.of(2027,5, 22));
         assertThat(updatedTask.getStatus()).isEqualTo(Status.IN_PROGRESS);
         assertThat(updatedTask.getHourlyRate()).isEqualTo(500.0);
         assertThat(updatedTask.getSubProjectId()).isEqualTo(1);

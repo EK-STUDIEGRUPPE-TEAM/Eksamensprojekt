@@ -13,6 +13,7 @@ import thestudiegruppe.projectestimationtool.Repository.TaskRepository;
 import thestudiegruppe.projectestimationtool.Service.SubTaskService;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,8 +73,8 @@ class TaskServiceTest {
     @Test
     void getAllTasksShouldReturnTasks() {
         // Arrange: Vi laver 2 test-Tasks.
-        Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1", 250.0, Status.TODO, 1);
-        Task task2 = new Task(2, "Test Task 2", "Test for Task Service 2", 300.0, Status.IN_PROGRESS, 2);
+        Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1", LocalDate.of(2026,5,30), 250.0, Status.TODO, 1);
+        Task task2 = new Task(2, "Test Task 2", "Test for Task Service 2", LocalDate.of(2026,5,30),300.0, Status.IN_PROGRESS, 2);
 
         /* Vi samler dem i en liste, som repository skal returnere,
         når getAllTasks() bliver kaldt. */
@@ -131,8 +132,8 @@ class TaskServiceTest {
         int subProjectId1 = 1;
 
         // Vi laver 2 test-Tasks.
-        Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1", 250.0, Status.TODO, 1);
-        Task task2 = new Task(2, "Test Task 2", "Test for Task Service 2", 300.0, Status.IN_PROGRESS, 2);
+        Task task1 = new Task(1, "Test Task 1", "Test for Task Service 1",LocalDate.of(2026,5,30), 250.0, Status.TODO, 1);
+        Task task2 = new Task(2, "Test Task 2", "Test for Task Service 2",LocalDate.of(2026,5,30), 300.0, Status.IN_PROGRESS, 2);
 
         /* Vi samler tasks i en liste, som repository skal returnere,
         når getTasksBySubProjectId(subProjectId1) bliver kaldt. */
@@ -239,7 +240,7 @@ class TaskServiceTest {
     void getFullTasks_shouldReturnTasksWithCorrectTotalPrice() {
         // Arrange: Vi laver et gyldigt subProjectId og en test-Task.
         int subProjectId = 1;
-        Task task = new Task(1, "Test Task", "Test", 250.0, Status.TODO, 1);
+        Task task = new Task(1, "Test Task", "Test", LocalDate.of(2026,5,30),250.0, Status.TODO, 1);
 
         // Repository returnerer task når getTasksBySubProjectId kaldes.
         when(taskRepository.getTasksBySubProjectId(subProjectId)).thenReturn(List.of(task));
