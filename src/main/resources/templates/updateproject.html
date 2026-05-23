@@ -2,16 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update Project</title>
+    <title>Rediger projekt</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
-<h1>Rediger projekt</h1>
-
-<p th:if="${error}"
-   th:text="${error}">
-</p>
+<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
 
 <main>
+    <h1>Rediger projekt</h1>
+
+    <div class="error-msg" th:if="${error}" th:text="${error}"></div>
 
     <!--
     vi bruger form til at modtage de nye ændringer
@@ -26,32 +28,37 @@
     method="post" betyder at vi sender
     dataen til backend
     -->
+
     <form th:action="@{/projects/update/{id}(id=${project.id})}" th:object="${project}" method="post">
-
-
-        <table>
-            <tr>
-                <th>Navn</th>
-                <th>beskrivelse</th>
-                <th>Deadline</th>
-                <th>Budget</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td><input type="text" th:field="*{name}"></td>
-                <td><input type="text" th:field="*{description}"></td>
-                <td><input type="date" th:field="*{deadline}" required></td>
-                <td><input type="text" th:field="*{budget}"></td>
-                <td><select th:field="*{status}">
-                        <option value="TODO">Todo</option>
-                        <option value="IN_PROGRESS">Aktiv</option>
-                        <option value="DONE">Færdig</option>
-                </select></td>
-            </tr>
-        </table>
-        <button type="submit">Gem</button>
+        <div class="form-group">
+            <label>Navn</label>
+            <input type="text" th:field="*{name}">
+        </div>
+        <div class="form-group">
+            <label>Beskrivelse</label>
+            <input type="text" th:field="*{description}">
+        </div>
+        <div class="form-group">
+            <label>Deadline</label>
+            <input type="date" th:field="*{deadline}" required>
+        </div>
+        <div class="form-group">
+            <label>Budget (KR.)</label>
+            <input type="text" th:field="*{budget}">
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select th:field="*{status}">
+                <option value="TODO">Todo</option>
+                <option value="IN_PROGRESS">Aktiv</option>
+                <option value="DONE">Færdig</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit">Gem ændringer</button>
+            <a class="btn-cancel" th:href="@{/projects}">Annuller</a>
+        </div>
     </form>
-    <a th:href="@{/projects}"> Annuller</a>
 </main>
 </body>
 </html>

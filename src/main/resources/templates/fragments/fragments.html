@@ -19,17 +19,13 @@
         Projector
     </h1>
 
-    <!-- Vi tjekker først om brugeren er logget ind
-    Hvis de er, så bruger vi sessions til at hente brugerens navn -->
-    <h3 th:if="${session.userName != null}" th:text="${session.userName}"></h3>
-
 </header>
 
 <!-- nav fragment så vi kan have et sidepanel
     på hver side ligesom vores prototype-->
 <nav th:fragment="navfragment">
     <!-- hyperlink til dashboard viewpoint-->
-    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/dashboard}">Oversigt</a>
 
     <!-- hyperlink til projekt viewpoint-->
     <!-- fører til en projekt side

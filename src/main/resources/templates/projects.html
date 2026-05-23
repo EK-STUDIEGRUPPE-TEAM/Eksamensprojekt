@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>AlleProjekter</title>
+    <title>Projekter</title>
+    <link rel="stylesheet" href="/css/global.css">
 </head>
-
 <body>
 <!-- Bliver replacet af vores header fragment-->
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
@@ -12,42 +12,31 @@
 <!-- Bliver replacet af vores nav fragment-->
 <nav th:replace="~{fragments/fragments :: navfragment}"></nav>
 
+<main>
+    <h1>Projekter</h1>
+    <a class="btn-create" th:href="@{/projects/addproject}">+ Opret projekt</a>
 
-<h1>Projekter</h1>
-
-<!--<a th:href="@{/}">Opret projekt</a>-->
-<a th:href="@{/projects/addproject}">
-    Opret projekt
-</a>
-<table>
-    <thead>
-    <tr>
-        <th>Navn</th>
-        <th>Status</th>
-        <th>Dato oprettet</th>
-        <th>Deadline</th>
-        <th colspan="2"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="project : ${projects}">
-        <td>
-          <a th:href="@{/projects/{id}(id=${project.id})}" th:text="${project.name}"></a>
-        </td>
-        <td th:text="${project.status}"></td>
-        <td th:text="${project.date}"></td>
-        <td th:text="${project.deadline}"></td>
-        <td>
-            <a th:href="@{/projects/update/{id}(id=${project.id})}">Rediger</a>
-        </td>
-        <td>
-            <a th:href="@{/projects/delete/{id}(id=${project.id})}">Slet </a>
-        </td>
-
-    </tr>
-    </tbody>
-</table>
-
-
+    <table>
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Status</th>
+                <th>Dato oprettet</th>
+                <th>Deadline</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="project : ${projects}">
+                <td><a th:href="@{/projects/{id}(id=${project.id})}" th:text="${project.name}"></a></td>
+                <td th:text="${project.status}"></td>
+                <td th:text="${project.date}"></td>
+                <td th:text="${project.deadline}"></td>
+                <td><a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id})}">Rediger</a></td>
+                <td><a class="btn-delete" th:href="@{/projects/delete/{id}(id=${project.id})}">Slet</a></td>
+            </tr>
+        </tbody>
+    </table>
+</main>
 </body>
 </html>
