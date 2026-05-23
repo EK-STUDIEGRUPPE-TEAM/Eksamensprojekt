@@ -15,10 +15,10 @@
     så vi ikke behøver at skrive projector
     i toppen på hver html side -->
 <header th:fragment="headerfragment">
-    <h1>
-        Projector
-    </h1>
-
+    <!-- Logo linker til dashboard -->
+    <a th:href="@{/dashboard}" class="header-logo">
+        <h1>Projector_</h1>
+    </a>
 </header>
 
 <!-- nav fragment så vi kan have et sidepanel

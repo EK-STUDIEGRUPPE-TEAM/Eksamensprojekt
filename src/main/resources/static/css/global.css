@@ -43,14 +43,56 @@ header {
     border-bottom: 3px solid #402f1d;
 }
 
+/* Fjern link-styling fra header-logo */
+a.header-logo {
+    text-decoration: none;
+    display: inline-block;
+}
+
 header h1 {
     font-family: 'DM Mono', monospace;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #243d2c;
     margin: 0;
+    transform: perspective(250px) rotateX(8deg);
+    display: inline-block;
+
+    /* ---- GLASS EFFEKT ---- */
+    padding: 8px 20px;
+    border-radius: 12px;
+    background: rgba(36, 61, 44, 0.07);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    border: 1px solid rgba(36, 61, 44, 0.15);
+    box-shadow:
+        0 4px 16px rgba(36, 61, 44, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 0 6px 3px rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Øverste lysstreg */
+header h1::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+/* Venstre lysstreg */
+header h1::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent, rgba(255, 255, 255, 0.3));
 }
 
 header h3 {

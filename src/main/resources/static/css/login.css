@@ -125,6 +125,65 @@ input:-webkit-autofill:focus {
     text-decoration: underline;
 }
 
+/* ---- "VELKOMMEN TIL" OVERTITEL ---- */
+/* Specificitet (0,2,1) slår .hero p (0,1,1) */
+.hero p.hero-overtitle {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: #7a9e7a;
+    margin-bottom: 14px;
+}
+
+/* ---- PROJECTOR GLASS LOGO (kun forsiden) ---- */
+.projector-hero-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #243d2c;
+    margin-bottom: 36px;
+
+    padding: 18px 40px;
+    border-radius: 20px;
+    transform: perspective(600px) rotateX(10deg);
+    background: rgba(36, 61, 44, 0.09);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    border: 1px solid rgba(36, 61, 44, 0.18);
+    box-shadow:
+        0 8px 32px rgba(36, 61, 44, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 0 8px 4px rgba(255, 255, 255, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Øverste lysstreg */
+.projector-hero-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+/* Venstre lysstreg */
+.projector-hero-logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent, rgba(255, 255, 255, 0.3));
+}
+
 /* ---- HERO (forsiden) ---- */
 .hero {
     flex: 1;

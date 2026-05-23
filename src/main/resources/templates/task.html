@@ -14,34 +14,40 @@
     <!-- Tilbage-knap kun på denne side -->
     <a class="btn-back" th:href="@{/projects/{id}(id=${projectId})}">Tilbage til projekt</a>
 
-    <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
-    <h1 th:text="${task.name}"></h1>
+    <!-- Ydre flex-wrapper: venstre kolonne strækker sig lodret mod beskrivelse-boksen -->
+    <div class="task-main-layout">
 
-    <!-- Knap der sender brugeren til rediger-siden for den valgte task -->
-    <div class="form-actions" style="margin-bottom: 24px;">
-        <a class="btn-edit" th:href="@{/task/update/{id}(id=${task.id})}">Rediger task</a>
-        <!-- Delete bruger form og method="post", fordi vi ændrer/sletter data i databasen. -->
-        <form th:action="@{/task/deleteTask/{subProjectId}/{id}(subProjectId=${task.subProjectId}, id=${task.id})}" method="post" style="display:inline;">
-            <button type="submit" class="btn-sm-danger">Slet task</button>
-        </form>
+        <!-- Venstre kolonne: titel, knapper og deadline/status -->
+        <div class="task-left-col">
+            <h1 th:text="${task.name}"></h1>
+            <div class="form-actions" style="margin-bottom: 24px;">
+                <a class="btn-edit" th:href="@{/task/update/{id}(id=${task.id})}">Rediger task</a>
+                <!-- Delete bruger form og method="post", fordi vi ændrer/sletter data i databasen. -->
+                <form th:action="@{/task/deleteTask/{subProjectId}/{id}(subProjectId=${task.subProjectId}, id=${task.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn-sm-danger">Slet task</button>
+                </form>
+            </div>
+            <table class="info-table">
+                <tbody>
+                    <tr>
+                        <th>Deadline</th>
+                        <td th:text="${task.deadline}"></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td th:text="${task.status.displayName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Højre kolonne: beskrivelse strækker sig fra titel til bunden af tabellen -->
+        <div class="task-description-box">
+            <div class="task-description-label">Beskrivelse</div>
+            <div class="task-description-text" th:text="${task.description}"></div>
+        </div>
+
     </div>
-
-    <table class="info-table">
-        <tbody>
-            <tr>
-                <th>Beskrivelse</th>
-                <td th:text="${task.description}"></td>
-            </tr>
-            <tr>
-                <th>Deadline</th>
-                <td th:text="${task.deadline}"></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td th:text="${task.status.displayName}"></td>
-            </tr>
-        </tbody>
-    </table>
 
     <!-- Tabellen viser projektets subprojekter, tasks og subtasks -->
     <h2>Delopgaver</h2>
