@@ -33,8 +33,7 @@ public class ProjectController {
             return "redirect:/login";
         }
 
-        /* Vi henter userId fra sessionen.
-           userId blev gemt i sessionen, da brugeren loggede ind */
+        /* Vi henter userId fra sessionen userId blev gemt i sessionen, da brugeren loggede ind */
         Integer userId = SessionHelper.getLoggedInUserId(session);
         List<Project> projectList = projectService.findProjectByUserId(userId);
 
