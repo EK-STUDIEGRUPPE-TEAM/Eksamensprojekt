@@ -1,0 +1,103 @@
+/*
+   Dashboard CSS
+   Velkomsthero, stat-kort størrelse, forskudte animationer
+   (Keyframes ligger i animations.css, importeret via global.css)
+*/
+
+/* ---- VELKOMST HERO ---- */
+.dashboard-hero {
+    margin-bottom: 40px;
+    -webkit-animation: fade-in-fwd 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: fade-in-fwd 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.page-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #7a9e7a;
+    margin-bottom: 6px;
+}
+
+.welcome-heading {
+    font-size: 48px;
+    font-weight: 900;
+    color: #243d2c;
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* ---- STAT-KORT — udfyld bredde, forskudt glid-ind ---- */
+.stat-cards {
+    justify-content: center;
+}
+
+.stat-card {
+    flex: 1;
+    padding: 32px 36px;
+}
+
+.stat-label {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    color: rgba(122, 158, 122, 0.65);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+}
+
+/* ---- DEKORATIV STREG UNDER STAT-LABEL ---- */
+.stat-label::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin-top: 8px;
+    background: linear-gradient(to right, rgba(36, 61, 44, 0.35), transparent);
+    border-radius: 2px;
+}
+
+.stat-value {
+    font-size: 56px;
+}
+
+/* ---- KLIKBARE STAT-KORT ---- */
+a.stat-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* ---- GÅ TIL PROJEKTER CTA ---- */
+/* Forsinket så den starter EFTER kortene */
+.projects-cta {
+    display: inline-block;
+    margin-top: 28px;
+    color: #243d2c;
+    font-weight: 700;
+    font-size: 20px;
+    text-decoration: none;
+    -webkit-animation: bounce-in-right 1.1s 0.6s both;
+            animation: bounce-in-right 1.1s 0.6s both;
+}
+
+.projects-cta:hover {
+    text-decoration: underline;
+    opacity: 0.75;
+}
+
+.stat-card:nth-child(1) {
+    -webkit-animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.09s both;
+            animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.09s both;
+}
+
+.stat-card:nth-child(2) {
+    -webkit-animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.20s both;
+            animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.20s both;
+}
+
+.stat-card:nth-child(3) {
+    -webkit-animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.41s both;
+            animation: slide-in-blurred-bottom 0.44s cubic-bezier(0.230, 1.000, 0.320, 1.000) 0.41s both;
+}

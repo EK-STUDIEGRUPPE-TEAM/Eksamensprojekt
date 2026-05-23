@@ -1,0 +1,176 @@
+/*
+   Global CSS — Kerne
+   Importerer alle delmoduler og definerer:
+   reset · layout · header · nav · main · typografi · links
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
+@import url('animations.css');
+@import url('tables.css');
+@import url('buttons.css');
+@import url('forms.css');
+@import url('cards.css');
+
+/* ---- NULSTIL ---- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- LAYOUT ---- */
+body {
+    font-family: 'Inter', sans-serif;
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "nav    main";
+    grid-template-columns: 215px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    background: #f4f6f4;
+    color: #1a2e1f;
+}
+
+/* ---- HEADER ---- */
+header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: #fff;
+    border-bottom: 3px solid #402f1d;
+}
+
+header h1 {
+    font-family: 'DM Mono', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #243d2c;
+    margin: 0;
+}
+
+header h3 {
+    font-weight: 700;
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+/* ---- SIDEBJÆLKE NAV ---- */
+nav {
+    grid-area: nav;
+    background: #243d2c;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0;
+    min-height: 100%;
+}
+
+nav a {
+    display: block;
+    color: #e8e0cc;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 13px 24px;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+nav a:hover {
+    color: #fff;
+    border-left-color: #7dcf8a;
+    background: rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+}
+
+/* Aktiv side fremhævning */
+nav a.nav-active {
+    color: #fff;
+    border-left-color: #7dcf8a;
+    background: rgba(255, 255, 255, 0.06);
+    font-weight: 800;
+}
+
+nav form {
+    margin: 0;
+}
+
+nav form button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    color: #e8e0cc;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 13px 24px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+nav form button:hover {
+    color: #fff;
+    border-left-color: #7dcf8a;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- HOVEDINDHOLD ---- */
+main {
+    grid-area: main;
+    padding: 36px 40px;
+}
+
+/* Sider uden <main> — direkte body-børn efter nav */
+body > h1,
+body > h2,
+body > h3,
+body > p,
+body > a,
+body > table,
+body > form,
+body > div {
+    grid-column: 2;
+}
+
+/* ---- TYPOGRAFI ---- */
+h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #243d2c;
+    margin-bottom: 24px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #243d2c;
+    margin-bottom: 16px;
+}
+
+p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+/* ---- LINKS ---- */
+a {
+    color: #3a7a4a;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #243d2c;
+    text-decoration: underline;
+}
