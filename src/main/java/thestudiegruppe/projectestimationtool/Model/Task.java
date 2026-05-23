@@ -1,5 +1,6 @@
 package thestudiegruppe.projectestimationtool.Model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Task {
@@ -7,6 +8,7 @@ public class Task {
     private Integer id;
     private String name;
     private String description;
+    private LocalDate deadline;
     private double hourlyRate;
     private Status status;
     private List<SubTask> subTasks;
@@ -14,10 +16,13 @@ public class Task {
     private int estimatedHours;
     private double totalPrice;
 
-    public Task(Integer id, String name, String description, double hourlyRate, Status status, int subProjectId) {
+
+
+    public Task(Integer id, String name, String description, LocalDate deadline, double hourlyRate, Status status, int subProjectId) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.deadline = deadline;
         this.hourlyRate = hourlyRate;
         this.status = status;
         this.subProjectId = subProjectId;
@@ -100,5 +105,13 @@ public class Task {
 
     public void setTotalPrice(double totalprice) {
         this.totalPrice = totalprice;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
     }
 }

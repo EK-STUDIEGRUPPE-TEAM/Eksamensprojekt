@@ -130,6 +130,7 @@ public class ProjectRepositoryIntegrationTest {
        assertThat(updatedProject.getName()).isEqualTo("Test Project Update 1");
        assertThat(updatedProject.getDescription()).isEqualTo("Test description Update 1");
        assertThat(updatedProject.getDate()).isEqualTo(LocalDate.of(2027,5, 22));
+       assertThat(updatedProject.getDeadline()).isEqualTo(LocalDate.of(2027,5, 23));
        assertThat(updatedProject.getStatus()).isEqualTo(Status.TODO);
        assertThat(updatedProject.getBudget()).isEqualTo(100);
    }
