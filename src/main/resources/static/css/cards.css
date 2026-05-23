@@ -1,9 +1,9 @@
 /*
-   Kort CSS
+   Stat Kort CSS
    Stat-kort, info-stat-kort, projektsektioner, sidetitelrækker
 */
 
-/* ---- DASHBOARD STAT-KORT ---- */
+/* DASHBOARD STAT-KORT */
 .stat-cards {
     display: flex;
     gap: 20px;
@@ -41,7 +41,7 @@
     color: #243d2c;
 }
 
-/* ---- INFO-KORT RÆKKE (projektdetalje omslutning) ---- */
+/* INFO-KORT RÆKKE (projektdetalje omslutning) */
 .info-cards {
     display: flex;
     gap: 28px;
@@ -56,7 +56,7 @@
     margin-bottom: 0;
 }
 
-/* ---- INFO STAT-KORT (projektdetalje — lodret, mindre) ---- */
+/* INFO STAT-KORT*/
 .info-stat-cards {
     flex: 1;
     display: flex;
@@ -126,7 +126,7 @@
     margin-bottom: 0;
 }
 
-/* ---- DELPROJEKT SEKTIONER ---- */
+/* DELPROJEKT SEKTIONER */
 .subproject-section {
     margin-bottom: 36px;
 }

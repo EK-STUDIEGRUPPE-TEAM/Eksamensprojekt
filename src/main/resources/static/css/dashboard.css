@@ -4,7 +4,7 @@
    (Keyframes ligger i animations.css, importeret via global.css)
 */
 
-/* ---- VELKOMST HERO ---- */
+/* VELKOMST HERO */
 .dashboard-hero {
     margin-bottom: 40px;
     -webkit-animation: fade-in-fwd 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -28,7 +28,7 @@
     margin: 0;
 }
 
-/* ---- STAT-KORT — udfyld bredde, forskudt glid-ind ---- */
+/* STAT-KORT — udfyld bredde, forskudt glid-ind */
 .stat-cards {
     justify-content: center;
 }
@@ -48,7 +48,7 @@
     padding-bottom: 10px;
 }
 
-/* ---- DEKORATIV STREG UNDER STAT-LABEL ---- */
+/* DEKORATIV STREG UNDER STAT-LABEL */
 .stat-label::after {
     content: '';
     display: block;
@@ -62,14 +62,14 @@
     font-size: 56px;
 }
 
-/* ---- KLIKBARE STAT-KORT ---- */
+/*  KLIKBARE STAT-KORT */
 a.stat-card {
     text-decoration: none;
     color: inherit;
     display: block;
 }
 
-/* ---- GÅ TIL PROJEKTER CTA ---- */
+/*  GÅ TIL PROJEKTER CTA  */
 /* Forsinket så den starter EFTER kortene */
 .projects-cta {
     display: inline-block;

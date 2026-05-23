@@ -1,7 +1,7 @@
 /*
    Login / Signup / Index CSS
    Indlæses efter global.css — tilsidesætter body fra grid til flex-kolonne.
-   Header hentes fra fragment og er ens på alle sider.
+   Header hentes fra fragment.
 */
 
 /* LAYOUT TILSIDESÆTTELSE */
@@ -12,7 +12,7 @@ body {
     min-height: 100vh;
 }
 
-/* ---- LOGIN-KORT ---- */
+/* LOGIN-KORT */
 .login-card {
     background: #fff;
     border: 2px solid rgba(64, 47, 29, 0.18);
@@ -43,7 +43,7 @@ body {
     margin: 0;
 }
 
-/* ---- FORMULAR ---- */
+/* FORMULAR */
 .login-card form {
     display: flex;
     flex-direction: column;
@@ -89,7 +89,7 @@ input:-webkit-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-/* ---- INDSEND ---- */
+/* INDSEND */
 .login-card input[type="submit"] {
     margin-top: 8px;
     padding: 11px;
@@ -109,7 +109,7 @@ input:-webkit-autofill:focus {
     opacity: 0.88;
 }
 
-/* ---- TILBAGE-LINK ---- */
+/* TILBAGE-LINK */
 .back-link {
     display: block;
     text-align: center;
@@ -125,7 +125,7 @@ input:-webkit-autofill:focus {
     text-decoration: underline;
 }
 
-/* ---- "VELKOMMEN TIL" OVERTITEL ---- */
+/*  "VELKOMMEN TIL" PROJECT_ TITEL  */
 /* Specificitet (0,2,1) slår .hero p (0,1,1) */
 .hero p.hero-overtitle {
     font-size: 13px;
@@ -136,7 +136,7 @@ input:-webkit-autofill:focus {
     margin-bottom: 14px;
 }
 
-/* ---- PROJECTOR GLASS LOGO (kun forsiden) ---- */
+/* PROJECTOR GLASS LOGO (kun forsiden) */
 .projector-hero-logo {
     font-family: 'DM Mono', monospace;
     font-size: 28px;
@@ -184,7 +184,7 @@ input:-webkit-autofill:focus {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent, rgba(255, 255, 255, 0.3));
 }
 
-/* ---- HERO (forsiden) ---- */
+/* HERO (forsiden) */
 .hero {
     flex: 1;
     display: flex;

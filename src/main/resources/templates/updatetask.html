@@ -40,6 +40,12 @@
         <input type="hidden" th:field="*{subProjectId}">
 
         <!--
+        vi gemmer task id som hidden så formlen
+        stadig kender det rigtige id hvis siden vises igen med en fejlbesked
+        -->
+        <input type="hidden" th:field="*{id}">
+
+        <!--
 th:field binder inputfelterne til task objektet
 
 fordi vi har th:object="${task}",
@@ -56,7 +62,12 @@ og ikke *{task.name}
         </div>
         <div class="form-group">
             <label>Deadline</label>
-            <input type="date" th:field="*{deadline}" required>
+            <!--
+             vi bruger th:value fordi th:field
+             formaterer LocalDate på en måde som browser ikke forstår
+             hvilket gør at feltet vises tomt under update
+             -->
+            <input type="date" name="deadline" th:value="${task.deadline}" required>
         </div>
         <div class="form-group">
             <label>Timepris (KR.)</label>

@@ -3,7 +3,7 @@
    Styling til fejlsiden
 */
 
-/* ---- GIGANT TEKST ---- */
+/*  GIGANT Ups... TEKST  */
 /* h1.error-giant slår .hero h1 fra login.css på source order ved ens specificitet */
 h1.error-giant {
     font-size: 140px;
@@ -15,7 +15,7 @@ h1.error-giant {
             animation: slide-in-blurred-left 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 }
 
-/* ---- UNDERTEKST ---- */
+/* UNDERTEKST  */
 /* .hero p.error-subtitle (0,2,1) slår .hero p (0,1,1) fra login.css */
 .hero p.error-subtitle {
     font-size: 22px;
@@ -26,7 +26,7 @@ h1.error-giant {
             animation: fade-in-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) 0.35s both;
 }
 
-/* ---- FEJLBESKED ---- */
+/*  FEJLBESKED  */
 .hero .error-msg {
     align-self: center;
     -webkit-animation: fade-in-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) 0.5s both;

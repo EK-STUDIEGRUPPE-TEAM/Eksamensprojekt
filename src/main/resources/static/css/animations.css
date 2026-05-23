@@ -3,7 +3,7 @@
    Importeret af global.css så keyframes er tilgængelige overalt
 */
 
-/* ---- GLID IND FRA TOPPEN ---- */
+/* GLID IND FRA TOPPEN */
 @-webkit-keyframes slide-in-blurred-top {
     0% {
         -webkit-transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
@@ -87,7 +87,7 @@
     }
 }
 
-/* ---- GLID IND FRA VENSTRE ---- */
+/* GLID IND FRA VENSTRE */
 @-webkit-keyframes slide-in-blurred-left {
     0% {
         -webkit-transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
@@ -129,7 +129,7 @@
     }
 }
 
-/* ---- NAV BLØD FADE-GLID (subtil, ikke irriterende) ---- */
+/* NAV BLØD FADE-GLID (subtil, ikke irriterende) */
 @keyframes navFadeIn {
     from {
         opacity: 0;
@@ -141,7 +141,7 @@
     }
 }
 
-/* ---- KORT POP-IN (hurtig skala+fade til login-kort) ---- */
+/* KORT POP-IN (hurtig skala+fade til login-kort) */
 @keyframes cardPopIn {
     from {
         opacity: 0;
@@ -153,7 +153,7 @@
     }
 }
 
-/* ---- GLID IND FRA HØJRE ---- */
+/* GLID IND FRA HØJRE */
 @-webkit-keyframes slide-in-blurred-right {
     0% {
         -webkit-transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
@@ -195,7 +195,7 @@
     }
 }
 
-/* ---- FADE IND FREMAD ---- */
+/*  FADE IND FREMAD */
 @-webkit-keyframes fade-in-fwd {
     0% {
         -webkit-transform: translateZ(-80px);
@@ -221,7 +221,7 @@
     }
 }
 
-/* ---- BOUNCE IND FRA HØJRE ---- */
+/* BOUNCE IND FRA HØJRE  */
 @-webkit-keyframes bounce-in-right {
     0%   { -webkit-transform: translateX(600px); transform: translateX(600px); -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; opacity: 0; }
     38%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; opacity: 1; }

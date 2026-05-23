@@ -1,7 +1,7 @@
 /*
    Global CSS — Kerne
    Importerer alle delmoduler og definerer:
-   reset · layout · header · nav · main · typografi · links
+   reset, layout, header, nav, main,  typografi , links
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
@@ -11,14 +11,14 @@
 @import url('forms.css');
 @import url('cards.css');
 
-/* ---- NULSTIL ---- */
+/*  NULSTIL  */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* ---- LAYOUT ---- */
+/*  LAYOUT  */
 body {
     font-family: 'Inter', sans-serif;
     display: grid;
@@ -32,7 +32,7 @@ body {
     color: #1a2e1f;
 }
 
-/* ---- HEADER ---- */
+/* - HEADER  */
 header {
     grid-area: header;
     display: flex;
@@ -60,7 +60,7 @@ header h1 {
     transform: perspective(250px) rotateX(8deg);
     display: inline-block;
 
-    /* ---- GLASS EFFEKT ---- */
+    /*  GLASS EFFEKT fra glassmorphism  */
     padding: 8px 20px;
     border-radius: 12px;
     background: rgba(36, 61, 44, 0.07);
@@ -102,7 +102,7 @@ header h3 {
     margin: 0;
 }
 
-/* ---- SIDEBJÆLKE NAV ---- */
+/*  SIDEBJÆLKE NAV */
 nav {
     grid-area: nav;
     background: #243d2c;
@@ -165,7 +165,7 @@ nav form button:hover {
     background: rgba(255, 255, 255, 0.06);
 }
 
-/* ---- HOVEDINDHOLD ---- */
+/* HOVEDINDHOLD */
 main {
     grid-area: main;
     padding: 36px 40px;
@@ -204,7 +204,7 @@ p {
     margin-bottom: 12px;
 }
 
-/* ---- LINKS ---- */
+/* LINKS */
 a {
     color: #3a7a4a;
     text-decoration: none;

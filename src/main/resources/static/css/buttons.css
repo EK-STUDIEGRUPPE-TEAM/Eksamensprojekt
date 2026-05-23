@@ -3,7 +3,7 @@
    Basisknapper, destruktive varianter og alle link-knap klasser
 */
 
-/* ---- BASISKNAP ---- */
+/* BASISKNAP */
 button,
 input[type="submit"] {
     padding: 9px 20px;
@@ -23,7 +23,7 @@ input[type="submit"]:hover {
     opacity: 0.88;
 }
 
-/* ---- DESTRUKTIVE KNAPPER ---- */
+/* DESTRUKTIVE KNAPPER */
 form[action*="delete"] button,
 form[action*="slet"] button,
 button.btn-danger,
@@ -37,7 +37,7 @@ button.btn-sm-danger {
     font-size: 12px;
 }
 
-/* ---- LINK-KNAPPER ---- */
+/* LINK-KNAPPER */
 a.btn-create {
     display: inline-block;
     margin-bottom: 18px;
@@ -124,7 +124,7 @@ a.btn-back:hover {
     text-decoration: underline;
 }
 
-/* ---- TILBAGE-KNAP INDE I FORM-ACTIONS ---- */
+/* TILBAGE-KNAP INDE I FORM-ACTIONS  */
 /* Når btn-back sidder ved siden af en submit-knap */
 .form-actions a.btn-back {
     margin-bottom: 0;
