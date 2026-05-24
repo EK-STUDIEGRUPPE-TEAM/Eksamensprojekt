@@ -56,7 +56,7 @@ public class UserControllerTest {
                 .sessionAttr("userId", 1)
                 .sessionAttr("userName", "Test"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("/login"));
+                .andExpect(redirectedUrl("/login"));
 
 
     }
