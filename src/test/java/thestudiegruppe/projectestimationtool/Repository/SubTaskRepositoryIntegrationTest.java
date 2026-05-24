@@ -1,4 +1,4 @@
-package thestudiegruppe.projectestimationtool.Service;
+package thestudiegruppe.projectestimationtool.Repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.SubTask;
-import thestudiegruppe.projectestimationtool.Repository.SubTaskRepository;
 
 import java.util.List;
 
