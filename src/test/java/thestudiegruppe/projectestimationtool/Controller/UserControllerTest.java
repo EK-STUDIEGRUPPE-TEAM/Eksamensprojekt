@@ -178,6 +178,7 @@ public class UserControllerTest {
 
         // Assert: Vi tjekker, at service ikke bliver kaldt.
         verify(userService, never()).update(any(User.class));
+
     }
 
 
