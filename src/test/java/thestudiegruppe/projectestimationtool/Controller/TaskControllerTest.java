@@ -15,9 +15,9 @@ import thestudiegruppe.projectestimationtool.Service.ProjectService;
 import thestudiegruppe.projectestimationtool.Service.SubProjectService;
 import thestudiegruppe.projectestimationtool.Service.TaskService;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -64,26 +64,71 @@ class TaskControllerTest {
 
         mockMvc.perform(get("/task/1").sessionAttr("userId", 20))
                 .andExpect(status().isOk())
-                .andExpect((view().name("task")));
+                .andExpect(view().name("task"));
     }
 
     @Test
-    void addTask() {
+    void shouldAddTask() throws Exception {
+
+        mockMvc.perform(get("/task/addtask/2")
+                        .sessionAttr("userId", 1)
+                        .param("projectId", "10"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("addtask"));
     }
 
     @Test
-    void save() {
+    void save() throws Exception{
+
+        mockMvc.perform(post("/task/save")
+                        .sessionAttr("userId", 1)
+                        .param("projectId", "1")
+                        .param("name", "task 1")
+                        .param("deadline", "2027-01-01"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/projects/1"));
+
+        verify(taskService).createTask(any(Task.class));
     }
 
     @Test
-    void delete() {
+    void delete() throws Exception {
+        SubProject subProject = new SubProject();
+        subProject.setProjectId(10);
+
+        when(subProjectService.findSubProjectById(1)).thenReturn(subProject);
+
+
+        mockMvc.perform(post("/task/deleteTask/1/5")
+                        .sessionAttr("userId", 1))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/projects/10"));
+
+        verify(taskService).deleteTask(5);
     }
 
     @Test
-    void update() {
+    void update() throws Exception{
+
+        mockMvc.perform(post("/task/update/5")
+                .sessionAttr("userId", 10)
+                .param("deadline", "2027-01-01"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/task/5"));
+
+        verify(taskService).updateTask(any(Task.class));
     }
 
     @Test
-    void showUpdateTask() {
+    void showUpdateTask() throws Exception{
+        Task task = new Task();
+        task.setId(5);
+
+        when(taskService.findTaskById(5)).thenReturn(task);
+
+        mockMvc.perform(get("/task/update/5")
+                .sessionAttr("userId", 10))
+                .andExpect(status().isOk())
+                .andExpect(view().name("updatetask"));
     }
 }
