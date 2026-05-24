@@ -1,0 +1,252 @@
+/*
+   Login / Signup / Index CSS
+   Indlæses efter global.css — tilsidesætter body fra grid til flex-kolonne.
+   Header hentes fra fragment.
+*/
+
+/* LAYOUT TILSIDESÆTTELSE */
+/* global.css sætter body til grid; vi skifter til flex-kolonne på disse sider */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* LOGIN-KORT */
+.login-card {
+    background: #fff;
+    border: 2px solid rgba(64, 47, 29, 0.18);
+    border-radius: 16px;
+    box-shadow: -6px 6px 0px rgba(64, 47, 29, 0.65), 0 10px 28px rgba(64, 47, 29, 0.08);
+    padding: 40px 48px;
+    margin: 72px auto 0;
+    width: 100%;
+    max-width: 420px;
+    animation: cardPopIn 0.28s ease-out 0.05s both;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.login-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #243d2c;
+    margin-bottom: 6px;
+}
+
+.login-header p {
+    font-size: 13px;
+    color: #7a9e7a;
+    margin: 0;
+}
+
+/* FORMULAR */
+.login-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #243d2c;
+}
+
+.form-group input {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1.5px solid #c5d9c5;
+    background: #f9fdfb;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #243d2c;
+    box-shadow: 0 0 0 3px rgba(36, 61, 44, 0.1);
+    background: #fff;
+}
+
+/* Fjern browserens autofyld-gul baggrund */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #f9fdfb inset !important;
+    -webkit-text-fill-color: #1a2e1f !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* INDSEND */
+.login-card input[type="submit"] {
+    margin-top: 8px;
+    padding: 11px;
+    width: 100%;
+    border-radius: 999px;
+    background: #243d2c;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.login-card input[type="submit"]:hover {
+    opacity: 0.88;
+}
+
+/* TILBAGE-LINK */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: #243d2c;
+    text-decoration: underline;
+}
+
+/*  "VELKOMMEN TIL" PROJECT_ TITEL  */
+/* Specificitet (0,2,1) slår .hero p (0,1,1) */
+.hero p.hero-overtitle {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: #7a9e7a;
+    margin-bottom: 14px;
+}
+
+/* PROJECTOR GLASS LOGO (kun forsiden) */
+.projector-hero-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #243d2c;
+    margin-bottom: 36px;
+
+    padding: 18px 40px;
+    border-radius: 20px;
+    transform: perspective(600px) rotateX(10deg);
+    background: rgba(36, 61, 44, 0.09);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    border: 1px solid rgba(36, 61, 44, 0.18);
+    box-shadow:
+        0 8px 32px rgba(36, 61, 44, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 0 8px 4px rgba(255, 255, 255, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Øverste lysstreg */
+.projector-hero-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+/* Venstre lysstreg */
+.projector-hero-logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent, rgba(255, 255, 255, 0.3));
+}
+
+/* HERO (forsiden) */
+.hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 40px;
+    animation: cardPopIn 0.28s ease-out 0.05s both;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 900;
+    color: #243d2c;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    font-size: 16px;
+    color: #7a9e7a;
+    margin-bottom: 36px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 13px 36px;
+    border-radius: 999px;
+    background: #243d2c;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+    opacity: 0.88;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 36px;
+    border-radius: 999px;
+    background: transparent;
+    color: #243d2c;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border: 2px solid #243d2c;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(36, 61, 44, 0.08);
+    text-decoration: none;
+}

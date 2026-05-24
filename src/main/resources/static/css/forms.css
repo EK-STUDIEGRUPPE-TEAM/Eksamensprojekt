@@ -1,0 +1,95 @@
+/*
+   Formularer CSS
+   Inputfelter, etiketter, formulargrupper, fejltilstande
+*/
+
+/*  INPUTFELTER  */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1.5px solid #c5d9c5;
+    background: #f9fdfb;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    max-width: 320px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #243d2c;
+    box-shadow: 0 0 0 3px rgba(36, 61, 44, 0.1);
+    background: #fff;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #243d2c;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* ---- FORMULARGRUPPER ---- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #243d2c;
+    margin: 0;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    max-width: 360px;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* ---- FEJLBESKED ---- */
+.error-msg {
+    background: #fdecea;
+    color: #c0392b;
+    border-left: 4px solid #c0392b;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    max-width: 480px;
+}
+
+/* ---- FORMULAR LAYOUT (opret / rediger sider) ---- */
+main form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 480px;
+}
+
+/* Indsend-knap — venstrejusteret inde i formularen */
+main form input[type="submit"],
+main form button[type="submit"] {
+    align-self: flex-start;
+}

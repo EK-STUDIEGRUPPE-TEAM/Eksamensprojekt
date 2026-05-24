@@ -1,0 +1,101 @@
+/*
+   Tabeller CSS
+   Alle tabelstile, varianter og række-hjælpere
+*/
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 8px rgba(26, 46, 31, 0.06);
+}
+
+table thead tr {
+    background: #243d2c;
+    color: #fff;
+}
+
+table thead th {
+    padding: 13px 18px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #eef2ee;
+    transition: background 0.15s;
+}
+
+table tbody tr:last-child {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background: #f5faf5;
+}
+
+table tbody td,
+table tbody th {
+    padding: 13px 18px;
+    font-size: 14px;
+    color: #2d3e2d;
+}
+
+/* Colspan-celler (delprojekt / gruppeoverskrifter) */
+table tbody tr td[colspan],
+table tbody tr th[colspan] {
+    background: #eaf2ea;
+    font-weight: 700;
+    font-size: 14px;
+    color: #243d2c;
+}
+
+/* Info-tabel — nøgle/værdi-par */
+table.info-table {
+    width: auto;
+    min-width: 300px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(26, 46, 31, 0.06);
+}
+
+table.info-table thead {
+    display: none;
+}
+
+table.info-table tbody th {
+    background: #eaf2ea;
+    font-weight: 700;
+    font-size: 13px;
+    color: #243d2c;
+    white-space: nowrap;
+    width: 180px;
+}
+
+table.info-table tbody td {
+    font-size: 14px;
+}
+
+/* Gruppeoverskriftsrækker */
+tr.group-header td {
+    background: #eaf2ea;
+    font-weight: 700;
+    font-size: 14px;
+    color: #243d2c;
+    border-bottom: 2px solid #c5d9c5;
+}
+
+/* Tilføj-række hjælper */
+tr.add-row td {
+    background: #f8fbf8;
+    padding: 8px 18px;
+}
+
+/* Statuskolonne fremhævning */
+td:first-child {
+    font-weight: 500;
+}

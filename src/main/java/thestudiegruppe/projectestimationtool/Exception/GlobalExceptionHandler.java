@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     // Catcher alle generic exceptions som ikke bliver fanget af vores custom exceptions
     @ExceptionHandler(Exception.class)
     public String handleGenericException(Model model) {
-        model.addAttribute("message", "Noget gik galt");
+        model.addAttribute("message", "Der opstod en uventet fejl");
         return "error";
     }
 

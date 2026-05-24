@@ -180,6 +180,9 @@ public class TaskController {
 
         if(task.getDeadline().isBefore(LocalDate.now())){
 
+            /* Vi sætter id'et på task objektet inden vi returnerer fejlsiden
+               så formlen kender den rigtige URL */
+            task.setId(id);
             model.addAttribute("error","Deadline må ikke være før dags dato");
 
             return "updatetask";

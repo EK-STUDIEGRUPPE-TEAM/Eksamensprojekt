@@ -201,6 +201,9 @@ public class ProjectController {
 
         if(project.getDeadline().isBefore(LocalDate.now())){
 
+            /* Vi sætter id'et på project objektet inden vi returnerer fejlsiden
+               så formlen kender den rigtige URL */
+            project.setId(id);
             model.addAttribute("error","Deadline må ikke være før dags dato");
 
             return "updateproject";

@@ -1,0 +1,146 @@
+/*
+   Knapper CSS
+   Basisknapper, destruktive varianter og alle link-knap klasser
+*/
+
+/* BASISKNAP */
+button,
+input[type="submit"] {
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #243d2c;
+    color: #fff;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    opacity: 0.88;
+}
+
+/* DESTRUKTIVE KNAPPER */
+form[action*="delete"] button,
+form[action*="slet"] button,
+button.btn-danger,
+button.btn-sm-danger {
+    background: #c0392b;
+    color: #fff;
+}
+
+button.btn-sm-danger {
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+/* LINK-KNAPPER */
+a.btn-create {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    background: #243d2c;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+a.btn-create:hover {
+    opacity: 0.88;
+    text-decoration: none;
+    color: #fff;
+}
+
+a.btn-create-sm {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: #243d2c;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+a.btn-create-sm:hover {
+    opacity: 0.88;
+    text-decoration: none;
+    color: #fff;
+}
+
+a.btn-edit {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: #e8f0e8;
+    color: #243d2c;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+a.btn-edit:hover {
+    background: #d0e4d0;
+    text-decoration: none;
+}
+
+a.btn-delete {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: #c0392b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+a.btn-delete:hover {
+    opacity: 0.85;
+    text-decoration: none;
+    color: #fff;
+}
+
+a.btn-back {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #888;
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+a.btn-back:hover {
+    color: #243d2c;
+    text-decoration: underline;
+}
+
+/* TILBAGE-KNAP INDE I FORM-ACTIONS  */
+/* Når btn-back sidder ved siden af en submit-knap */
+.form-actions a.btn-back {
+    margin-bottom: 0;
+    margin-left: 16px;
+    align-self: center;
+}
+
+a.btn-cancel {
+    color: #888;
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+    margin-left: 12px;
+}
+
+a.btn-cancel:hover {
+    color: #243d2c;
+    text-decoration: underline;
+}

@@ -1,0 +1,297 @@
+/*
+   Animationer CSS — Animista slide-in-blurred keyframes
+   Importeret af global.css så keyframes er tilgængelige overalt
+*/
+
+/* GLID IND FRA TOPPEN */
+@-webkit-keyframes slide-in-blurred-top {
+    0% {
+        -webkit-transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+                transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+        -webkit-transform-origin: 50% 0%;
+                transform-origin: 50% 0%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+                transform: translateY(0) scaleY(1) scaleX(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-blurred-top {
+    0% {
+        -webkit-transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+                transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+        -webkit-transform-origin: 50% 0%;
+                transform-origin: 50% 0%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+                transform: translateY(0) scaleY(1) scaleX(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* ---- GLID IND FRA BUNDEN ---- */
+@-webkit-keyframes slide-in-blurred-bottom {
+    0% {
+        -webkit-transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+                transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+        -webkit-transform-origin: 50% 100%;
+                transform-origin: 50% 100%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+                transform: translateY(0) scaleY(1) scaleX(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-blurred-bottom {
+    0% {
+        -webkit-transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+                transform: translateY(1000px) scaleY(2.5) scaleX(0.2);
+        -webkit-transform-origin: 50% 100%;
+                transform-origin: 50% 100%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+                transform: translateY(0) scaleY(1) scaleX(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* GLID IND FRA VENSTRE */
+@-webkit-keyframes slide-in-blurred-left {
+    0% {
+        -webkit-transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
+                transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
+        -webkit-transform-origin: 100% 50%;
+                transform-origin: 100% 50%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0) scaleX(1) scaleY(1);
+                transform: translateX(0) scaleX(1) scaleY(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-blurred-left {
+    0% {
+        -webkit-transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
+                transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
+        -webkit-transform-origin: 100% 50%;
+                transform-origin: 100% 50%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0) scaleX(1) scaleY(1);
+                transform: translateX(0) scaleX(1) scaleY(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* NAV BLØD FADE-GLID (subtil, ikke irriterende) */
+@keyframes navFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* KORT POP-IN (hurtig skala+fade til login-kort) */
+@keyframes cardPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* GLID IND FRA HØJRE */
+@-webkit-keyframes slide-in-blurred-right {
+    0% {
+        -webkit-transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+                transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+        -webkit-transform-origin: 0% 50%;
+                transform-origin: 0% 50%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0) scaleX(1) scaleY(1);
+                transform: translateX(0) scaleX(1) scaleY(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-blurred-right {
+    0% {
+        -webkit-transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+                transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+        -webkit-transform-origin: 0% 50%;
+                transform-origin: 0% 50%;
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0) scaleX(1) scaleY(1);
+                transform: translateX(0) scaleX(1) scaleY(1);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/*  FADE IND FREMAD */
+@-webkit-keyframes fade-in-fwd {
+    0% {
+        -webkit-transform: translateZ(-80px);
+                transform: translateZ(-80px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+        opacity: 1;
+    }
+}
+@keyframes fade-in-fwd {
+    0% {
+        -webkit-transform: translateZ(-80px);
+                transform: translateZ(-80px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+        opacity: 1;
+    }
+}
+
+/* RUL IND FRA HØJRE (blurred) */
+@-webkit-keyframes roll-in-blurred-right {
+    0%   { -webkit-transform: translateX(1000px) rotate(720deg); transform: translateX(1000px) rotate(720deg); -webkit-filter: blur(50px); filter: blur(50px); opacity: 0; }
+    100% { -webkit-transform: translateX(0) rotate(0deg);        transform: translateX(0) rotate(0deg);        -webkit-filter: blur(0);    filter: blur(0);    opacity: 1; }
+}
+@keyframes roll-in-blurred-right {
+    0%   { -webkit-transform: translateX(1000px) rotate(720deg); transform: translateX(1000px) rotate(720deg); -webkit-filter: blur(50px); filter: blur(50px); opacity: 0; }
+    100% { -webkit-transform: translateX(0) rotate(0deg);        transform: translateX(0) rotate(0deg);        -webkit-filter: blur(0);    filter: blur(0);    opacity: 1; }
+}
+
+/* BOUNCE IND FRA HØJRE  */
+@-webkit-keyframes bounce-in-right {
+    0%   { -webkit-transform: translateX(600px); transform: translateX(600px); -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; opacity: 0; }
+    38%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; opacity: 1; }
+    55%  { -webkit-transform: translateX(68px);  transform: translateX(68px);  -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; }
+    72%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+    81%  { -webkit-transform: translateX(32px);  transform: translateX(32px);  -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; }
+    90%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+    95%  { -webkit-transform: translateX(8px);   transform: translateX(8px);   -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; }
+    100% { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+}
+@keyframes bounce-in-right {
+    0%   { -webkit-transform: translateX(600px); transform: translateX(600px); -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; opacity: 0; }
+    38%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; opacity: 1; }
+    55%  { -webkit-transform: translateX(68px);  transform: translateX(68px);  -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; }
+    72%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+    81%  { -webkit-transform: translateX(32px);  transform: translateX(32px);  -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; }
+    90%  { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+    95%  { -webkit-transform: translateX(8px);   transform: translateX(8px);   -webkit-animation-timing-function: ease-in; animation-timing-function: ease-in; }
+    100% { -webkit-transform: translateX(0);     transform: translateX(0);     -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+}
+
+/* ---- GLID IND FRA BUNDVENSTRE ---- */
+@-webkit-keyframes slide-in-blurred-bl {
+    0% {
+        -webkit-transform: translate(-1000px, 1000px) skew(-80deg, -10deg);
+                transform: translate(-1000px, 1000px) skew(-80deg, -10deg);
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translate(0, 0) skew(0deg, 0deg);
+                transform: translate(0, 0) skew(0deg, 0deg);
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-blurred-bl {
+    0% {
+        -webkit-transform: translate(-1000px, 1000px) skew(-80deg, -10deg);
+                transform: translate(-1000px, 1000px) skew(-80deg, -10deg);
+        -webkit-filter: blur(40px);
+                filter: blur(40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translate(0, 0) skew(0deg, 0deg);
+                transform: translate(0, 0) skew(0deg, 0deg);
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+    }
+}
+/* Animerer _ i projector til at blinke */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+}

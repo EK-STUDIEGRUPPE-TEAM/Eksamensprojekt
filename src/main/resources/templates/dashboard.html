@@ -3,27 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
 <!-- Bliver replacet af vores header fragment-->
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
 
 <!-- Bliver replacet af vores nav fragment-->
-<nav th:replace="~{fragments/fragments :: navfragment}"></nav>
+<nav th:replace="~{fragments/fragments :: navfragment('dashboard')}"></nav>
 
 <main>
-    <table>
-        <tr>
-            <th>Projekter i alt</th>
-            <th>Afsluttede projekter</th>
-            <th>Aktive projekter</th>
-        </tr>
-        <tr>
-            <td th:text="${totalprojects}"></td>
-            <td th:text="${completedprojects}"></td>
-            <td th:text="${activeprojects}"></td>
-        </tr>
-    </table>
+    <div class="dashboard-hero">
+        <p class="page-subtitle">Oversigt</p>
+        <h1 class="welcome-heading" th:if="${session.userName != null}" th:text="'Velkommen, ' + ${session.userName}">Velkommen</h1>
+    </div>
+
+    <div class="stat-cards">
+        <!-- Hvert kort linker til projektoversigten -->
+        <a class="stat-card" th:href="@{/projects}">
+            <div class="stat-label">Projekter i alt</div>
+            <div class="stat-value" th:text="${totalprojects}"></div>
+        </a>
+        <a class="stat-card" th:href="@{/projects}">
+            <div class="stat-label">Afsluttede projekter</div>
+            <div class="stat-value" th:text="${completedprojects}"></div>
+        </a>
+        <a class="stat-card" th:href="@{/projects}">
+            <div class="stat-label">Aktive projekter</div>
+            <div class="stat-value" th:text="${activeprojects}"></div>
+        </a>
+    </div>
+
+    <!-- CTA-link med bounce-animation efter kortene er landet -->
+    <a class="projects-cta" th:href="@{/projects}">Gå til mine projekter</a>
 </main>
 </body>
 </html>

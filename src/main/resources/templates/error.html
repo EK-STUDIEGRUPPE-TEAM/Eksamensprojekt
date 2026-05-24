@@ -2,13 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>error</title>
+    <title>Fejl</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/error.css">
 </head>
 <body>
-<h1>Noget gik galt</h1>
-//Viser custom exception besked eller hardcodet generic exception besked fra global exception handler
-<p th:text="${message}"></p>
-//Går tilbage til dashboard (eller til login skærm hvis brugeren ikke er logget ind)
-<a href="/dashboard">Gå tilbage</a>
+
+<header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
+<div class="hero">
+    <h1 class="error-giant">Ups...</h1>
+    <p class="error-subtitle">Noget gik galt</p>
+    <div class="error-msg" th:text="${message}"></div>
+    <a class="btn-back" href="/dashboard">Gå tilbage</a>
+</div>
+
 </body>
 </html>

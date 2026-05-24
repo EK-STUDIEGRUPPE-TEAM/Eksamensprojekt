@@ -1,0 +1,61 @@
+/*
+   Projekt CSS
+   Fade-in animation til projektdetalje-siden
+*/
+
+/*  FADE IND (hele siden)  */
+main {
+    animation: fade-in-fwd 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+/* TASK HOVED-LAYOUT — venstre kolonne + beskrivelse strækker sig */
+.task-main-layout {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+/* Venstre kolonne: titel, knapper, deadline/status — tager sin naturlige bredde */
+.task-left-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-left-col table.info-table {
+    margin-bottom: 0;
+    width: fit-content;
+}
+
+/* Beskrivelse-boks: strækker sig lodret fra top til bund af venstre kolonne */
+.task-description-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(26, 46, 31, 0.06);
+}
+
+/* Label-bjælke matcher info-table th-styling */
+.task-description-label {
+    background: #eaf2ea;
+    color: #243d2c;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 13px 18px;
+    border-bottom: 1px solid #eef2ee;
+}
+
+.task-description-text {
+    flex: 1;
+    padding: 16px 18px;
+    font-size: 14px;
+    color: #2d3e2d;
+    line-height: 1.6;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
+}

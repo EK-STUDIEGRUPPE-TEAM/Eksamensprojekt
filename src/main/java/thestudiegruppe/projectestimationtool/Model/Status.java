@@ -2,7 +2,7 @@ package thestudiegruppe.projectestimationtool.Model;
 
 public enum Status {
 
-    TODO("Todo"), IN_PROGRESS("In Progress"), DONE("Done");
+    TODO("Todo"), IN_PROGRESS("Aktiv"), DONE("Færdig");
 
     private final String displayName;
 

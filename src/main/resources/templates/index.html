@@ -2,21 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Projector</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
-
 <body>
-    <main>
-        <h3>Velkommen til Projector</h3>
 
-        <hr>
+<header>
+    <a class="header-logo" style="visibility: hidden;">
+        <h1>PROJECTOR</h1>
+    </a>
+</header>
 
-        <!-- Login og Opret bruger knapper -->
-        <nav>
-            <a th:href="@{/login}">Login</a>
-            <a th:href="@{/signup}">Opret bruger</a>
-        </nav>
+<div class="hero">
+    <!-- Lille overtitel over glaslogoet -->
+    <p class="hero-overtitle">Velkommen til</p>
+    <!-- Glassmorphism logo med 3D perspektiv — kun på forsiden -->
+    <div class="projector-hero-logo">PROJECTOR<span class="cursor">_</span></div>
+    <p>Beregn smartere. Byg stærkere.</p>
+    <!-- Login og Opret bruger knapper -->
+    <div class="hero-actions">
+        <a th:href="@{/login}" class="btn-primary">Login</a>
+        <a th:href="@{/signup}" class="btn-secondary">Opret bruger</a>
+    </div>
+</div>
 
-    </main>
 </body>
 </html>
