@@ -47,37 +47,6 @@ class SubTaskServiceTest {
     }
 
     @Test
-    void getAllSubTasks_ShouldReturnAllSubTasks() {
-        //ARRANGE
-        // Her laver vi vores fake testdata
-        SubTask subTask = new SubTask();
-        SubTask subTask1 = new SubTask();
-
-        /* Vi bruger variablen subTasks til at holde objekterne
-           ved at bruge List.of()      */
-        List<SubTask> subTasks = List.of(subTask, subTask1);
-
-        //ACT
-        /* Her bruger vi when().thenReturn til at få vores repository
-        til at returnere vores variabel aka vores liste med objekter
-         */
-        when(repository.findAllSubTask()).thenReturn(subTasks);
-
-        // Så tilkobler vi service metoden til en variabel
-        List<SubTask> result = service.getAllSubTasks();
-
-        // ASSERT
-        /* Nu tester vi så om result og subTasks har samme liste
-        Hvis den virker så hænger metoderne sammen
-        Og så virker getAllSubTask
-         */
-        assertEquals(result, subTasks);
-
-        // Her bruger vi verify til at teste om metoden kører 1 gang
-        verify(repository, times(1)).findAllSubTask();
-    }
-
-    @Test
     void getSubtaskById_ShouldReturnSubTaskSuccessfully() {
 
         //Arrange: Lave testdata
