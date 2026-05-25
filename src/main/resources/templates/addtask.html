@@ -37,7 +37,7 @@
 
         <div class="form-group">
             <label>Opgavetitel</label>
-            <input type="text" th:field="*{name}" maxlength="30">
+            <input type="text" th:field="*{name}" maxlength="30" required>
         </div>
         <div class="form-group">
             <label>Beskrivelse</label>
@@ -50,11 +50,11 @@
         <div class="form-group">
             <label>Timepris (KR.)</label>
             <!-- step tillader decimal tal -->
-            <input type="number" th:field="*{hourlyRate}" min="1" step=".01">
+            <input type="number" th:field="*{hourlyRate}" min="1" step=".01" required>
         </div>
         <div class="form-group">
             <label>Status</label>
-            <select th:field="*{status}">
+            <select th:field="*{status}" required>
                 <option value="TODO">Todo</option>
                 <option value="IN_PROGRESS">Aktiv</option>
                 <option value="DONE">Færdig</option>
