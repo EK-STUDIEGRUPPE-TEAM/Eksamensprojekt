@@ -87,7 +87,7 @@ public class SubProjectController {
         return "updatesubproject";
     }
 
-    @PostMapping("saveUpdate")
+    @PostMapping("/saveUpdate")
     // Opdaterer et delprojekt ud fra id'et i URL'en
     public String saveUpdate(@ModelAttribute SubProject subProject, HttpSession session) {
 
