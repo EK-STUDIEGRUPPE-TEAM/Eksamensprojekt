@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Task (
     task_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(200),
-    deadline DATE NOT NULL NOT NULL,
+    deadline DATE NOT NULL,
     status VARCHAR(50) NOT NULL,
     hourlyRate DECIMAL(10,2) NOT NULL,
     subProject_id INT NOT NULL,
