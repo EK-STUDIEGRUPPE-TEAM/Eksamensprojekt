@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import thestudiegruppe.projectestimationtool.Exception.InvalidLoginException;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.UserService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
@@ -36,23 +37,30 @@ public class UserController {
 
     @PostMapping("/login")
     // Modtager data fra login-formularen
-    public String login(@ModelAttribute User user, HttpSession session){
-
+    public String login(@ModelAttribute User user, HttpSession session, Model model){
         /*@ModelAttribute tager email og password fra HTML-formularen
           og lægger dem ind i et User-objekt*/
 
+        try {
         /* Vi bruger user.getEmail() og user.getPassword()
            til at tjekke om brugeren findes i databasen.
            Hvis brugeren findes, returnerer service-laget den fundne bruger*/
-        User loggedInUser = userService.findUserForLogIn(user.getEmail(), user.getPassword());
+            User loggedInUser = userService.findUserForLogIn(user.getEmail(), user.getPassword());
 
         /* Når brugeren er logget ind, gemmer vi brugerens id i sessionen.
            Så kan systemet huske hvem brugeren er på de næste sider */
-        session.setAttribute("userId", loggedInUser.getId());
-        session.setAttribute("userName", loggedInUser.getName());
+            session.setAttribute("userId", loggedInUser.getId());
+            session.setAttribute("userName", loggedInUser.getName());
 
-        // Når login lykkes, sendes brugeren videre til dashboard
-         return "redirect:/dashboard";
+            // Når login lykkes, sendes brugeren videre til dashboard
+            return "redirect:/dashboard";
+        } catch (InvalidLoginException e){
+            // Hvis login er forkert displayer vi vores custom exception på siden
+            model.addAttribute("error", e.getMessage());
+            //Vi adder user til modellen da vi bypasser
+            model.addAttribute("user", new User());
+            return "login";
+        }
     }
 
     @PostMapping("/logout")
