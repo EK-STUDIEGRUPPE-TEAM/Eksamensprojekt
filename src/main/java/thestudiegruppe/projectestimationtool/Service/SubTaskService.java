@@ -27,10 +27,6 @@ public class SubTaskService {
         subTaskRepository.addSubTask(subTask);
     }
 
-    public List<SubTask> getAllSubTasks() {
-        return subTaskRepository.findAllSubTask();
-    }
-
     public List<SubTask> getSubTasksByTaskId(int taskId) {
         return subTaskRepository.findSubTaskByTaskId(taskId);
     }

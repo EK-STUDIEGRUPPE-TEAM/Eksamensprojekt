@@ -51,24 +51,6 @@ public class SubTaskControllerTest {
                 .andExpect(redirectedUrl("/login"));
     }
 
-//    @Test
-//    void shouldShowSubTasks_WhenUserIsLoggedIn() throws Exception{
-//        // Arrange: Vi simulerer en bruger, der er logget ind,
-//        // og fortæller mock-service, at den skal returnere en tom liste.
-//
-//        when(subTaskService.getSubTasksByTaskId(1)).thenReturn(List.of());
-//
-//        // Act + Assert: Vi kalder subtask-endpointet og tjekker view + model.
-//        mockMvc.perform(get("/subtask/1")
-//                .sessionAttr("userId", 1))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("subtask"))
-//                .andExpect(model().attributeExists("subtasks"));
-//
-//        // Assert: Vi tjekker, at service bliver kaldt med taskId.
-//        verify(subTaskService).getSubTasksByTaskId(1);
-//
-//    }
 
     @Test
     void shouldSaveSubTask_WhenUserIsLoggedIn() throws Exception{

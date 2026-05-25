@@ -18,29 +18,6 @@ public class SubTaskController {
         this.subTaskService = subTaskService;
     }
 
-
-//    @GetMapping("/{taskId}")
-//    // Viser alle subtasks, der hører til en bestemt task
-//    public String getSubTasksByTaskId(@PathVariable int taskId, Model model, HttpSession session) {
-//
-//        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-//          Hvis der ikke findes et userId i sessionen,
-//          sendes brugeren tilbage til login-siden */
-//        if (!SessionHelper.isLoggedIn(session)){
-//            return "redirect:/login";
-//        }
-//
-//        /* @PathVariable henter taskId fra URL'en.
-//           Fx /subtask/3 betyder at taskId = 3 */
-//
-//        /* Vi bruger taskId til at hente alle subtasks,
-//           der hører til den valgte task */
-//        model.addAttribute("subtasks", subTaskService.getSubTasksByTaskId(taskId));
-//
-//        // Returnerer subtask.html fra templates-mappen
-//        return "subtask";
-//    }
-
     @GetMapping("/addsubtask/{taskId}")
     public String addSubTask(@PathVariable int taskId, Model model, HttpSession session){
 
