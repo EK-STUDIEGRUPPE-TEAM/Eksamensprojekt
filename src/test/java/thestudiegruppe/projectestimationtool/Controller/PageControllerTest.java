@@ -6,7 +6,9 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import thestudiegruppe.projectestimationtool.Model.Project;
+import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
+import thestudiegruppe.projectestimationtool.Service.UserService;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class PageControllerTest {
     @MockitoBean
     private ProjectService projectService;
 
+    @MockitoBean
+    private UserService userService;
+
     @Test
     void index() throws Exception{
 
@@ -33,12 +38,13 @@ public class PageControllerTest {
 
     @Test
     void shouldShowDashboard() throws Exception{
-
+        User user = new User();
         Project project = new Project();
         project.setUserId(1);
         List<Project> projects = List.of(project);
 
         when(projectService.findProjectByUserId(1)).thenReturn(projects);
+        when(userService.findUserById(1)).thenReturn(user);
 
         mockMvc.perform(get("/dashboard")
                 .sessionAttr("userId", 1))

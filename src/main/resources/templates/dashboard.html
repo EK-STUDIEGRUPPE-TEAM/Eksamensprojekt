@@ -16,7 +16,7 @@
 <main>
     <div class="dashboard-hero">
         <p class="page-subtitle">Oversigt</p>
-        <h1 class="welcome-heading" th:if="${session.userName != null}" th:text="'Velkommen, ' + ${session.userName}">Velkommen</h1>
+        <h1 class="welcome-heading" th:if="${userName != null}" th:text="'Velkommen, ' + ${userName}">Velkommen</h1>
     </div>
 
     <div class="stat-cards">

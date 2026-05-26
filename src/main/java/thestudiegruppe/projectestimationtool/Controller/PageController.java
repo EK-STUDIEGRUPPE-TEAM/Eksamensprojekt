@@ -8,6 +8,7 @@ import thestudiegruppe.projectestimationtool.Model.Project;
 import thestudiegruppe.projectestimationtool.Model.Status;
 import thestudiegruppe.projectestimationtool.Model.User;
 import thestudiegruppe.projectestimationtool.Service.ProjectService;
+import thestudiegruppe.projectestimationtool.Service.UserService;
 import thestudiegruppe.projectestimationtool.sessions.SessionHelper;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.List;
 public class PageController {
 
     private final ProjectService projectService;
+    private final UserService userService;
 
-    public PageController(ProjectService projectService) {
+    public PageController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -41,8 +44,10 @@ public class PageController {
 
         // Vi tilkobler projects der tilhører brugerens id til projects variablen
         List<Project> projects = projectService.findProjectByUserId(userId);
+        User user = userService.findUserById(userId);
 
         /* Hvis brugeren er logget ind så henter vi */
+        model.addAttribute("userName", user.getName());
         model.addAttribute("projects", projects);
         model.addAttribute("totalprojects", projects.size());
         model.addAttribute("completedprojects", projectService.projectsWithStatusCount(userId, Status.DONE));
