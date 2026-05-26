@@ -158,7 +158,7 @@ public class UserControllerTest {
                 .param("email", "test@mail.dk")
                 .param("password", "123"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/user/profile"));
+                .andExpect(redirectedUrl("/dashboard"));
 
         // Assert: Vi tjekker, at service bliver kaldt med et User-objekt.
         verify(userService).update(any(User.class));

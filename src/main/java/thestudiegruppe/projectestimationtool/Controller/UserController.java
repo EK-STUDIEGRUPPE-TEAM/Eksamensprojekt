@@ -114,7 +114,7 @@ public class UserController {
         userService.update(user);
 
         // Efter opdatering sendes brugeren tilbage til sin profilside
-        return "redirect:/user/profile";
+        return "redirect:/dashboard";
     }
 
     // Eventuelt slette denne mapping Grunden er, at /profile er bedre til “min profil”,
