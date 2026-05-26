@@ -73,10 +73,10 @@
                 <td th:text="${subtask.description}"></td>
                 <td>
                     <form th:action="@{/subtask/delete/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette denne delopgave?')">Slet delopgaven</button>
+                        <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette denne delopgave?')">Slet delopgave</button>
                     </form>
                 </td>
-                <td><a class="btn-edit" th:href="@{/subtask/update/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}">Rediger</a></td>
+                <td><a class="btn-edit" th:href="@{/subtask/update/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}">Rediger delopgave</a></td>
             </tr>
         </tbody>
     </table>

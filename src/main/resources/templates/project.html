@@ -16,7 +16,7 @@
     <div class="page-title-row">
         <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
     <h1 th:text="${project.name}"></h1>
-        <a class="btn-create" th:href="@{/projects/update/{id}(id=${project.id}, URL=${'/projects/' + project.id})}">Rediger projekt</a>
+        <a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id}, URL=${'/projects/' + project.id})}">Rediger projektet</a>
     </div>
 
     <div class="info-cards">
@@ -64,11 +64,11 @@
         <div class="subproject-header">
             <h2 th:text="${subproject.name}"></h2>
             <div class="subproject-actions">
-                <a class="btn-create-sm" th:href="@{/task/addtask/{subProjectId}(subProjectId=${subproject.id}, projectId=${project.id})}">+ Opret opgave</a>
+                <a class="btn-create-sm-diff" th:href="@{/task/addtask/{subProjectId}(subProjectId=${subproject.id}, projectId=${project.id})}">+ Opret opgave</a>
                 <form th:action="@{/subproject/delete/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}" method="post">
                     <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette dette delprojekt?')">Slet delprojekt</button>
                 </form>
-                <a class="btn-edit" th:href="@{/subproject/update/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}">Rediger</a>
+                <a class="btn-edit" th:href="@{/subproject/update/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}">Rediger delprojekt</a>
             </div>
         </div>
 

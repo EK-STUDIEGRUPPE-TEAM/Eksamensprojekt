@@ -23,7 +23,7 @@ input[type="submit"]:hover {
     opacity: 0.88;
 }
 
-/* DESTRUKTIVE KNAPPER */
+/* SLET KNAPPER */
 form[action*="delete"] button,
 form[action*="slet"] button,
 button.btn-danger,
@@ -43,7 +43,7 @@ a.btn-create {
     margin-bottom: 18px;
     padding: 9px 20px;
     border-radius: 999px;
-    background: #243d2c;
+    background: #395041;
     color: #fff;
     font-weight: 700;
     font-size: 13px;
@@ -70,6 +70,24 @@ a.btn-create-sm {
 }
 
 a.btn-create-sm:hover {
+    opacity: 0.88;
+    text-decoration: none;
+    color: #fff;
+}
+
+a.btn-create-sm-diff {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: #2171B5;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+a.btn-create-sm-diff:hover {
     opacity: 0.88;
     text-decoration: none;
     color: #fff;
