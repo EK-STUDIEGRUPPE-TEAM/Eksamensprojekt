@@ -11,11 +11,11 @@ VALUES ('Website Redesign', 'Redesign company website for better UX', '2026-05-0
        ('School Platform', 'Build an online learning platform', '2026-05-05', '2026-06-23','DONE', 99999, 3);
 
 -- SubProjects
-INSERT INTO SubProject (name, status, project_id)
-VALUES ('Frontend Module', 'IN_PROGRESS', 1),
-       ('Backend Module', 'TODO', 1),
-       ('Authentication System', 'TODO', 2),
-       ('Dashboard Features', 'DONE', 3);
+INSERT INTO SubProject (name, project_id)
+VALUES ('Frontend Module', 1),
+       ('Backend Module', 1),
+       ('Authentication System', 2),
+       ('Dashboard Features', 3);
 
 -- Tasks
 INSERT INTO Task (name, description, deadline, status, hourlyRate, subProject_id)
