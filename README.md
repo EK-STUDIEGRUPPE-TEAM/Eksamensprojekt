@@ -6,23 +6,28 @@
 
 [Scrum Board](https://github.com/orgs/EK-STUDIEGRUPPE-TEAM/projects/1)
 
+## Dokumentation
+
+Projektets dokumentation og diagrammer findes her:
+
+[Se dokumentation](docs/README.md)
 ---
 
 ## Teknologier
 
-| **Teknologi** 	| **Version**                 	|
-|---------------	|-----------------------------	|
-| Java          	| 21.0.8 Eclipse              	|
-| Spring Boot   	| 4.0.6                       	|
-| Thymeleaf     	| 4.0.6 (via Spring Boot)     	|
-| HTML          	| 5                           	|
-| CSS           	| 3                           	|
-| JDBC          	| 9.7.0 (via MySQL Connector) 	|
-| H2            	| 2.4.240                     	|
-| MySQL         	| 8.0.45                      	|
-| Maven         	| 3.9.15                      	|
-| IntelliJ IDE  	| 2025.3.2                    	|
-| Azure         	|                             	|
+| Teknologi | Version | Anvendelse |
+|----------|---------|------------|
+| Java | 21.0.8 | Programmeringssprog |
+| Spring Boot | 4.0.6 | Backend webapplikation |
+| Thymeleaf | via Spring Boot | HTML templates |
+| HTML | 5 | Struktur på websider |
+| CSS | 3 | Styling af websider |
+| JDBC | via MySQL Connector/J 9.7.0 | Databaseforbindelse |
+| MySQL | 8.0.45 | Produktionsdatabase |
+| H2 | 2.4.240 | Test-/udviklingsdatabase |
+| Maven | 3.9.15 | Build tool og dependency management |
+| IntelliJ IDEA | 2025.3.2 | Udviklingsmiljø |
+| Azure App Service |????| Deployment/hosting |
 
 ## Kør lokalt
 
