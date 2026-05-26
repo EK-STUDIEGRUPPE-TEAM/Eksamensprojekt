@@ -4,7 +4,12 @@ Her ligger projektets diagrammer og dokumentation.
 
 ## Diagrammer
 
-- ER-diagram
-- UML package diagram
-- Klassediagram
-- Qodana
+## ER-diagram
+
+![ER-diagram](er-diagram.png)
+
+## UML package diagram
+
+## Klassediagram
+
+## Qodana
