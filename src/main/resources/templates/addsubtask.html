@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label>Delopgavetitel</label>
-            <input type="text" th:field="*{name}" maxlength="30">
+            <input type="text" th:field="*{name}" maxlength="30" required>
         </div>
         <div class="form-group">
             <label>Beskrivelse</label>
@@ -26,11 +26,11 @@
         </div>
         <div class="form-group">
             <label>Estimerede timer</label>
-            <input type="number" th:field="*{estimatedHours}" min="1">
+            <input type="number" th:field="*{estimatedHours}" min="1" required>
         </div>
         <div class="form-group">
             <label>Status</label>
-            <select th:field="*{status}">
+            <select th:field="*{status}" required>
                 <option value="TODO">Todo</option>
                 <option value="IN_PROGRESS">Aktiv</option>
                 <option value="DONE">Færdig</option>
