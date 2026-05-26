@@ -6,7 +6,7 @@ Her ligger projektets diagrammer og dokumentation.
 
 ## ER-diagram
 
-![ER-diagram](er-diagram.png)
+![ER-diagram](images/er-diagram.png)
 
 ## UML package diagram
 
