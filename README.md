@@ -27,7 +27,7 @@ Projektets dokumentation og diagrammer findes her:
 | H2 | 2.4.240 | Test-/udviklingsdatabase |
 | Maven | 3.9.15 | Build tool og dependency management |
 | IntelliJ IDEA | 2025.3.2 | Udviklingsmiljø |
-| Azure App Service |????| Deployment/hosting |
+| Azure App Service | Version ikke relevant | Deployment/hosting |
 
 ## Kør lokalt
 
