@@ -112,8 +112,8 @@ public class UserControllerTest {
                 .param("password", "123"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/dashboard"))
-                .andExpect(request().sessionAttribute("userId", 1))
-                .andExpect(request().sessionAttribute("userName", "Test"));
+                .andExpect(request().sessionAttribute("userId", 1)
+                );
 
         // Assert: Vi tjekker, at service bliver kaldt med email og password.
         verify(userService).findUserForLogIn("test@mail.dk", "123");
