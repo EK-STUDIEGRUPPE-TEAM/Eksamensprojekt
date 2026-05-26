@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS Project (
 CREATE TABLE IF NOT EXISTS SubProject (
     subProject_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    status VARCHAR(50) NOT NULL,
     project_id INT NOT NULL,
     FOREIGN KEY (project_id) REFERENCES Project(project_id) ON DELETE CASCADE
     );

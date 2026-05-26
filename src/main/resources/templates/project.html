@@ -16,7 +16,7 @@
     <div class="page-title-row">
         <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
     <h1 th:text="${project.name}"></h1>
-        <a class="btn-create" th:href="@{/subproject/addsubproject/{projectId}(projectId=${project.id})}">+ Opret delprojekt</a>
+        <a class="btn-create" th:href="@{/projects/update/{id}(id=${project.id}, URL=${'/projects/' + project.id})}">Rediger projekt</a>
     </div>
 
     <div class="info-cards">
@@ -56,6 +56,8 @@
             </div>
         </div>
     </div>
+
+    <a class="btn-create" th:href="@{/subproject/addsubproject/{projectId}(projectId=${project.id})}">+ Opret delprojekt</a>
 
     <!-- Vi looper igennem hvert subprojekt der tilhører det korrekte projekt -->
     <div th:each="subproject : ${project.subProjects}" class="subproject-section">

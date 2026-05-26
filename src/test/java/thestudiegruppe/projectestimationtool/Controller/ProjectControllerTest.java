@@ -144,7 +144,7 @@ class ProjectControllerTest {
                 .param("budget", "10000"))
 
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/projects"));
+                .andExpect(view().name("redirect:/projects/1"));
 
 
     }

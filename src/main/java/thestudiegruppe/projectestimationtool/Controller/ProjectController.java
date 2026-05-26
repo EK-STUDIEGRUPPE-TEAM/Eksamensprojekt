@@ -172,7 +172,8 @@ public class ProjectController {
     @GetMapping("/update/{id}")
     public String showUpdatePage(@PathVariable int id,
                                  Model model,
-                                 HttpSession session) {
+                                 HttpSession session,
+                                 @RequestParam(required = false, defaultValue = "") String URL) {
 
         if(!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
@@ -185,12 +186,14 @@ public class ProjectController {
 
         model.addAttribute("project", project);
 
+        model.addAttribute("URL", URL);
         return "updateproject";
     }
 
+    // Vi bruger required = false ved requestparam så spring ikke crasher hvis der ikke er noget URL parameter
     @PostMapping("/update/{id}")
     // Opdaterer et projekt ud fra id'et i URL'en
-    public String update(@PathVariable int id, @ModelAttribute Project project, HttpSession session, Model model) {
+    public String update(@PathVariable int id, @ModelAttribute Project project, HttpSession session, @RequestParam(required = false, defaultValue = "") String URL, Model model) {
 
         /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
           Hvis der ikke findes et userId i sessionen,
@@ -229,8 +232,13 @@ public class ProjectController {
 
         projectService.updateProject(project);
 
-        // Efter opdatering sendes brugeren tilbage til projektoversigten
-        return "redirect:/projects";
+        // Efter opdatering sendes brugeren tilbage til projektoversigten hvis ikke på project template
+        if (URL.equals("/projects")){
+            return "redirect:/projects";
+        } else {
+            // Efter opdatering sendes brugeren tilbage til projektet hvis inde på project view
+            return "redirect:/projects/" + id;
+        }
     }
 
 
