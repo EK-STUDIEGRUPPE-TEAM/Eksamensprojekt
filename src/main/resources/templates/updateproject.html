@@ -31,10 +31,12 @@
 
     <form th:action="@{/projects/update/{id}(id=${project.id})}" th:object="${project}" method="post">
         <!--
-        vi gemmer projektets id som hidden så formlen
+        vi gemmer projektets id og URL som hidden så formlen
         stadig kender det rigtige id hvis siden vises igen med en fejlbesked
         -->
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" name="URL" th:value="${URL}">
+
         <div class="form-group">
             <label>Navn</label>
             <input type="text" th:field="*{name}" maxlength="30">
@@ -66,7 +68,7 @@
         </div>
         <div class="form-actions">
             <button type="submit">Gem ændringer</button>
-            <a class="btn-cancel" th:href="@{/projects}">Annuller</a>
+            <a class="btn-cancel" th:href="${URL}">Annuller</a>
         </div>
     </form>
 </main>
