@@ -278,8 +278,28 @@ class TaskServiceTest {
 
     }
 
+    // Tester at findFullTask returnerer en task med de korrekte subtasks sat på.
+    @Test
+    void findFullTask_shouldReturnTaskWithSubTasks() {
+        // Arrange: Vi laver en task og en subtask der hører til den
+        Task task = new Task();
+        task.setId(1);
 
+        SubTask subTask = new SubTask();
+        subTask.setTaskId(1);
 
+        List<SubTask> subTasks = List.of(subTask);
 
+        // Repository returnerer tasken og subTaskService returnerer subtasks.
+        when(taskRepository.findById(1)).thenReturn(task);
+        when(subTaskService.getSubTasksByTaskId(1)).thenReturn(subTasks);
+
+        // Act: Vi kalder service-metoden.
+        Task result = taskService.findFullTask(1);
+
+        /* Assert: Vi tjekker at subtasklisten er sat korrekt på task-objektet */
+        assertEquals(subTasks, result.getSubTasks());
+        verify(subTaskService, Mockito.times(1)).getSubTasksByTaskId(1);
+    }
 
 }
