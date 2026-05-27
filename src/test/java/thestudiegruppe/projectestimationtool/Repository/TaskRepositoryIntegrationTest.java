@@ -24,17 +24,15 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     void getAllTasks_ShouldReturnTasksFromDatabase(){
-        //Arrange: Vi henter som regel bare den data der allerede ligger inde i h2init.sql.
 
-
-        //Act: Henter alle tasks fra H2-databasen.
+        //Act
         List<Task> tasks = taskRepository.getAllTasks();
 
-        //Assert: Vi tjekker, at h2init.sql har oprettet 2 tasks.
+        //Assert
         assertThat(tasks)
                 .hasSize(2);
 
-        //Assert: Tjekker at testTaskne fra H2init.sql findes.
+        //Assert
         assertThat(tasks)
                 .extracting(Task::getName)
                 .contains("Test Task 1", "Test Task 2");
@@ -42,7 +40,8 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     void addTask_ShouldSaveNewTaskInDatabase(){
-        //Arrange: Vi laver en ny task og indsætter data.
+
+        //Arrange
         Task task = new Task();
         task.setName("Test Task 3");
         task.setDescription("Task description 3");
@@ -51,34 +50,34 @@ public class TaskRepositoryIntegrationTest {
         task.setHourlyRate(100.0);
         task.setSubProjectId(1);
 
-        //Act: Gemmer den nye task i H2-databasen.
+        //Act
         taskRepository.addTask(task);
 
-        //Assert: Henter alle tasks igen efter add.
+        //Assert
         List<Task> tasks = taskRepository.getAllTasks();
 
-        //Assert: Tjekker at der nu er 3 tasks efter add.
+        //Assert
         assertThat(tasks).hasSize(3);
 
-        //Assert: Tjekker at den nye task findes i databasen.
+        //Assert
         assertThat(tasks)
                 .extracting(Task::getName)
                 .contains("Test Task 3");
-        
     }
 
     @Test
     void deleteTask_ShouldDeleteTaskFromDatabase(){
-        //Arrange: Vi vælger et taskId, som allerede findes i h2init.sql.
+
+        //Arrange
         int taskId = 1;
 
-        //Act: Sletter tasken med det valgte id.
+        //Act
         taskRepository.deleteTask(taskId);
 
-        //Assert: Henter alle tasks efter delete.
+        //Assert
         List<Task> tasks = taskRepository.getAllTasks();
 
-        //Assert: tjekker at taskets id ikke længere findes.
+        //Assert
         assertThat(tasks)
                 .extracting(Task::getId)
                 .doesNotContain(taskId);
@@ -86,23 +85,25 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     void findTaskById_ShouldReturnTask_WhenTaskExists(){
-        //Arrange: Vi vælger et taskId, som allerede findes i h2init.sql.
+
+        //Arrange
         int taskId = 1;
 
-        //Act: Finder en task ud fra id.
+        //Act
         Task foundTask = taskRepository.findById(taskId);
 
-        //Assert: Tjekker at der faktisk blev fundet en task.
+        //Assert
         assertThat(foundTask).isNotNull();
 
-        //Assert: Tjekker at taskens id matcher det id, vi søgte efter.
+        //Assert
         assertThat(foundTask.getId())
                 .isEqualTo(taskId);
     }
 
     @Test
     void updateTask_ShouldUpdateTaskInDatabase(){
-        //Arrange: Vi vælger et taskId, som allerede findes i h2init.sql.
+
+        //Arrange
         int taskId = 1;
 
         //Arrange
@@ -115,16 +116,16 @@ public class TaskRepositoryIntegrationTest {
         task.setHourlyRate(500.0);
         task.setSubProjectId(1);
 
-        //Act: Opdaterer tasken i h2-databasen.
+        //Act
         taskRepository.updateTask(task);
 
-        //Assert: Henter tasken igen og tjekker de nye værdier.
+        //Assert
         Task updatedTask = taskRepository.findById(taskId);
 
-        //Assert: Tjekker at tasken stadig findes efter update.
+        //Assert
         assertThat(updatedTask).isNotNull();
 
-        //Assert: Tjekker at tasken har de nye værdier fra update.
+        //Assert
         assertThat(updatedTask.getId()).isEqualTo(taskId);
         assertThat(updatedTask.getName()).isEqualTo("Test Task 4");
         assertThat(updatedTask.getDescription()).isEqualTo("Task description 4");
@@ -136,19 +137,20 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     void findTaskBySubProjectId_ShouldReturnTasksForSubProject(){
-        //Arrange: Vi vælger et subProjectId, som allerede har tasks i h2init.sql.
+
+        //Arrange
         int subProjectId = 1;
 
-        //Act: Vi henter alle tasks, der tilhører subProjectId 1.
+        //Act
         List<Task> foundTasks = taskRepository.getTasksBySubProjectId(subProjectId);
 
-        //Assert: Vi tjekker, at listen ikke er null.
+        //Assert
         assertThat(foundTasks).isNotNull();
 
-        //Assert: Vi tjekker, at der er 2 tasks for subProjectId 1.
+        //Assert
         assertThat(foundTasks).hasSize(2);
 
-        //Assert: Vi tjekker, at alle tasks faktisk tilhører subProjectId 1.
+        //Assert
         assertThat(foundTasks)
                 .extracting(Task::getSubProjectId)
                 .containsOnly(subProjectId);
@@ -156,20 +158,21 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     void deleteTaskBySubProjectId_ShouldDeleteTasksForSubProject(){
-        //Arrange: Vi vælger et subProjectId, som allerede har tasks i h2init.sql.
+
+        //Arrange
         int subProjectId = 1;
 
-        //Act: Vi sletter alle tasks, der hører til subProjectId.
+        //Act
         int deletedTask = taskRepository.deleteTaskBySubProjectId(subProjectId);
 
-        // Assert: Vi henter tasks for samme subProjectId igen efter delete.
+        //Assert
         List<Task> taskAfterDelete = taskRepository.getTasksBySubProjectId(subProjectId);
 
 
-        //Assert: Tjekker at der faktisk blev slettet mindst én task.
+        //Assert
         assertThat(deletedTask).isGreaterThan(0);
 
-        //Assert: Tjekker at der ikke længere findes tasks for subProjectId.
+        //Assert
         assertThat(taskAfterDelete).isEmpty();
     }
 

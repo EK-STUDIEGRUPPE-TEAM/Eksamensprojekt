@@ -20,115 +20,101 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class SubProjectServiceTest {
 
-    //Laver fake version af repository
     @Mock
     private SubProjectRepository subProjectRepository;
 
     @Mock
     private TaskService taskService;
 
-    //Laver service-klasse og sætter vores fake version repository ind i den
     @InjectMocks
     private SubProjectService subProjectService;
 
-    //test for at tjekke om der returneres den liste som repository giver tilbage
     @Test
     void getAllSubProjectsShouldReturnList() {
 
-        //Her adder vi et project objekt og sætter dataen ind i et subProject
+       //Arrange
         int projectId = 1;
         SubProject subProject = new SubProject(1, "test SubProject", projectId);
 
-        // Viser at når repository bliver kaldt, så returner det test dataen
         when(subProjectRepository.getAllSubProjects()).thenReturn(List.of(subProject));
 
-        // tester om serivce-metoden virker
+        //Act
         List<SubProject> result = subProjectService.getAllSubProjects();
 
-        //Tjekker om vores resultat er det vi forventer
-        //om vi kan se SubProject med navnet "test Subprject" i listen
+        //Assert
         assertEquals(1, result.size());
         assertEquals("test SubProject", result.get(0).getName());
     }
 
-    //Tjekker om service kalder korrekt til repository
     @Test
     void deleteSubProjectShouldCallRepository() {
-        //Arrange: laver testData.
+
+        //Arrange
         int subProjectId = 1;
 
-        // kalder service
+        //Act
         subProjectService.deleteSubProject(subProjectId);
 
-        // tjekker om repository er blevet kaldt med værdien 1
+        //Assert
         verify(subProjectRepository).deleteSubProject(subProjectId);
     }
 
-    //test om createSubProject() bliver korrekt kaldt fra SubProjectService til SubProjectRepository
+
     @Test
     void createSubProjectShouldCallRepository() {
-          // ARRANGE
-        // Fake objekt som testdata
+
+        //Arrange
         SubProject subProject = new SubProject();
 
-        // ACT
-        // Her kalder vi på service metoden
+        //Act
         subProjectService.createSubProject(subProject);
 
-        // ASSERT
-        /* Tjekker om service sender objektet til repository
-        Hvis den gør så hænger de sammen
-         */
+        //Assert
         verify(subProjectRepository, times(1)).addSubProject(subProject);
     }
 
     @Test
     void updateSubProjectShouldCallRepository() {
-        // Arrange: laver testdata
+
+        //Arrange
         int projectId = 1;
         SubProject subProject = new SubProject(1, "test", projectId);
 
-        // Her kaldes update i service
+        //Act
         subProjectService.updateSubProject(subProject);
 
-        // Tjekker om repository bliver kaldt korrekt
+        //Assert
         verify(subProjectRepository).updateSubProject(subProject);
-
     }
 
     @Test
     void getSubProjectsByProjectId_shouldReturnSubProjects_whenProjectIdIsValid(){
-        //Arrange: Vi laver testData.
+
+        //Arrange
         int projectId = 1;
 
         SubProject subProject1 = new SubProject();
         SubProject subProject2 = new SubProject();
 
-        /* Vi samler vores subprojects i en liste,
-           som repository skal returnere. */
         List<SubProject> subProjects = List.of(subProject1, subProject2);
 
-        /* Vi fortæller mock-repository, at den skal returnere listen,
-           når getSubProjectsByProjectId(projectId) bliver kaldt. */
         when(subProjectRepository.getSubProjectsByProjectId(projectId)).thenReturn(subProjects);
 
-        // Act: Vi kalder service-metoden, som vi vil teste.
+        //Act
         List<SubProject> result = subProjectService.getSubProjectsByProjectId(projectId);
 
-        /* Assert: Vi tjekker, at resultatet fra service
-           er den samme liste, som repository returnerede. */
+        //Assert
         assertEquals(subProjects, result);
 
-        // Vi tjekker også, at repository-metoden blev kaldt præcis 1 gang.
+        //Assert
         verify(subProjectRepository, times(1)).getSubProjectsByProjectId(projectId);
-
-
     }
 
     // Tester at getFullSubProjects returnerer subprojekter med de korrekte tasks sat på.
     @Test
     void getFullSubProjects_shouldReturnSubProjectsWithTasks() {
-        // Arrange: Vi laver et subprojekt og en task, der hører til det.
+
+        //Arrange
         SubProject subProject = new SubProject();
         subProject.setId(1);
 
@@ -138,15 +124,13 @@ public class SubProjectServiceTest {
         List<SubProject> subProjects = List.of(subProject);
         List<Task> tasks = List.of(task);
 
-        // Repository returnerer subprojektet og taskService returnerer tasks for subprojektet.
         when(subProjectRepository.getSubProjectsByProjectId(1)).thenReturn(subProjects);
         when(taskService.getFullTasks(1)).thenReturn(tasks);
 
-        // Act: Vi kalder service metoden.
+        //Act
         List<SubProject> result = subProjectService.getFullSubProjects(1);
 
-        /* Assert: Vi tjekker at listen indeholder 1 subprojekt,
-        og at task-listen er sat korrekt på subprojekt objektet. */
+        //Assert
         assertEquals(1, result.size());
         assertEquals(tasks, result.get(0).getTasks());
         verify(taskService, times(1)).getFullTasks(1);
@@ -155,20 +139,17 @@ public class SubProjectServiceTest {
     @Test
     void getSubProjectByIdShouldReturnSubProjectSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         SubProject subProject = new SubProject();
         subProject.setId(1);
 
         when(subProjectRepository.findById(subProject.getId())).thenReturn(subProject);
 
-        //Act: Kalde metoden som testes fra serviceklassen
-
+        //Act
         subProjectService.findSubProjectById(subProject.getId());
 
-        //Assert: Kalder funktionen i service klassen, repository korrekt
-
+        //Assert
         verify(subProjectRepository).findById((subProject.getId()));
-
     }
 }
 

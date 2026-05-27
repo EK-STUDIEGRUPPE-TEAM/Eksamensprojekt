@@ -26,9 +26,6 @@ public class ProjectController {
     // Viser alle projekter på project-siden
     public String showProjects(Model model, HttpSession session) {
 
-       /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
@@ -37,11 +34,8 @@ public class ProjectController {
         Integer userId = SessionHelper.getLoggedInUserId(session);
         List<Project> projectList = projectService.findProjectByUserId(userId);
 
-        /* Vi bruger userId til kun at hente de projekter,
-           der tilhører den bruger, der er logget ind */
         model.addAttribute("projects" ,projectList);
 
-        // Returnerer project.html fra templates-mappen
         return "projects";
     }
 
@@ -49,11 +43,9 @@ public class ProjectController {
     @GetMapping("/{id}")
     public String showProject(Model model, @PathVariable Integer id, HttpSession session) {
 
-
         if(!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
-
 
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
@@ -70,7 +62,6 @@ public class ProjectController {
             return "redirect:/projects";
         }
 
-
         model.addAttribute("project", project);
         // Her sender vi projektet og summary-tallene videre til HTML-siden
         model.addAttribute("totalEstimatedHours", totalEstimatedHours);
@@ -81,33 +72,20 @@ public class ProjectController {
     }
 
     @GetMapping("/addproject")
-    // Viser formularen til at oprette et nyt projekt
     public String addProject(Model model, HttpSession session) {
 
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
 
-
-
-        /* Vi laver et tomt Project-objekt og sender det til HTML-siden.
-           Så Thymeleaf kan koble inputfelterne til project-objektets felter */
         model.addAttribute("project", new Project());
 
-        // Returnerer addproject.html fra templates-mappen
         return "addproject";
     }
 
     @PostMapping("/save")
-    // Modtager data fra addproject-formularen og gemmer projektet
     public String add(@ModelAttribute Project project, HttpSession session, Model model) {
 
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
@@ -119,44 +97,24 @@ public class ProjectController {
             return "addproject";
         }
 
-        /* Vi henter userId fra sessionen.
-           Det fortæller systemet hvilken bruger projektet skal tilhøre */
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
-        /* @ModelAttribute tager data fra HTML-formularen
-           og lægger dem ind i et Project-objekt */
-
-        /* Vi sender både project og userId videre til service-laget.
-           På den måde bliver projektet gemt med den rigtige user_id */
         projectService.createProject(project, userId);
 
-        // Efter projektet er oprettet, sendes brugeren tilbage til projektoversigten
         return "redirect:/projects";
     }
 
     @GetMapping("/delete/{id}")
-    // Sletter et projekt ud fra id'et i URL'en
     public String delete(@PathVariable int id, HttpSession session) {
 
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:login";
         }
 
-        /* Vi henter userId fra sessionen.
-           Det fortæller systemet hvilken bruger er logget ind */
-        int userId = SessionHelper.getLoggedInUserId(session);
+        Integer userId = SessionHelper.getLoggedInUserId(session);
 
-        /* Vi henter projekt som objekt og tilkobler det id'et
-        På den måde kan vi tjekke hvem projektet tilhører */
         Project project = projectService.findProjectById(id);
 
-        /* Vi sammenligner projektets user id med brugeren der logget ind
-        Hvis de matcher så går vi videre og sletter det
-        Hvis de ikke matcher så sender vi brugeren tilbage uden at slette
-         */
         if (project.getUserId() != userId) {
             return "redirect:/projects";
         }
@@ -165,21 +123,15 @@ public class ProjectController {
            Fx /project/delete/3 betyder at id = 3 */
         projectService.deleteProject(id);
 
-        // Efter sletning sendes brugeren tilbage til projektoversigten
         return "redirect:/projects";
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdatePage(@PathVariable int id,
-                                 Model model,
-                                 HttpSession session,
-                                 @RequestParam(required = false, defaultValue = "") String URL) {
+    public String showUpdatePage(@PathVariable int id, Model model, HttpSession session, @RequestParam(required = false, defaultValue = "") String URL) {
 
         if(!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
-
-
 
         Project project =
                 projectService.findProjectById(id);
@@ -195,35 +147,24 @@ public class ProjectController {
     // Opdaterer et projekt ud fra id'et i URL'en
     public String update(@PathVariable int id, @ModelAttribute Project project, HttpSession session, @RequestParam(required = false, defaultValue = "") String URL, Model model) {
 
-        /* Vi bruger SessionHelper til at tjekke om brugeren er logget ind.
-          Hvis der ikke findes et userId i sessionen,
-          sendes brugeren tilbage til login-siden */
         if (!SessionHelper.isLoggedIn(session)){
             return "redirect:/login";
         }
 
         if(project.getDeadline().isBefore(LocalDate.now())){
-
-            /* Vi sætter id'et på project objektet inden vi returnerer fejlsiden
-               så formlen kender den rigtige URL */
             project.setId(id);
+
             model.addAttribute("error","Deadline må ikke være før dags dato");
 
             return "updateproject";
         }
 
-
-         /* Vi henter userId fra sessionen.
-           Det sikrer at projektet stadig kobles til den bruger,
-           der er logget ind */
         Integer userId = SessionHelper.getLoggedInUserId(session);
 
 
-        // Hent eksisterende projekt
         Project existingProject =
                 projectService.findProjectById(id);
 
-        // Behold gamle værdier
         project.setId(id);
 
         project.setUserId(userId);
@@ -232,18 +173,10 @@ public class ProjectController {
 
         projectService.updateProject(project);
 
-        // Efter opdatering sendes brugeren tilbage til projektoversigten hvis ikke på project template
         if (URL.equals("/projects")){
             return "redirect:/projects";
         } else {
-            // Efter opdatering sendes brugeren tilbage til projektet hvis inde på project view
             return "redirect:/projects/" + id;
         }
     }
-
-
-    /* Lige nu bruger vi session til at sikre,
-   at kun loggede brugere kan tilgå projektfunktionerne.
-   Senere kan sessionens userId også bruges til at hente
-   og oprette projekter for den specifikke bruger. */
 }

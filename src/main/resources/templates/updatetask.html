@@ -8,91 +8,86 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
+
 <body>
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
+
     <h1>Rediger opgave</h1>
 
-    <!-- Hvis valgte deadline er før dags dato, ville dette blive kaldt-->
+
     <div class="error-msg" th:if="${error}" th:text="${error}"></div>
 
-    <!--
-  vi bruger form til at modtage de nye ændringer
-  fra brugeren
-
-  th:action sender tasken til vores update metode
-  i task controlleren
-
-  {id} bruges fordi vi skal vide hvilken task
-  der skal redigeres
-
-  method="post" betyder at vi sender
-  dataen til backend
-  -->
     <form th:action="@{/task/update/{id}(id=${task.id})}" th:object="${task}" method="post">
 
-        <!--
- subProjectId er hidden fordi brugeren ikke skal ændre det
-
- vi bruger det kun til at sende brugeren tilbage
- til den rigtige task-oversigt efter update
- -->
         <input type="hidden" th:field="*{subProjectId}">
 
-        <!--
-        vi gemmer task id som hidden så formlen
-        stadig kender det rigtige id hvis siden vises igen med en fejlbesked
-        -->
         <input type="hidden" th:field="*{id}">
 
-        <!--
-th:field binder inputfelterne til task objektet
+        <div class="form-group">
 
-fordi vi har th:object="${task}",
-skal vi kun skrive fx *{name}
-og ikke *{task.name}
--->
-        <div class="form-group">
             <label>Opgavetitel</label>
+
             <input type="text" th:field="*{name}" maxlength="30">
+
         </div>
+
         <div class="form-group">
+
             <label>Beskrivelse</label>
+
             <input type="text" th:field="*{description}" maxlength="200">
+
         </div>
+
         <div class="form-group">
+
             <label>Deadline</label>
-            <!--
-             vi bruger th:value fordi th:field
-             formaterer LocalDate på en måde som browser ikke forstår
-             hvilket gør at feltet vises tomt under update
-             -->
+
             <input type="date" name="deadline" th:value="${task.deadline}" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Timepris (KR.)</label>
+
             <input type="number" th:field="*{hourlyRate}" step="0.01">
+
         </div>
+
         <div class="form-group">
+
             <label>Status</label>
+
             <select th:field="*{status}">
+
                 <option value="TODO">Todo</option>
+
                 <option value="IN_PROGRESS">Aktiv</option>
+
                 <option value="DONE">Færdig</option>
+
             </select>
+
         </div>
+
         <div class="form-actions">
-            <!--
-når brugeren trykker gem,
-sendes de ændrede data til update metoden
--->
+
             <button type="submit">Gem ændringer</button>
-            <!-- Tilbage knap sender brugeren til task oversigten-->
+
             <a class="btn-cancel" th:href="@{/task/{Id}(Id=${id})}">Tilbage</a>
+
         </div>
+
     </form>
+
 </main>
+
 </body>
+
 </html>

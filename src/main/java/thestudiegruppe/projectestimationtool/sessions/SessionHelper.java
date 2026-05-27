@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 
 public class SessionHelper {
 
-    //Private constructor, så man ikke kan oprette et objekt af hjælpeklassen.
     private SessionHelper(){
     }
 
@@ -27,9 +26,5 @@ public class SessionHelper {
     }
 
     /* Vi bruger SessionHelper for at undgå gentagelse af session-kode
-   i flere controllers.
-   SessionHelper.isLoggedIn(session) tjekker om der findes et userId
-   i sessionen.
-   Hvis userId findes, er brugeren logget ind.
-   Hvis userId ikke findes, sendes brugeren tilbage til login-siden. */
+       i flere controllers.*/
 }

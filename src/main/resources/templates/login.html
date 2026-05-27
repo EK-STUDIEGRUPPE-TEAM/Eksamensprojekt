@@ -8,58 +8,47 @@
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
 
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
 
 <div class="login-card">
+
   <div class="login-header">
+
     <h1>Login</h1>
+
   </div>
+
   <div class="error-msg" th:if="${error}" th:text="${error}"></div>
-  <!--
-Denne form bruges til login.
 
-th:action="@{/user/login}"
-betyder at formularen sender data til /user/login,
-når brugeren trykker på Login.
-
-Vi bruger /user/login, fordi UserController har @RequestMapping("/user")
-og login-metoden har @PostMapping("/login").
-
-th:object="${user}"
-betyder at formularen arbejder med User-objektet,
-som PageController sender til login.html.
-
-method="post"
-betyder at formularen sender data til backend.
--->
   <form th:action="@{/user/login}" th:object="${user}" method="post">
+
     <div class="form-group">
+
       <label>Email</label>
-      <!--
-    Dette felt kobles til user.email.
-    Emailen bruges til at finde brugeren i databasen.
-    -->
+
       <input type="email" th:field="*{email}" placeholder="Indtast din email her" required/>
+
     </div>
+
     <div class="form-group">
+
       <label>Password</label>
-      <!--
-    Dette felt kobles til user.password.
-    Passwordet bruges sammen med email til at tjekke login.
-    -->
+
       <input type="password" th:field="*{password}" placeholder="Indtast dit password her" required/>
+
     </div>
-    <!--
-  Når brugeren trykker Login,
-  sendes email og password til /user/login.
-  -->
+
     <input type="submit" value="Login"/>
+
   </form>
 
   <a th:href="@{/}" class="back-link">Tilbage</a>
+
 </div>
 
 </body>
+
 </html>

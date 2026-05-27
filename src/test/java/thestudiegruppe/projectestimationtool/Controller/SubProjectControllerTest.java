@@ -35,100 +35,81 @@ class SubProjectControllerTest {
     @MockitoBean
     private ProjectService projectService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
-    void shouldShowAddSubProjectForm() throws Exception{
+    void shouldShowAddSubProjectForm_WhenUserIsLoggedIn() throws Exception{
 
-
+        //Act + Assert
         mockMvc.perform(get("/subproject/addsubproject/1")
                         .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("addsubproject"));
-
-
-
     }
 
     @Test
-    void shouldCreateSubProject() throws Exception {
+    void shouldCreateSubProject_WhenUserIsLoggedIn() throws Exception {
 
+        //Arrange
         Project project = new Project();
         project.setId(1);
         project.setDeadline(LocalDate.of(2027, 1, 1));
 
-
-
-
-        mockMvc.perform(post("/subproject/add/1").sessionAttr("userId", 1)
+        //Act + Assert
+        mockMvc.perform(post("/subproject/add/1")
+                        .sessionAttr("userId", 1)
                         .param("name", "test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/1"));
-
-
     }
 
     @Test
-    void shouldUpdateSubProject() throws Exception {
+    void shouldShowUpdateSubProjectPage_WhenUserIsLoggedIn() throws Exception {
 
+        //Arrange
         Project project = new Project();
         project.setId(1);
 
         SubProject subProject = new SubProject();
         subProject.setId(1);
 
-
-
       when(subProjectService.findSubProjectById(1)).thenReturn(subProject);
 
-
-        mockMvc.perform(get("/subproject/update/1/1").sessionAttr("userId", 1))
+        //Act + Assert
+        mockMvc.perform(get("/subproject/update/1/1")
+                        .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("updatesubproject"));
-
     }
 
     @Test
-    void shouldSaveUpdate() throws Exception{
+    void shouldSaveUpdatedSubProject_WhenUserIsLoggedIn() throws Exception{
 
-SubProject subProject = new SubProject();
+        //Arrange
+        SubProject subProject = new SubProject();
 
-
-        mockMvc.perform(post("/subproject/saveUpdate").sessionAttr("userId", 1)
-                        .param("name", "test").param("projectId", "1"))
-
+        //Act + Assert
+        mockMvc.perform(post("/subproject/saveUpdate")
+                        .sessionAttr("userId", 1)
+                        .param("name", "test")
+                        .param("projectId", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/1"));
-
-
     }
 
     @Test
-    void shouldDeleteSubProject() throws Exception{
+    void shouldDeleteSubProject_WhenUserIsLoggedIn() throws Exception{
 
-
-
+        //Arrange
         SubProject subProject = new SubProject();
         subProject.setProjectId(1);
         subProject.setId(1);
 
-
         when(subProjectService.findSubProjectById(1)).
                 thenReturn(subProject);
 
-        mockMvc.perform(post("/subproject/delete/1/1").sessionAttr("userId", 1))
+        //Act + Assert
+        mockMvc.perform(post("/subproject/delete/1/1")
+                        .sessionAttr("userId", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/1"));
-
-
-
-
-
     }
 }

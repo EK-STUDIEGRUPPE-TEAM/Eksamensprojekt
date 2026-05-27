@@ -8,65 +8,86 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
+
 <body>
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
+
     <h1>Tilføj opgave</h1>
 
     <div class="error-msg" th:if="${error}" th:text="${error}"></div>
 
-    <!--
-    vi bruger form for at modtage input fra brugeren
-
-    th:action fortæller vores th:object som er task
-    at modellen skal sendes til vores /save metode
-    som ligger i task controller
-
-        method="post" betyder at vi sender
-        dataen til vores backend
-    -->
     <form th:action="@{/task/save}" th:object="${task}" method="post">
-        <!--
-    herefter bruger vi th:field for at binde brugerinput
-    til de forskellige felter i task
 
-    subprojectid og projectid er hidden idet man ikke skal kunne ændre det
-    -->
         <input type="hidden" th:field="*{subProjectId}">
+
         <input type="hidden" name="projectId" th:value="${projectId}">
 
         <div class="form-group">
+
             <label>Opgavetitel</label>
+
             <input type="text" th:field="*{name}" maxlength="30" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Beskrivelse</label>
+
             <input type="text" th:field="*{description}" maxlength="200">
+
         </div>
+
         <div class="form-group">
+
             <label>Deadline</label>
+
             <input type="date" th:field="*{deadline}" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Timepris (KR.)</label>
+
             <!-- step tillader decimal tal -->
             <input type="number" th:field="*{hourlyRate}" min="1" step=".01" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Status</label>
+
             <select th:field="*{status}" required>
+
                 <option value="TODO">Todo</option>
+
                 <option value="IN_PROGRESS">Aktiv</option>
+
                 <option value="DONE">Færdig</option>
+
             </select>
+
         </div>
+
         <div class="form-actions">
+
             <button type="submit">Opret opgave</button>
+
             <a class="btn-cancel" th:href="@{/projects/{id}(id=${projectId})}">Annuler</a>
+
         </div>
+
     </form>
+
 </main>
+
 </body>
+
 </html>

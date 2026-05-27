@@ -36,17 +36,10 @@ class TaskControllerTest {
     @MockitoBean
     private ProjectService projectService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
-    void shouldShowTask() throws Exception {
+    void shouldShowTask_WhenUserOwnsProject() throws Exception {
 
+        //Arrange
         Task task = new Task();
         task.setId(1);
         task.setSubProjectId(5);
@@ -62,14 +55,17 @@ class TaskControllerTest {
         when(subProjectService.findSubProjectById(5)).thenReturn(subProject);
         when(projectService.findProjectById(10)).thenReturn(project);
 
-        mockMvc.perform(get("/task/1").sessionAttr("userId", 20))
+        //Act + Assert
+        mockMvc.perform(get("/task/1")
+                        .sessionAttr("userId", 20))
                 .andExpect(status().isOk())
                 .andExpect(view().name("task"));
     }
 
     @Test
-    void shouldAddTask() throws Exception {
+    void shouldShowAddTaskForm_WhenUserIsLoggedIn() throws Exception {
 
+        //Act + Assert
         mockMvc.perform(get("/task/addtask/2")
                         .sessionAttr("userId", 1)
                         .param("projectId", "10"))
@@ -78,8 +74,9 @@ class TaskControllerTest {
     }
 
     @Test
-    void save() throws Exception{
+    void shouldSaveTask_WhenUserIsLoggedIn() throws Exception{
 
+        //Act + Assert
         mockMvc.perform(post("/task/save")
                         .sessionAttr("userId", 1)
                         .param("projectId", "1")
@@ -88,44 +85,53 @@ class TaskControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/1"));
 
+        //Assert
         verify(taskService).createTask(any(Task.class));
     }
 
     @Test
-    void delete() throws Exception {
+    void shouldDeleteTask_WhenUserIsLoggedIn() throws Exception {
+
+        //Arrange
         SubProject subProject = new SubProject();
         subProject.setProjectId(10);
 
         when(subProjectService.findSubProjectById(1)).thenReturn(subProject);
 
-
+        //Act + Assert
         mockMvc.perform(post("/task/deleteTask/1/5")
                         .sessionAttr("userId", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/10"));
 
+        //Assert
         verify(taskService).deleteTask(5);
     }
 
     @Test
-    void update() throws Exception{
+    void shouldUpdateTask_WhenUserIsLoggedIn() throws Exception{
 
+        //Act + Assert
         mockMvc.perform(post("/task/update/5")
                 .sessionAttr("userId", 10)
                 .param("deadline", "2027-01-01"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/task/5"));
 
+        //Assert
         verify(taskService).updateTask(any(Task.class));
     }
 
     @Test
-    void showUpdateTask() throws Exception{
+    void shouldShowUpdateTaskPage_WhenUserIsLoggedIn() throws Exception{
+
+        //Arrange
         Task task = new Task();
         task.setId(5);
 
         when(taskService.findTaskById(5)).thenReturn(task);
 
+        //Act + Assert
         mockMvc.perform(get("/task/update/5")
                 .sessionAttr("userId", 10))
                 .andExpect(status().isOk())

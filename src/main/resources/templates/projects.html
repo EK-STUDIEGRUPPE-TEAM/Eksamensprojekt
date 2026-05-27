@@ -8,38 +8,65 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/pagefade.css">
 </head>
+
 <body>
-<!-- Bliver replacet af vores header fragment-->
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
 
-<!-- Bliver replacet af vores nav fragment-->
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
+
     <h1>Projekter</h1>
+
     <a class="btn-create" th:href="@{/projects/addproject}">+ Opret projekt</a>
 
     <table>
+
         <thead>
-            <tr>
-                <th>Navn</th>
-                <th>Status</th>
-                <th>Dato oprettet</th>
-                <th>Deadline</th>
-                <th colspan="2"></th>
-            </tr>
+
+        <tr>
+
+            <th>Navn</th>
+
+            <th>Status</th>
+
+            <th>Dato oprettet</th>
+
+            <th>Deadline</th>
+
+            <th colspan="2"></th>
+
+        </tr>
+
         </thead>
+
         <tbody>
-            <tr th:each="project : ${projects}">
-                <td><a th:href="@{/projects/{id}(id=${project.id})}" th:text="${project.name}"></a></td>
-                <td th:text="${project.status.displayName}"></td>
-                <td th:text="${project.date}"></td>
-                <td th:text="${project.deadline}"></td>
-                <td><a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id}, URL='/projects')}">Rediger projekt</a></td>
-                <td><a class="btn-delete" th:href="@{/projects/delete/{id}(id=${project.id})}" onclick="return confirm('Er du sikker på du vil slette denne opgave?')">Slet projekt</a></td>
-            </tr>
+
+        <tr th:each="project : ${projects}">
+
+            <td><a th:href="@{/projects/{id}(id=${project.id})}" th:text="${project.name}"></a></td>
+
+            <td th:text="${project.status.displayName}"></td>
+
+            <td th:text="${project.date}"></td>
+
+            <td th:text="${project.deadline}"></td>
+
+            <td><a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id}, URL='/projects')}">Rediger
+                projekt</a></td>
+
+            <td><a class="btn-delete" th:href="@{/projects/delete/{id}(id=${project.id})}"
+                   onclick="return confirm('Er du sikker på du vil slette denne opgave?')">Slet projekt</a></td>
+
+        </tr>
+
         </tbody>
+
     </table>
+
 </main>
+
 </body>
+
 </html>

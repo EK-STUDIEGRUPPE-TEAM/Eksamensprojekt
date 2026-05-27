@@ -20,9 +20,8 @@ public class SubProjectRepository {
 
 
     public void addSubProject(SubProject subProject) {
-        /* Opretter kun delprojektet, hvis project_id tilhører den loggede bruger */
-        String sql = "INSERT INTO SubProject(name, project_id) VALUES(?,?)";
 
+        String sql = "INSERT INTO SubProject(name, project_id) VALUES(?,?)";
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
@@ -37,6 +36,7 @@ public class SubProjectRepository {
 
     // kun admin og test
     public List<SubProject> getAllSubProjects() {
+
         String sql = "SELECT * FROM SubProject";
         return jdbcTemplate.query(sql, new SubProjectRowMapper());
     }
@@ -44,8 +44,8 @@ public class SubProjectRepository {
 
 
     public void updateSubProject(SubProject subProject) {
-        String sql = "UPDATE SubProject SET name = ? WHERE subProject_id = ?";
 
+        String sql = "UPDATE SubProject SET name = ? WHERE subProject_id = ?";
         jdbcTemplate.update(
                 sql,
                 subProject.getName(),
@@ -53,13 +53,14 @@ public class SubProjectRepository {
     }
 
     public SubProject findById(int id) {
+
         String sql = "SELECT * FROM SubProject WHERE subProject_id = ?";
-    return jdbcTemplate.queryForObject(sql, new SubProjectRowMapper(), id);
+        return jdbcTemplate.queryForObject(sql, new SubProjectRowMapper(), id);
     }
 
     public void deleteSubProject(int id) {
-        String sql = "DELETE FROM SubProject WHERE subProject_id = ?";
 
+        String sql = "DELETE FROM SubProject WHERE subProject_id = ?";
         jdbcTemplate.update(sql, id);
     }
 }

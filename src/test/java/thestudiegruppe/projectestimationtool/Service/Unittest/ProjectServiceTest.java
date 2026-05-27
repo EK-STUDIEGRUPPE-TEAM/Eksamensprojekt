@@ -27,11 +27,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ProjectServiceTest {
 
-
     @Mock
     private ProjectRepository projectRepository;
-    
-    
+
     @Mock
     private SubProjectService subProjectService;
 
@@ -42,34 +40,34 @@ class ProjectServiceTest {
     @Test
     void createProjectShouldCreateProjectSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         Project project = new Project();
         int userId = 1;
 
         Mockito.when(projectRepository.add(project, userId)).thenReturn(1);
 
-        //Act: Kalde metoden som vi vil teste, fra service klassen
-
+        //Act
         projectService.createProject(project, userId);
-        //Assert: Kalder funktionen i service klassen, repository korrekt
 
+        //Assert
         Mockito.verify(projectRepository).add(project, userId);
 
     }
 
     @Test
     void createProject_shouldReturnExceptionWhenVBudgetIsNegative(){
-        // Arrange: Vi laver testdata
+
+        //Arrange
         Project project = new Project();
         project.setBudget(-1);
         int userId = 1;
 
-        // Act: Vi gør så vores exception bliver kastet når projektet bliver lavet
+        //Act
         assertThrows(NegativeValueException.class, () -> {
             projectService.createProject(project, userId);
         });
 
-        // Assert: Vi bruger verify til at være sikker på at der aldrig blev addet til repository
+        //Assert
         verify(projectRepository, never()).add(project, userId);
     }
 
@@ -77,7 +75,7 @@ class ProjectServiceTest {
     @Test
     void getAllProjectsShouldReturnAllProjectsSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         List<Project> projects = new ArrayList<>();
 
         projects.add(new Project());
@@ -85,12 +83,10 @@ class ProjectServiceTest {
 
         Mockito.when(projectRepository.findAll()).thenReturn(projects);
 
-        //Act: Kalde metoden som testes fra serviceklassen
-
+        //Act
         projectService.findAllProjects();
 
-        //Assert: Kalder funktionen i service klassen, repository korrekt
-
+        //Assert
         Mockito.verify(projectRepository).findAll();
 
 
@@ -99,7 +95,7 @@ class ProjectServiceTest {
     @Test
     void getAllProjectsByUserIdShouldReturnProjectSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         List<Project> projects = new ArrayList<>();
         projects.add(new Project());
         projects.add(new Project());
@@ -110,13 +106,10 @@ class ProjectServiceTest {
         Mockito.when(projectRepository.findByUserId(user.getId())).thenReturn(projects);
 
 
-        //Act: Kalde metoden som testes fra serviceklassen
-
+        //Act
         projectService.findProjectByUserId(user.getId());
 
-
-        //Assert: Kalder funktionen i service klassen, repository korrekt
-
+        //Assert
         Mockito.verify(projectRepository).findByUserId(user.getId());
 
     }
@@ -124,62 +117,59 @@ class ProjectServiceTest {
     @Test
     void updateProjectShouldUpdateProjectSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         Project project = new Project();
 
-        //Act: Kalde metoden som testes fra serviceklassen
+        //Act
         projectService.updateProject(project);
-        //Assert: Kalder funktionen i service klassen, repository korrekt
 
+        //Assert
         Mockito.verify(projectRepository).update(project);
     }
 
     @Test
     void updateProject_shouldReturnExceptionWhenVBudgetIsNegative(){
-        // Arrange: Vi laver testdata
+
+        //Arrange
         Project project = new Project();
         project.setBudget(-1);
 
-        // Act: Vi gør så vores exception bliver kastet når projektet bliver opdateret
-
+        //Act
         assertThrows(NegativeValueException.class, () -> {
             projectService.updateProject(project);
         });
 
-        // Assert: Vi bruger verify til at være sikker på at update data adlrig blev sendt til repository
+        //Assert
         verify(projectRepository, never()).update(project);
     }
 
     @Test
     void deleteProjectShouldDeleteProjectSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         Project project = new Project();
         project.setId(1);
 
-        //Act: Kalde metoden som testes fra serviceklassen
+        //Act
         projectService.deleteProject(project.getId());
 
-        //Assert: Kalder funktionen i service klassen, repository korrekt
+        //Assert
         Mockito.verify(projectRepository).delete(project.getId());
-
     }
 
     @Test
     void getProjectByIdShouldReturnProjectSuccessfully() {
 
-        //Arrange: Lave testdata
+        //Arrange
         Project project = new Project();
         project.setId(1);
 
         Mockito.when(projectRepository.findById(project.getId())).thenReturn(project);
 
-        //Act: Kalde metoden som testes fra serviceklassen
-
+        //Act
         projectService.findProjectById(project.getId());
 
-        //Assert: Kalder funktionen i service klassen, repository korrekt
-
+        //Assert
         Mockito.verify(projectRepository).findById((project.getId()));
 
     }
@@ -187,27 +177,26 @@ class ProjectServiceTest {
     @Test
     void findProjectById_shouldThrowNotFoundExceptionWhenProjectNotFound() {
 
-        //Arrange: Lave testdata
+        //Arrange
         int projectId = 1;
 
         when(projectRepository.findById(projectId)).thenThrow(new EmptyResultDataAccessException(1));
 
 
-        //Act: Kalde metoden som testes fra serviceklassen
-
+        //Act
         assertThrows(NotFoundException.class, () -> projectService.findProjectById(projectId));
 
 
-        //Assert: Kalder funktionen i service klassen, repository korrekt
-
+        //Assert
         verify(projectRepository).findById(projectId);
     }
 
 
-    // Tester at findFullProject returnerer et projekt med de korrekte subprojekter sat på.
+
     @Test
     void findFullProject_shouldReturnProjectWithSubProjects() {
-        // Arrange: Vi laver et projekt og et subprojekt, der hører til det.
+
+        //Arrange
         Project project = new Project();
         project.setId(1);
 
@@ -216,23 +205,23 @@ class ProjectServiceTest {
 
         List<SubProject> subProjects = List.of(subProject);
 
-        // Repository returnerer projekte og subProjectService returnerer subprojekterne.
+
         when(projectRepository.findById(1)).thenReturn(project);
         when(subProjectService.getFullSubProjects(1)).thenReturn(subProjects);
 
-        // Act: Vi kalder service-metoden.
+        //Act
         Project result = projectService.findFullProject(1);
 
-        /* Assert: Vi tjekker at subprojektlisten er sat korrekt på projekt-objektet. */
+        //Assert
         assertEquals(subProjects, result.getSubProjects());
         verify(subProjectService, Mockito.times(1)).getFullSubProjects(1);
     }
 
-    // Tester at projectsWithStatusCount returnerer det korrekte antal projekter med en bestemt status.
+
     @Test
     void projectsWithStatusCount_shouldReturnCorrectCount_whenProjectsMatchStatus() {
 
-        //Arrange: Vi laver 3 projekter hvor 2 har status TODO og 1 har status DONE.
+        //Arrange
         int userId = 1;
         Project project1 = new Project();
         project1.setStatus(Status.TODO);
@@ -243,17 +232,14 @@ class ProjectServiceTest {
         Project project3 = new Project();
         project3.setStatus(Status.DONE);
 
-        /* Vi samler dem i en liste, som repository skal returnere
-        når findByUserId(userId) bliver kaldt. */
         List<Project> projects = List.of(project1, project2, project3);
 
         when(projectRepository.findByUserId(userId)).thenReturn(projects);
 
-        //Act: Vi kalder service metoden med status TODO
+        //Act
         int result = projectService.projectsWithStatusCount(userId, Status.TODO);
 
-        /* Assert: Vi tjekker, at resultatet er 2,
-        fordi kun 2 ud af 3 projekter har status TODO */
+        //Assert
         assertEquals(2, result);
         verify(projectRepository).findByUserId(userId);
     }
@@ -261,16 +247,16 @@ class ProjectServiceTest {
     @Test
     void findProjectsByUserId_shouldReturnEmptyList_whenUserHasNoProject() {
 
-        //Arrange: Lave testdata
+        //Arrange
         int userId = 1;
         List<Project> emptyProjects = new ArrayList<>();
 
         when(projectRepository.findByUserId(userId)).thenReturn(emptyProjects);
 
-        //Act: Kalde metoden som testes fra serviceklassen
+        //Act
         List<Project> result = projectService.findProjectByUserId(userId);
 
-        // Assert: Tjekker at listen er tom, men uden at kaste exception
+        // Assert
         Assertions.assertTrue(result.isEmpty());
         Mockito.verify(projectRepository).findByUserId(userId);
 
@@ -278,7 +264,8 @@ class ProjectServiceTest {
 
     @Test
     void getTotalEstimatedHoursOfWholeProject_shouldReturnTotalEstimatedHours() {
-        // Arrange: Vi laver testdata til ét project med ét subproject og to tasks
+
+        //Arrange
         int projectId = 1;
 
         Project project = new Project();
@@ -292,20 +279,20 @@ class ProjectServiceTest {
         SubProject subProject = new SubProject();
         subProject.setTasks(List.of(task1, task2));
 
-        // Vi mocker de metoder, som findFullProject() bruger
         when(projectRepository.findById(projectId)).thenReturn(project);
         when(subProjectService.getFullSubProjects(projectId)).thenReturn(List.of(subProject));
 
-        // Act: Vi kalder metoden, der skal testes
+        //Act
         double result = projectService.getTotalEstimatedHoursOfWholeProject(projectId);
 
-        // Assert: 3 + 5 = 8 timer
+        //Assert
         assertEquals(8.0, result, 0.001);
     }
 
     @Test
     void getTotalPriceOfWholeProject_shouldReturnTotalPrice() {
-        // Arrange: Vi laver testdata til ét project med ét subproject og to tasks
+
+        //Arrange
         int projectId = 1;
 
         Project project = new Project();
@@ -319,20 +306,20 @@ class ProjectServiceTest {
         SubProject subProject = new SubProject();
         subProject.setTasks(List.of(task1, task2));
 
-        // Vi mocker de metoder, som findFullProject() bruger
         when(projectRepository.findById(projectId)).thenReturn(project);
         when(subProjectService.getFullSubProjects(projectId)).thenReturn(List.of(subProject));
 
-        // Act: Vi kalder metoden, der skal testes
+        //Act
         double result = projectService.getTotalPriceOfWholeProject(projectId);
 
-        // Assert: 600 + 1000 = 1600 kr.
+        //Assert
         assertEquals(1600.0, result, 0.001);
     }
 
     @Test
     void getProjectDifference(){
-        // Arrange: Vi laver testdata til ét project med ét subproject og to tasks
+
+        //Arrange
         int projectId = 1;
 
         Project project = new Project();
@@ -347,16 +334,14 @@ class ProjectServiceTest {
         SubProject subProject = new SubProject();
         subProject.setTasks(List.of(task1, task2));
 
-        // Vi mocker de metoder, som findFullProject() bruger
         when(projectRepository.findById(projectId)).thenReturn(project);
         when(subProjectService.getFullSubProjects(projectId)).thenReturn(List.of(subProject));
 
-        // Act: Vi kalder metoden, der skal testes
+        //Act
         double result = projectService.getProjectDifference(projectId);
 
-        // Assert
+        //Assert
         assertEquals(1500, result);
         assertTrue(result > 0);
     }
-
 }

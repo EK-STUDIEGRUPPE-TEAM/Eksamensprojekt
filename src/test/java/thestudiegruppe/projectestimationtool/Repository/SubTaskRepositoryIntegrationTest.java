@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SpringBootTest
+
 @ActiveProfiles("test")
 @Sql(scripts = "classpath:h2init.sql", executionPhase = BEFORE_TEST_METHOD)
 public class SubTaskRepositoryIntegrationTest {
@@ -23,16 +24,15 @@ public class SubTaskRepositoryIntegrationTest {
 
     @Test
     void getAllSubTasks_ShouldReturnSubTasksFromDatabase(){
-        //Arrange: Vi henter som regel bare den data der allerede ligger inde i h2init.sql.
 
-        //Act: Henter alle subTasks fra h2-databasen.
+        //Act
         List<SubTask> subTasks = subTaskRepository.findAllSubTask();
 
-        //Assert: Vi tjekker, at h2init.sql har oprettet 2 subTasks.
+        //Assert
         assertThat(subTasks)
                 .hasSize(2);
 
-        //Assert: Tjekker at subTaskne fra h2init.sql findes.
+        //Assert
         assertThat(subTasks)
                 .extracting(SubTask::getName)
                 .contains("Test SubTask 1", "Test SubTask 2");
@@ -40,7 +40,8 @@ public class SubTaskRepositoryIntegrationTest {
 
     @Test
     void addSubTask_ShouldSaveNewSubTaskInDatabase(){
-        //Arrange: Vi laver en ny subTask og indsætter data.
+
+        //Arrange
         SubTask subTask = new SubTask();
         subTask.setName("Test SubTask 3");
         subTask.setDescription("SubTask description 3");
@@ -48,16 +49,16 @@ public class SubTaskRepositoryIntegrationTest {
         subTask.setStatus(Status.DONE);
         subTask.setTaskId(1);
 
-        //Act: Gemmer den nye subTask i h2-databasen.
+        //Act
         subTaskRepository.addSubTask(subTask);
 
-        //Assert: Henter alle subTaskne igen efter add.
+        //Assert
         List<SubTask> subTasks = subTaskRepository.findAllSubTask();
 
-        //Assert: Tjekker at der nu er 3 subTasks efter add.
+        //Assert
         assertThat(subTasks).hasSize(3);
 
-        //Assert: Tjekker at den ny subTask findes i databasen.
+        //Assert
         assertThat(subTasks)
                 .extracting(SubTask::getName)
                 .contains("Test SubTask 3");
@@ -65,16 +66,17 @@ public class SubTaskRepositoryIntegrationTest {
 
     @Test
     void deleteSubTask_ShouldDeleteSubTaskFromDatabase(){
-        //Arrange: Vi vælger et subTaskId, som allerede findes i h2init.sql.
+
+        //Arrange
        int subTaskId = 1;
 
-        //Act: Sletter subTasken med det valgte id.
+        //Act
         subTaskRepository.deleteSubTask(subTaskId);
 
-        //Assert: Henter alle subTasks efter delete.
+        //Assert
         List<SubTask> subTasks = subTaskRepository.findAllSubTask();
 
-        //Assert: tjekker at subTasken id ikke længere findes.
+        //Assert
         assertThat(subTasks)
                 .extracting(SubTask::getId)
                 .doesNotContain(subTaskId);
@@ -82,23 +84,25 @@ public class SubTaskRepositoryIntegrationTest {
 
     @Test
     void findSubTaskById_ShouldReturnSubTask_WhenSubTaskExists(){
-        //Arrange: Vi vælger et subTaskId, som allerede findes i h2init.sql.
+
+        //Arrange
         int subTaskId = 1;
 
-        //Act: Finder en subTask ud fra id.
+        //Act
         SubTask foundSubTask = subTaskRepository.findSubTaskById(subTaskId);
 
-        //Assert: Tjekker at der faktisk blev fundet en subTask.
+        //Assert
        assertThat(foundSubTask).isNotNull();
 
-        //Assert: Tjekker at subTaskens id matcher det id, vi søgte efter.
+        //Assert
         assertThat(foundSubTask.getId())
                 .isEqualTo(subTaskId);
     }
 
     @Test
     void updateSubTask_ShouldUpdateSubTaskInDatabase(){
-        //Arrange: Vi vælger et subTaskId, som allerede findes i h2init.sql.
+
+        //Arrange
         int subTaskId = 1;
 
         SubTask subTask = new SubTask();
@@ -109,16 +113,16 @@ public class SubTaskRepositoryIntegrationTest {
         subTask.setStatus(Status.IN_PROGRESS);
         subTask.setTaskId(1);
 
-        //Act: Opdaterer subTasken i h2-databasen.
+        //Act
         subTaskRepository.updateSubTask(subTask);
 
-        //Assert: Henter subTasken igen og tjekker de nye værdier.
+        //Assert
         SubTask updatedSubTask = subTaskRepository.findSubTaskById(subTaskId);
 
-        //Assert: Tjekker at subTasken stadig findes efter update.
+        //Assert
         assertThat(updatedSubTask).isNotNull();
 
-        //Assert: Tjekker at subTasken har de nye værdier fra update.
+        //Assert
         assertThat(updatedSubTask.getId()).isEqualTo(subTaskId);
         assertThat(updatedSubTask.getName()).isEqualTo("Test SubTask 4");
         assertThat(updatedSubTask.getDescription()).isEqualTo("SubTask description 4");
@@ -130,19 +134,20 @@ public class SubTaskRepositoryIntegrationTest {
 
     @Test
     void findSubTaskByTaskId_ShouldReturnSubTasksForTask(){
-        //Arrange: Vi vælger et taskId, som allerede har subTask i h2init.sql.
+
+        //Arrange
         int taskId = 1;
 
-        //Act: Vi henter alle subTasks, der tilhører taskId 1.
+        //Act
         List<SubTask> foundSubTasks = subTaskRepository.findSubTaskByTaskId(taskId);
 
-        //Assert: Vi tjekker, at listen ikke er null.
+        //Assert
         assertThat(foundSubTasks).isNotNull();
 
-        //Assert: Vi tjekker, at der er 2 subTasks for taskId 1.
+        //Assert
         assertThat(foundSubTasks).hasSize(2);
 
-        //Assert: Vi tjekker, at alle subTasks faktisk tilhører taskId 1.
+        //Assert
         assertThat(foundSubTasks)
                 .extracting(SubTask::getTaskId)
                 .containsOnly(taskId);
@@ -150,19 +155,19 @@ public class SubTaskRepositoryIntegrationTest {
 
     @Test
     void deleteSubTaskByTaskId_ShouldDeleteSubTasksForTask(){
-        //Arrange: Vi vælger et taskId, som allerede har subTasks i h2init.sql.
+        //Arrange
         int taskId = 1;
 
-        //Act: Vi sletter alle subTasks, der hører til taskId.
+        //Act
         int deletedSubTask = subTaskRepository.deleteSubTaskByTaskId(taskId);
 
-        //Assert: Vi henter subTasks for samme taskId igen efter delete.
+        //Assert
         List<SubTask> subTaskAfterDelete = subTaskRepository.findSubTaskByTaskId(taskId);
 
-        //Assert: Tjekker at der faktisk blev slettet mindst en subTask.
+        //Assert
         assertThat(deletedSubTask).isGreaterThan(0);
 
-        //Assert: Tjekker at der ikke længere findes subTasks for taskId.
+        //Assert
         assertThat(subTaskAfterDelete).isEmpty();
     }
 

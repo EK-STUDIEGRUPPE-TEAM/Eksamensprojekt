@@ -14,25 +14,20 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// Tester kun UserController og web-laget, ikke service/repository/database.
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
-    // Bruges til at sende fake HTTP-requests til controlleren.
     @Autowired
     private MockMvc mockMvc;
 
-    // UserService mockes, fordi vi kun tester controllerens flow.
     @MockitoBean
     private UserService userService;
 
 
     @Test
-    void shouldSignUpUser() throws Exception{
-        //Arrange: Vi sender brugerData som form-parametre.
+    void shouldSignUpUser_WhenFormIsValid() throws Exception{
 
-        // Act + Assert: Vi kalder signup-endpointet og tjekker, at brugeren sendes til login.
-        // param bruges, fordi signup-data kommer fra en formular.
+        //Act + Assert
         mockMvc.perform(post("/user/signup")
                 .param("name", "Test")
                 .param("email", "test@mail.dk")
@@ -40,33 +35,27 @@ public class UserControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-        // Assert: Vi tjekker, at controlleren kalder signUp-metoden i service-laget.
+        //Assert
         verify(userService).signUp(any(User.class));
     }
 
 
     @Test
-    void shouldLogUserOut() throws Exception{
-        // Arrange: Vi laver en fake session, som om brugeren er logget ind.
+    void shouldLogUserOut_WhenUserIsLoggedIn() throws Exception{
 
-        // Act: Vi sender en POST-request til logout.
-        // Assert: Vi tjekker, at brugeren redirectes til login.
-        // Du bruger sessionAttr, når controlleren skal bruge noget, der allerede ligger i sessionen.
+        //Act + Assert
         mockMvc.perform(post("/user/logout")
                 .sessionAttr("userId", 1)
                 .sessionAttr("userName", "Test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
-
-
     }
 
 
     @Test
     void shouldRedirectToLogin_WhenUserIsNotLoggedInAndTriesToSeeProfile() throws Exception{
-        // Arrange: Vi giver ikke session med, fordi brugeren ikke er logget ind.
 
-        // Act + Assert: Vi kalder profile-endpointet og tjekker, at brugeren sendes til login.
+        //Act + Assert
         mockMvc.perform(get("/user/profile"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
@@ -74,7 +63,7 @@ public class UserControllerTest {
 
     @Test
     void shouldShowProfile_WhenUserIsLoggedIn() throws Exception{
-        // Arrange: Vi laver en fake user og fortæller mock-service, hvad den skal returnere.
+        //Arrange
         User user = new User();
         user.setId(1);
         user.setName("Test");
@@ -83,21 +72,21 @@ public class UserControllerTest {
 
         when(userService.findUserById(1)).thenReturn(user);
 
-         // Act + Assert: Vi kalder profile-endpointet med session og tjekker profile-viewet.
+        //Act + Assert
         mockMvc.perform(get("/user/profile")
                 .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("profile"))
                 .andExpect(model().attributeExists("user"));
 
-        // Assert: Vi tjekker, at service bliver kaldt med userId.
+        //Assert
         verify(userService).findUserById(1);
 
     }
 
     @Test
-    void shouldLoginUser() throws Exception {
-        // Arrange: Vi laver en fake user og fortæller mock-service, hvad den skal returnere.
+    void shouldLoginUser_WhenInputAreValid() throws Exception {
+        //Arrange
         User user = new User();
         user.setId(1);
         user.setName("Test");
@@ -106,7 +95,7 @@ public class UserControllerTest {
 
         when(userService.findUserForLogIn("test@mail.dk", "123")).thenReturn(user);
 
-        // Act + Assert: Vi kalder login-endpointet og tjekker redirect + session.
+        //Act + Assert
         mockMvc.perform(post("/user/login")
                 .param("email", "test@mail.dk")
                 .param("password", "123"))
@@ -115,43 +104,40 @@ public class UserControllerTest {
                 .andExpect(request().sessionAttribute("userId", 1)
                 );
 
-        // Assert: Vi tjekker, at service bliver kaldt med email og password.
+        //Assert
         verify(userService).findUserForLogIn("test@mail.dk", "123");
     }
 
 
     @Test
     void shouldDeleteUser_WhenUserIsLoggedIn() throws Exception{
-        // Arrange: Vi simulerer en bruger, der er logget ind.
 
-        // Act + Assert: Vi kalder delete-endpointet og tjekker redirect til signup.
+        //Act + Assert
         mockMvc.perform(post("/user/delete/1")
                 .sessionAttr("userId", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/signup"));
 
-        // Assert: Vi tjekker, at service bliver kaldt med userId.
+       //Assert
         verify(userService).deleteUser(1);
     }
 
     @Test
     void shouldRedirectToLogin_WhenDeleteUserWithoutLogin() throws Exception{
-        // Arrange: Vi giver ikke session med, fordi brugeren ikke er logget ind.
 
-        // Act + Assert: Vi kalder delete-endpointet og tjekker redirect til login.
+        //Act + Assert
         mockMvc.perform(post("/user/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-        // Assert: Vi tjekker, at service ikke bliver kaldt.
+        //Assert
         verify(userService, never()).deleteUser(1);
     }
 
     @Test
     void shouldUpdateUser_WhenUserIsLoggedIn() throws Exception{
-        // Arrange: Vi simulerer en logget ind bruger og sender nye brugerdata.
 
-        // Act + Assert: Vi kalder update-endpointet og tjekker redirect til profile.
+        //Act + Assert
         mockMvc.perform(post("/user/update/1")
                 .sessionAttr("userId", 1)
                 .param("name", "Test")
@@ -160,15 +146,14 @@ public class UserControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/dashboard"));
 
-        // Assert: Vi tjekker, at service bliver kaldt med et User-objekt.
+        //Assert
         verify(userService).update(any(User.class));
     }
 
     @Test
     void shouldRedirectToLogin_WhenUpdateUserWithoutLogin() throws Exception{
-        // Arrange: Vi giver ikke session med, fordi brugeren ikke er logget ind.
 
-        // Act + Assert: Vi kalder update-endpointet og tjekker redirect til login.
+        //Act + Assert
         mockMvc.perform(post("/user/update/1")
                         .param("name", "Test")
                         .param("email", "test@mail.dk")
@@ -176,10 +161,7 @@ public class UserControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-        // Assert: Vi tjekker, at service ikke bliver kaldt.
+       //Assert
         verify(userService, never()).update(any(User.class));
-
     }
-
-
 }

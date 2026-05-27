@@ -16,21 +16,16 @@ public class SubProjectService {
     private final SubProjectRepository subProjectRepository;
     private final TaskService taskService;
 
-
     public SubProjectService(SubProjectRepository subProjectRepository, TaskService taskService) {
         this.subProjectRepository = subProjectRepository;
         this.taskService = taskService;
     }
 
     public void createSubProject(SubProject subProject) {
-
-        // Opretter et delProjekt under et projekt, som brugeren ejer.
         subProjectRepository.addSubProject(subProject);
     }
 
     public List<SubProject> getSubProjectsByProjectId(int projectId) {
-
-        // Henter delprojekter, hvis brugeren ejer projektet
         return subProjectRepository.getSubProjectsByProjectId(projectId);
     }
 
@@ -56,37 +51,24 @@ public class SubProjectService {
 
     public SubProject findSubProjectById(int id) {
 
-        /* Denne metode bruges til at finde ét bestemt subProjekt
-           ud fra subProjektets id */
-
         SubProject subProject = subProjectRepository.findById(id);
 
-        /* Hvis repository ikke finder et subProjekt,
-           kaster vi vores egen NotFoundException.
-
-           Det gør vi, så systemet kan håndtere fejlen pænt,
-           fx med en 404-side */
         if (subProject == null) {
             throw new NotFoundException("SubProjekt", id);
         }
 
-        /* Hvis projektet findes, returnerer vi det */
         return subProject;
     }
 
     public List<SubProject> getAllSubProjects() {
-        // Henter alle delprojekter, bruges primært til test/admin
         return subProjectRepository.getAllSubProjects();
     }
 
     public void updateSubProject(SubProject subProject) {
-
-        // Opdaterer kun delprojektet, hvis det tilhører brugerens projekt
         subProjectRepository.updateSubProject(subProject);
     }
 
     public void deleteSubProject(int id) {
-        // Sletter kun delprojektet, hvis det tilhører brugerens projekt
         subProjectRepository.deleteSubProject(id);
     }
 }

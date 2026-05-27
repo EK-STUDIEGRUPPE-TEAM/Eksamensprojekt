@@ -17,6 +17,7 @@ public class SubTaskRepository {
     }
 
     public void addSubTask(SubTask subTask) {
+
         String sql = "INSERT INTO SubTask (name, description, estimated_hours, status, task_id) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 subTask.getName(),
@@ -28,26 +29,31 @@ public class SubTaskRepository {
 
     // kun admin og test
     public List<SubTask> findAllSubTask() {
+
         String sql = "SELECT * FROM SubTask";
         return jdbcTemplate.query(sql, new SubTaskRowMapper());
     }
 
     public List<SubTask> findSubTaskByTaskId(int taskId) {
+
         String sql = "SELECT * FROM SubTask WHERE task_id = ?";
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
     public SubTask findSubTaskById(int id) {
+
         String sql = "SELECT * FROM SubTask WHERE subTask_id = ?";
         return jdbcTemplate.queryForObject(sql, new SubTaskRowMapper(), id);
     }
 
     public void deleteSubTask(int id) {
+
         String sql = "DELETE FROM SubTask WHERE subTask_id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public int updateSubTask(SubTask subTask) {
+
         String sql = "UPDATE SubTask SET name = ?, description = ?, estimated_hours = ?, status = ?, task_id = ? WHERE subTask_id = ?";
         return jdbcTemplate.update(sql,
                 subTask.getName(),
@@ -59,6 +65,7 @@ public class SubTaskRepository {
     }
 
     public int deleteSubTaskByTaskId(int taskId) {
+
         String sql = "DELETE FROM SubTask WHERE task_id = ?";
         return jdbcTemplate.update(sql, taskId);
     }

@@ -29,8 +29,7 @@ public class PageControllerTest {
     private UserService userService;
 
     @Test
-    void index() throws Exception{
-
+    void shouldShowIndexPage() throws Exception{
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
@@ -38,6 +37,7 @@ public class PageControllerTest {
 
     @Test
     void shouldShowDashboard() throws Exception{
+        //Arrange
         User user = new User();
         Project project = new Project();
         project.setUserId(1);
@@ -46,6 +46,7 @@ public class PageControllerTest {
         when(projectService.findProjectByUserId(1)).thenReturn(projects);
         when(userService.findUserById(1)).thenReturn(user);
 
+        //Act + Assert
         mockMvc.perform(get("/dashboard")
                 .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
@@ -53,7 +54,9 @@ public class PageControllerTest {
     }
 
     @Test
-    void login() throws  Exception{
+    void shouldShowLoginPage() throws  Exception{
+
+        //Act + Assert
         mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"))
@@ -61,7 +64,9 @@ public class PageControllerTest {
     }
 
     @Test
-    void signup() throws Exception{
+    void shouldShowSignupPage() throws Exception{
+
+        //Act + Assert
         mockMvc.perform(get("/signup"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("signup"))

@@ -8,96 +8,175 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/pagefade.css">
 </head>
+
 <body>
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
-    <!-- Tilbage-knap kun på denne side -->
+
     <a class="btn-back" th:href="@{/projects}">Tilbage til projekter</a>
+
     <div class="page-title-row">
-        <!-- Vi henter projektets navn fra model objektet og viser det som overskrift -->
-    <h1 th:text="${project.name}"></h1>
-        <a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id}, URL=${'/projects/' + project.id})}">Rediger projektet</a>
+
+        <h1 th:text="${project.name}"></h1>
+
+        <a class="btn-edit" th:href="@{/projects/update/{id}(id=${project.id}, URL=${'/projects/' + project.id})}">Rediger
+            projektet</a>
+
     </div>
 
     <div class="info-cards">
+
         <table class="info-table">
+
             <tbody>
-                <tr>
-                    <th>Beskrivelse</th>
-                    <td th:text="${project.description}"></td>
-                </tr>
-                <tr>
-                    <th>Dato oprettet</th>
-                    <td th:text="${project.date}"></td>
-                </tr>
-                <tr>
-                    <th>Deadline</th>
-                    <td th:text="${project.deadline}"></td>
-                </tr>
-                <tr>
-                    <th>Estimerede timer i alt</th>
-                    <td th:text="${totalEstimatedHours}"></td>
-                </tr>
+
+            <tr>
+
+                <th>Beskrivelse</th>
+
+                <td th:text="${project.description}"></td>
+
+            </tr>
+
+            <tr>
+
+                <th>Dato oprettet</th>
+
+                <td th:text="${project.date}"></td>
+
+            </tr>
+
+            <tr>
+
+                <th>Deadline</th>
+
+                <td th:text="${project.deadline}"></td>
+
+            </tr>
+
+            <tr>
+
+                <th>Estimerede timer i alt</th>
+
+                <td th:text="${totalEstimatedHours}"></td>
+
+            </tr>
+
             </tbody>
+
         </table>
 
         <div class="info-stat-cards">
+
             <div class="info-stat-card">
+
                 <div class="info-stat-label">Dit budget</div>
+
                 <div class="info-stat-value" th:text="${project.budget} + ' KR.'"></div>
+
             </div>
+
             <div class="info-stat-card">
+
                 <div class="info-stat-label">Dit forbrug</div>
+
                 <div class="info-stat-value" th:text="${totalPrice} + ' KR.'"></div>
+
             </div>
+
             <div class="info-stat-card">
+
                 <div class="info-stat-label">Dit over / underskud</div>
+
                 <div class="info-stat-value" th:text="${difference} + ' KR.'"></div>
+
             </div>
+
         </div>
+
     </div>
 
-    <a class="btn-create" th:href="@{/subproject/addsubproject/{projectId}(projectId=${project.id})}">+ Opret delprojekt</a>
+    <a class="btn-create" th:href="@{/subproject/addsubproject/{projectId}(projectId=${project.id})}">+ Opret
+        delprojekt</a>
 
-    <!-- Vi looper igennem hvert subprojekt der tilhører det korrekte projekt -->
+
     <div th:each="subproject : ${project.subProjects}" class="subproject-section">
+
         <div class="subproject-header">
+
             <h2 th:text="${subproject.name}"></h2>
+
             <div class="subproject-actions">
-                <a class="btn-create-sm-diff" th:href="@{/task/addtask/{subProjectId}(subProjectId=${subproject.id}, projectId=${project.id})}">+ Opret opgave</a>
-                <form th:action="@{/subproject/delete/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}" method="post">
-                    <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette dette delprojekt?')">Slet delprojekt</button>
+
+                <a class="btn-create-sm-diff"
+                   th:href="@{/task/addtask/{subProjectId}(subProjectId=${subproject.id}, projectId=${project.id})}">+
+                    Opret opgave</a>
+
+                <form th:action="@{/subproject/delete/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}"
+                      method="post">
+
+                    <button type="submit" class="btn-sm-danger"
+                            onclick="return confirm('Er du sikker på du vil slette dette delprojekt?')">Slet delprojekt
+                    </button>
+
                 </form>
-                <a class="btn-edit" th:href="@{/subproject/update/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}">Rediger delprojekt</a>
+
+                <a class="btn-edit"
+                   th:href="@{/subproject/update/{projectId}/{id}(projectId=${subproject.projectId}, id=${subproject.id})}">Rediger
+                    delprojekt</a>
+
             </div>
+
         </div>
 
         <table>
-            <!-- vi laver her alle de forskellige kollonneoverskrifter, hvori at de forskellige taskdataer ligger under. -->
+
             <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Opgaver</th>
-                    <th>Timer</th>
-                    <th>Timepris</th>
-                    <th>Total</th>
-                </tr>
+
+            <tr>
+
+                <th>Status</th>
+
+                <th>Opgaver</th>
+
+                <th>Timer</th>
+
+                <th>Timepris</th>
+
+                <th>Total</th>
+
+            </tr>
+
             </thead>
+
             <tbody>
-                <!-- Vi viser vi task rækken med status, navn, timer, timepris og total -->
-                <tr th:each="task : ${subproject.tasks}">
-                    <td th:text="${task.status.displayName}"></td>
-                    <td><a th:href="@{/task/{id}(id=${task.id})}" th:text="${task.name}"></a></td>
-                    <td th:text="${task.estimatedHours}"></td>
-                    <td th:text="${task.hourlyRate} + ' KR.'"></td>
-                    <td th:text="${task.totalPrice} + ' KR.'"></td>
-                </tr>
+
+            <tr th:each="task : ${subproject.tasks}">
+
+                <td th:text="${task.status.displayName}"></td>
+
+                <td><a th:href="@{/task/{id}(id=${task.id})}" th:text="${task.name}"></a></td>
+
+                <td th:text="${task.estimatedHours}"></td>
+
+                <td th:text="${task.hourlyRate} + ' KR.'"></td>
+
+                <td th:text="${task.totalPrice} + ' KR.'"></td>
+
+            </tr>
+
             </tbody>
+
         </table>
 
     </div>
+
 </main>
+
 </body>
+
 </html>

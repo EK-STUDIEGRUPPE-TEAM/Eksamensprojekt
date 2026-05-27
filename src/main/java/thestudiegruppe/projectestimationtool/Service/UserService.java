@@ -27,40 +27,25 @@ public class UserService {
 
 
     public void signUp(User user) {
-        // Tjekker om user er null, før brugeren oprettes.
-        // Hvis user er null, kan vi ikke oprette brugeren, og kaster en exception.
+
         if (user == null) {
             throw new IllegalArgumentException("User må ikke være null");
         }
 
-        // Vi bruger try/catch, fordi vi først skal prøve at køre repository-metoden.
-        // Hvis databasen giver en fejl, fanger catch fejlen.
-        // Derefter kaster vi vores egen custom exception, som passer bedre til vores program.
-        // Vi kan ikke bare skrive throw med det samme,
-        // fordi vi ikke ved om der er en fejl, før metoden er prøvet.
         try{
-            // Prøver at gemme brugeren i databasen.
             userRepository.signUp(user);
+
         }catch (DuplicateKeyException e){
-            // Hvis email allerede findes, stopper databasen oprettelsen.
-            // Vi laver database-fejlen om til vores egen custom exception.
             throw new EmailAlreadyExistsException(user.getEmail());
         }
     }
 
-    // Finder en bruger ud fra email og password.
     public User findUserForLogIn(String email, String password){
-        // Vi bruger try/catch, fordi vi først skal prøve at finde brugeren i databasen.
-        // Hvis databasen ikke finder en bruger, fanger catch fejlen.
-        // Derefter kaster vi vores egen custom exception for forkert login.
-        // Vi kan ikke bare skrive throw med det samme,
-        // fordi vi kun vil kaste fejl, hvis login faktisk fejler.
+
         try{
-            // Prøver at finde én bruger i databasen.
             return userRepository.findUserForLogIn(email, password);
+
         }catch (EmptyResultDataAccessException e){
-            // Hvis ingen bruger findes, betyder det at login er forkert.
-            // Vi laver Spring-fejlen om til vores egen custom exception.
             throw new InvalidLoginException();
         }
     }
@@ -73,19 +58,13 @@ public class UserService {
         userRepository.update(user);
     }
 
-    // Finder en bruger ud fra id.
-    // Kaster custom UserNotFoundException hvis bruger ikke er fundet
+
     public User findUserById(int id) {
-        // Vi bruger try/catch, fordi vi først skal prøve at finde brugeren i databasen.
-        // Hvis databasen ikke finder en bruger, fanger catch fejlen.
-        // Derefter kaster vi vores egen custom exception for forkert login.
-        // Vi kan ikke bare skrive throw med det samme,
-        // fordi vi kun vil kaste fejl, hvis login faktisk fejler.
+
         try {
             return userRepository.findUserById(id);
+
         } catch (EmptyResultDataAccessException e){
-            // Hvis ingen bruger findes, betyder det at login er forkert.
-            // Vi laver Spring-fejlen om til vores egen custom exception.
             throw new NotFoundException("Brugeren", id);
         }
     }

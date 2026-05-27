@@ -22,41 +22,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProjectControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
     private ProjectService projectService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
-    void shouldShowProjects() throws Exception {
-        mockMvc.perform(get("/projects").sessionAttr("userId",1))
+    void shouldShowProjects_WhenUserIsLoggedIn() throws Exception {
+
+        //Act + Assert
+        mockMvc.perform(get("/projects")
+                        .sessionAttr("userId",1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("projects"));
     }
 
 
     @Test
-    void shouldShowProject() throws Exception {
+    void shouldShowProject_WhenUserOwnsProject() throws Exception {
 
-
+        //Arrange
         Project project = new Project();
 
         project.setId(1);
         project.setUserId(1);
 
-        when(projectService.findFullProject(1))
-                .thenReturn(project);
+        when(projectService.findFullProject(1)).thenReturn(project);
 
+       //Act + Assert
         mockMvc.perform(get("/projects/1")
                         .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
@@ -64,9 +58,9 @@ class ProjectControllerTest {
     }
 
     @Test
-    void shouldShowAddProjectForm() throws Exception{
+    void shouldShowAddProjectForm_WhenUserIsLoggedIn() throws Exception{
 
-
+        //Act + Assert
         mockMvc.perform(get("/projects/addproject")
                         .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
@@ -75,14 +69,16 @@ class ProjectControllerTest {
     }
 
     @Test
-    void shouldAddProject() throws Exception{
+    void shouldAddProject_WhenUserIsLoggedIn() throws Exception{
 
+        //Arrange
         Project project = new Project();
         project.setUserId(1);
         project.setDeadline(LocalDate.of(2027, 1, 1));
 
-
-        mockMvc.perform(post("/projects/save").sessionAttr("userId", 1)
+        //Act + Assert
+        mockMvc.perform(post("/projects/save")
+                        .sessionAttr("userId", 1)
                         .param("name", "test")
                         .param("deadline", "2026-05-28")
                         .param("budget", "10000"))
@@ -92,8 +88,9 @@ class ProjectControllerTest {
     }
 
     @Test
-    void shouldDeleteProject() throws Exception {
+    void shouldDeleteProject_WhenUserOwnsProject() throws Exception {
 
+        //Arrange
         Project project = new Project();
         project.setUserId(1);
         project.setId(1);
@@ -102,17 +99,17 @@ class ProjectControllerTest {
         when(projectService.findProjectById(1)).
                 thenReturn(project);
 
-        mockMvc.perform(get("/projects/delete/1").sessionAttr("userId", 1))
+        //Act + Assert
+        mockMvc.perform(get("/projects/delete/1")
+                        .sessionAttr("userId", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects"));
-
-
-
     }
 
     @Test
-    void shouldShowUpdatePage() throws Exception {
+    void shouldShowUpdateProjectPage_WhenUserOwnsProject() throws Exception {
 
+        //Arrange
         Project project = new Project();
         project.setUserId(1);
         project.setId(1);
@@ -121,15 +118,18 @@ class ProjectControllerTest {
         when(projectService.findProjectById(1)).
                 thenReturn(project);
 
-        mockMvc.perform(get("/projects/update/1").sessionAttr("userId", 1))
+        //Act + Assert
+        mockMvc.perform(get("/projects/update/1")
+                        .sessionAttr("userId", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("updateproject"));
 
     }
 
     @Test
-    void shouldUpdateProject() throws Exception{
+    void shouldUpdateProject_WhenUserOwnsProject() throws Exception{
 
+        //Arrange
         Project project = new Project();
         project.setUserId(1);
         project.setId(1);
@@ -138,14 +138,13 @@ class ProjectControllerTest {
         when(projectService.findProjectById(1)).
                 thenReturn(project);
 
-        mockMvc.perform(post("/projects/update/1").sessionAttr("userId", 1)
+        //Act + Assert
+        mockMvc.perform(post("/projects/update/1")
+                        .sessionAttr("userId", 1)
                 .param("name", "test")
                 .param("deadline", "2026-05-28")
                 .param("budget", "10000"))
-
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/projects/1"));
-
-
     }
 }

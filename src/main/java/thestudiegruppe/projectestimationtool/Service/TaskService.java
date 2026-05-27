@@ -22,20 +22,16 @@ public class TaskService {
         this.subTaskService = subTaskService;
     }
 
-    //Opretter en ny task i databasen.
     public void createTask(Task task) {
-        //Tjekker om task er null.
-        //Hvis task er null, kaste en exception,
-        //fordi metoden ikke kan oprette en tom task.
+
         if (task == null) {
             throw new IllegalArgumentException("Task må ikke være null");
         }
-        // Hvis hourlyRate er 0 eller mindre kaster vi en custom NegativeValueException
-        // fordi en timepris på 0 eller derunder ikke giver mening.
+
         if (task.getHourlyRate() <= 0) {
             throw new NegativeValueException("Timepris");
         }
-        //Sender task videre til repository, som gemmer den i databasen.
+
         taskRepository.addTask(task);
     }
 
@@ -45,14 +41,11 @@ public class TaskService {
 
     //Henter alle tasks, der hører til et bestemt subProject.
     public List<Task> getTasksBySubProjectId(int subProjectId) {
-        //Tjekker om subProjectId er ugyldigt.
-        //Hvis id er 0 eller mindre, kastes en exception,
-        //fordi der skal bruges et gyldigt subProject-id.
+
         if (subProjectId <= 0) {
             throw new IllegalArgumentException("SubProject id skal være større end 0");
         }
 
-        //Returnerer alle tasks for det valgte subProject.
         return taskRepository.getTasksBySubProjectId(subProjectId);
     }
 
@@ -86,48 +79,39 @@ public class TaskService {
     }
 
     public void updateTask(Task task) {
-        // Hvis hourlyRate er 0 eller mindre kaster vi en custom NegativeValueException
-        // fordi en timepris på 0 eller derunder ikke giver mening.
+
         if (task.getHourlyRate() <= 0) {
             throw new NegativeValueException("Timepris");
         }
+
         taskRepository.updateTask(task);
     }
 
-    //Sletter alle tasks, der hører til et bestemt subProject.
+
     public int deleteTaskBySubProjectId(int subProjectId) {
-        //Tjekker om subProjectId er ugyldigt.
-        //Hvis id er 0 eller mindre, kastes en exception,
-        //fordi der skal bruges et gyldigt subProject-id.
+
         if (subProjectId <= 0) {
             throw new IllegalArgumentException("SubProject id skal være større end 0");
         }
 
-        //Sletter tasks i repository og returnerer resultatet.
         return taskRepository.deleteTaskBySubProjectId(subProjectId);
     }
 
     public Task findTaskById(int id) {
 
-        /* Denne metode bruges til at finde en bestemt task
-           ud fra taskens id */
         try {
             Task task = taskRepository.findById(id);
-
-            /* Hvis projektet findes, returnerer vi det */
             return task;
         } catch (EmptyResultDataAccessException e) {
-        /* Hvis repository ikke finder et projekt,
-           kaster vi vores egen NotFoundException.
 
-           Det gør vi, så systemet kan håndtere fejlen pænt,
-           fx med en 404-side */
             throw new NotFoundException("Opgaven", id);
         }
     }
 
     public Task findFullTask(int id){
+
         Task task;
+
         try {
             // Vi henter ét bestemt projekt ud fra projektets id
             task = taskRepository.findById(id);
@@ -147,7 +131,4 @@ public class TaskService {
             // Til sidst returnerer vi project med subprojects og tasks indsat
             return task;
     }
-
-
-
 }

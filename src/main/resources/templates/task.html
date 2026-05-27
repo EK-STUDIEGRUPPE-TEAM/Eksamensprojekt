@@ -8,80 +8,141 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/pagefade.css">
 </head>
+
 <body>
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
-    <!-- Tilbage-knap kun på denne side -->
+
     <a class="btn-back" th:href="@{/projects/{id}(id=${projectId})}">Tilbage til projekt</a>
 
-    <!-- Ydre flex-wrapper: venstre kolonne strækker sig lodret mod beskrivelse-boksen -->
     <div class="task-main-layout">
 
-        <!-- Venstre kolonne: titel, knapper og deadline/status -->
         <div class="task-left-col">
+
             <h1 th:text="${task.name}"></h1>
+
             <div class="form-actions" style="margin-bottom: 24px;">
+
                 <a class="btn-edit" th:href="@{/task/update/{id}(id=${task.id})}">Rediger opgaven</a>
-                <!-- Delete bruger form og method="post", fordi vi ændrer/sletter data i databasen. -->
-                <form th:action="@{/task/deleteTask/{subProjectId}/{id}(subProjectId=${task.subProjectId}, id=${task.id})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette denne opgave?')">Slet opgaven</button>
+
+                <form th:action="@{/task/deleteTask/{subProjectId}/{id}(subProjectId=${task.subProjectId}, id=${task.id})}"
+                      method="post" style="display:inline;">
+
+                    <button type="submit" class="btn-sm-danger"
+                            onclick="return confirm('Er du sikker på du vil slette denne opgave?')">Slet opgaven
+                    </button>
+
                 </form>
+
             </div>
+
             <table class="info-table">
+
                 <tbody>
-                    <tr>
-                        <th>Deadline</th>
-                        <td th:text="${task.deadline}"></td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
-                        <td th:text="${task.status.displayName}"></td>
-                    </tr>
+
+                <tr>
+
+                    <th>Deadline</th>
+
+                    <td th:text="${task.deadline}"></td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Status</th>
+
+                    <td th:text="${task.status.displayName}"></td>
+
+                </tr>
+
                 </tbody>
+
             </table>
+
         </div>
 
-        <!-- Højre kolonne: beskrivelse strækker sig fra titel til bunden af tabellen -->
+
         <div class="task-description-box">
+
             <div class="task-description-label">Beskrivelse</div>
+
             <div class="task-description-text" th:text="${task.description}"></div>
+
         </div>
 
     </div>
 
-    <!-- Tabellen viser projektets subprojekter, tasks og subtasks -->
     <h2>Delopgaver</h2>
+
     <a class="btn-create" th:href="@{/subtask/addsubtask/{taskId}(taskId=${task.id})}">+ Opret delopgave</a>
 
     <table>
-        <!-- vi laver her alle de forskellige kollonneoverskrifter, hvori at de forskellige taskdataer ligger under. -->
+
         <thead>
-            <tr>
-                <th>Status</th>
-                <th>Navn</th>
-                <th>Timer</th>
-                <th>Beskrivelse</th>
-                <th colspan="2"></th>
-            </tr>
+
+        <tr>
+
+            <th>Status</th>
+
+            <th>Navn</th>
+
+            <th>Timer</th>
+
+            <th>Beskrivelse</th>
+
+            <th colspan="2"></th>
+
+        </tr>
+
         </thead>
+
         <tbody>
-            <!-- Vi looper igennem hver subtask der tilhører den korrekte task -->
-            <tr th:each="subtask : ${task.subTasks}">
-                <td th:text="${subtask.status.displayName}"></td>
-                <td th:text="${subtask.name}"></td>
-                <td th:text="${subtask.estimatedHours}"></td>
-                <td th:text="${subtask.description}"></td>
-                <td>
-                    <form th:action="@{/subtask/delete/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn-sm-danger" onclick="return confirm('Er du sikker på du vil slette denne delopgave?')">Slet delopgave</button>
-                    </form>
-                </td>
-                <td><a class="btn-edit" th:href="@{/subtask/update/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}">Rediger delopgave</a></td>
-            </tr>
+
+        <tr th:each="subtask : ${task.subTasks}">
+
+            <td th:text="${subtask.status.displayName}"></td>
+
+            <td th:text="${subtask.name}"></td>
+
+            <td th:text="${subtask.estimatedHours}"></td>
+
+            <td th:text="${subtask.description}"></td>
+
+            <td>
+
+                <form th:action="@{/subtask/delete/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}"
+                      method="post" style="display:inline;">
+
+                    <button type="submit" class="btn-sm-danger"
+                            onclick="return confirm('Er du sikker på du vil slette denne delopgave?')">
+
+                        Slet delopgave
+
+                    </button>
+
+                </form>
+            </td>
+
+            <td><a class="btn-edit"
+                   th:href="@{/subtask/update/{taskId}/{id}(taskId=${subtask.taskId},id=${subtask.id})}">
+
+                Rediger delopgave</a>
+
+            </td>
+
+        </tr>
+
         </tbody>
+
     </table>
+
 </main>
+
 </body>
+
 </html>

@@ -19,36 +19,57 @@ public class TaskRepository {
     }
 
     public void addTask(Task task) {
+
         String sql = "INSERT INTO Task (name, description, deadline, hourlyRate, status, subProject_id) VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getDeadline(), task.getHourlyRate(), task.getStatus().name(), task.getSubProjectId());
+        jdbcTemplate.update(
+                sql,
+                task.getName(),
+                task.getDescription(),
+                task.getDeadline(),
+                task.getHourlyRate(),
+                task.getStatus().name(),
+                task.getSubProjectId());
     }
 
     public List<Task> getAllTasks() {
+
         String sql = "SELECT * FROM Task";
         return jdbcTemplate.query(sql, new TaskRowMapper());
     }
 
     public List<Task> getTasksBySubProjectId(int subProjectId) {
+
         String sql = "SELECT * FROM Task WHERE subProject_id = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectId);
     }
 
     public void deleteTask(int id) {
+
         String sql = "DELETE FROM Task WHERE task_id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public int updateTask(Task task) {
+
         String sql = "UPDATE Task SET name = ?, description = ?, deadline = ?, hourlyRate = ?, status = ? WHERE task_id = ?";
-        return jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getDeadline(), task.getHourlyRate(), task.getStatus().name(), task.getId());
+        return jdbcTemplate.update(
+                sql,
+                task.getName(),
+                task.getDescription(),
+                task.getDeadline(),
+                task.getHourlyRate(),
+                task.getStatus().name(),
+                task.getId());
     }
 
     public int deleteTaskBySubProjectId(int subProjectId) {
+
         String sql = "DELETE FROM Task WHERE subProject_id = ?";
         return jdbcTemplate.update(sql, subProjectId);
     }
 
     public Task findById(int id) {
+
         String sql = "SELECT * FROM Task WHERE task_id = ?";
         return jdbcTemplate.queryForObject(sql, new TaskRowMapper(), id);
     }

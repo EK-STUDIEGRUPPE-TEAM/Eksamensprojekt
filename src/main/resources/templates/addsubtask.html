@@ -8,42 +8,73 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
+
 <body>
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
+
     <h1>Opret delopgave</h1>
 
     <form th:action="@{/subtask/save}" th:object="${subtask}" method="post">
+
         <input type="hidden" th:field="*{taskId}">
 
         <div class="form-group">
+
             <label>Delopgavetitel</label>
+
             <input type="text" th:field="*{name}" maxlength="30" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Beskrivelse</label>
+
             <input type="text" th:field="*{description}" maxlength="60">
+
         </div>
+
         <div class="form-group">
+
             <label>Estimerede timer</label>
+
             <input type="number" th:field="*{estimatedHours}" min="1" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Status</label>
+
             <select th:field="*{status}" required>
+
                 <option value="TODO">Todo</option>
+
                 <option value="IN_PROGRESS">Aktiv</option>
+
                 <option value="DONE">Færdig</option>
+
             </select>
+
         </div>
+
         <div class="form-actions">
+
             <button type="submit">Opret delopgave</button>
-            <!-- Tilbage knap sender brugeren til task oversigten-->
-        <a class="btn-cancel" th:href="@{/task/{taskId}(taskId=${subtask.taskId})}">Annuller</a>
+
+            <a class="btn-cancel" th:href="@{/task/{taskId}(taskId=${subtask.taskId})}">Annuller</a>
+
         </div>
+
     </form>
+
 </main>
+
 </body>
+
 </html>

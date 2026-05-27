@@ -8,71 +8,86 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
+
 <body>
+
 <header th:replace="~{fragments/fragments :: headerfragment}"></header>
+
 <nav th:replace="~{fragments/fragments :: navfragment('projects')}"></nav>
 
 <main>
+
     <h1>Rediger projekt</h1>
 
     <div class="error-msg" th:if="${error}" th:text="${error}"></div>
 
-    <!--
-    vi bruger form til at modtage de nye ændringer
-    fra brugeren
-
-    th:action sender tasken til vores update metode
-    i task controlleren
-
-    {id} bruges fordi vi skal vide hvilken task
-    der skal redigeres
-
-    method="post" betyder at vi sender
-    dataen til backend
-    -->
-
     <form th:action="@{/projects/update/{id}(id=${project.id})}" th:object="${project}" method="post">
-        <!--
-        vi gemmer projektets id og URL som hidden så formlen
-        stadig kender det rigtige id hvis siden vises igen med en fejlbesked
-        -->
+
         <input type="hidden" th:field="*{id}">
+
         <input type="hidden" name="URL" th:value="${URL}">
 
         <div class="form-group">
+
             <label>Navn</label>
+
             <input type="text" th:field="*{name}" maxlength="30">
+
         </div>
+
         <div class="form-group">
+
             <label>Beskrivelse</label>
+
             <input type="text" th:field="*{description}" maxlength="60">
+
         </div>
+
         <div class="form-group">
+
             <label>Deadline</label>
-            <!--
-            vi bruger th:value fordi th:field
-            formaterer LocalDate på en måde som browser ikke forstår
-            hvilket gør at feltet vises tomt under update
-            -->
+
+
             <input type="date" name="deadline" th:value="${project.deadline}" required>
+
         </div>
+
         <div class="form-group">
+
             <label>Budget (KR.)</label>
+
             <input type="text" th:field="*{budget}">
+
         </div>
+
         <div class="form-group">
+
             <label>Status</label>
+
             <select th:field="*{status}">
+
                 <option value="TODO">Todo</option>
+
                 <option value="IN_PROGRESS">Aktiv</option>
+
                 <option value="DONE">Færdig</option>
+
             </select>
+
         </div>
+
         <div class="form-actions">
+
             <button type="submit">Gem ændringer</button>
+
             <a class="btn-cancel" th:href="${URL}">Annuller</a>
+
         </div>
+
     </form>
+
 </main>
+
 </body>
+
 </html>

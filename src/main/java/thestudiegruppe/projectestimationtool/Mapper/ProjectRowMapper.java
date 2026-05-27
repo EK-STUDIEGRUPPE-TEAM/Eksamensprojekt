@@ -13,7 +13,6 @@
 
         public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-
             return new Project(
                     rs.getInt("project_id"),
                     rs.getString("name"),
