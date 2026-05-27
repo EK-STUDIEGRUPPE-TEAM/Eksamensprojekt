@@ -12,18 +12,18 @@ Projektet kan tilgås her:
 
 ### ER-diagram
 
-![ER-diagram](images/er-diagram.png)
+<img src="images/er-diagram.png" alt="ER-diagram" width="600">
 
 ### UML package diagram
 
-![UML package diagram](images/UML-package-diagram.png)
+<img src="images/UML-package-diagram.png" alt="UML package diagram" width="600">
 
 ### Klassediagram
 
-![Klassediagram](images/klasse-diagram.png)
+<img src="images/Klassediagram.png" alt="Klassediagram" width="600">
 
 ## Qodana
 
 Projektet er analyseret med Qodana.
 
-![Qodana analyse](images/qodana.png)
+<img src="images/Qodana.png" alt="Qodana analyse" width="600">
