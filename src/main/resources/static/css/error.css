@@ -32,3 +32,16 @@ h1.error-giant {
     -webkit-animation: fade-in-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) 0.5s both;
             animation: fade-in-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) 0.5s both;
 }
+
+/* RESPONSIVE FEJLSIDE */
+/* Gør den store fejltekst mindre på mobil */
+@media (max-width: 768px) {
+
+    h1.error-giant {
+        font-size: 72px;
+    }
+
+    .hero p.error-subtitle {
+        font-size: 18px;
+    }
+}

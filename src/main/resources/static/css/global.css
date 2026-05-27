@@ -76,6 +76,91 @@ header h1 {
     overflow: hidden;
 }
 
+/* RESPONSIVE DESIGN */
+/* Ændrer grundlayoutet på små skærme, så siden bliver mobilvenlig */
+@media (max-width: 768px) {
+
+    /* Body går fra sidebar-layout til lodret mobil-layout */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* Header får mindre padding og kan bryde ned på flere linjer */
+    header {
+        padding: 14px 18px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Logo/overskrift bliver lidt mindre på mobil */
+    header h1 {
+        font-size: 15px;
+        padding: 7px 14px;
+        letter-spacing: 1.5px;
+    }
+
+    header h3 {
+        font-size: 12px;
+    }
+
+    /* Navigationen bliver vandret/top-menu i stedet for sidebar */
+    nav {
+        width: 100%;
+        min-height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px;
+        gap: 6px;
+    }
+
+    /* Links i nav bliver mindre og passer bedre på mobil */
+    nav a,
+    nav form button {
+        padding: 10px 12px;
+        font-size: 13px;
+        border-left: none;
+        border-radius: 999px;
+        width: auto;
+    }
+
+    nav a:hover,
+    nav a.nav-active,
+    nav form button:hover {
+        border-left: none;
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Main får mindre luft på mobil */
+    main {
+        padding: 24px 16px;
+        width: 100%;
+    }
+
+    /* Sider uden main skal også ligge korrekt på mobil */
+    body > h1,
+    body > h2,
+    body > h3,
+    body > p,
+    body > a,
+    body > table,
+    body > form,
+    body > div {
+        grid-column: auto;
+    }
+
+    /* Overskrifter bliver lidt mindre på mobil */
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+}
+
 /* Øverste lysstreg */
 header h1::before {
     content: '';

@@ -99,3 +99,33 @@ tr.add-row td {
 td:first-child {
     font-weight: 500;
 }
+
+/* RESPONSIVE TABELLER */
+/* Gør tabeller mere brugbare på mobil, så de kan scrolle vandret hvis de er brede */
+@media (max-width: 768px) {
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    table thead th,
+    table tbody td,
+    table tbody th {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    table.info-table {
+        width: 100%;
+        min-width: 0;
+        white-space: normal;
+    }
+
+    table.info-table tbody th {
+        width: auto;
+        white-space: normal;
+    }
+}

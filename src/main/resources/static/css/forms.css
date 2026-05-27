@@ -93,3 +93,49 @@ main form input[type="submit"],
 main form button[type="submit"] {
     align-self: flex-start;
 }
+
+/* RESPONSIVE FORMULARER */
+/* Gør formularer og inputfelter nemmere at bruge på mobil */
+@media (max-width: 768px) {
+
+    main form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        max-width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    main form input[type="submit"],
+    main form button[type="submit"] {
+        align-self: stretch;
+        width: 100%;
+    }
+
+    .form-actions a.btn-back,
+    a.btn-cancel {
+        margin-left: 0;
+        text-align: center;
+    }
+}
