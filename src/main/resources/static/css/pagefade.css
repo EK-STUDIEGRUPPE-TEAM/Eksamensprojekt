@@ -59,3 +59,28 @@ main {
     overflow-wrap: break-word;
     overflow: hidden;
 }
+
+/* Gør task/projekt-layoutet responsivt, så kolonnerne vises under hinanden på mobil */
+@media (max-width: 768px) {
+
+    .task-main-layout {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .task-left-col {
+        width: 100%;
+    }
+
+    .task-left-col table.info-table {
+        width: 100%;
+    }
+
+    .task-description-box {
+        width: 100%;
+    }
+
+    .task-description-text {
+        overflow: visible;
+    }
+}

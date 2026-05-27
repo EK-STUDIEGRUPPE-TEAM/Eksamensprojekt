@@ -150,3 +150,43 @@
     align-items: center;
     gap: 10px;
 }
+
+/* RESPONSIVE KORT OG SEKTIONER */
+/* Placér kort og sidehandlinger under hinanden på mobil */
+@media (max-width: 768px) {
+
+    .stat-cards,
+    .info-cards,
+    .info-stat-cards {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .stat-card,
+    .info-stat-card {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .page-title-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .page-title-row a.btn-create {
+        width: 100%;
+        text-align: center;
+    }
+
+    .subproject-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .subproject-actions {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}

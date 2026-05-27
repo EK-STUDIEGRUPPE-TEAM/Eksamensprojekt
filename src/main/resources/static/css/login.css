@@ -250,3 +250,45 @@ input:-webkit-autofill:focus {
     background: rgba(36, 61, 44, 0.08);
     text-decoration: none;
 }
+
+/* RESPONSIVE LOGIN, SIGNUP OG FORSIDE */
+/* Tilpasser login-kort og forside-hero til mobil */
+@media (max-width: 768px) {
+
+    .login-card {
+        margin: 36px 16px 0;
+        padding: 28px 22px;
+        max-width: none;
+    }
+
+    .hero {
+        padding: 36px 18px;
+    }
+
+    .projector-hero-logo {
+        font-size: 20px;
+        padding: 14px 24px;
+        letter-spacing: 3px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 14px;
+        margin-bottom: 26px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}

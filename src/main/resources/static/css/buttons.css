@@ -162,3 +162,31 @@ a.btn-cancel:hover {
     color: #243d2c;
     text-decoration: underline;
 }
+
+/* RESPONSIVE KNAPPER */
+/* Gør knapper lettere at trykke på mobil */
+@media (max-width: 768px) {
+
+    button,
+    input[type="submit"],
+    a.btn-create,
+    a.btn-create-sm,
+    a.btn-create-sm-diff,
+    a.btn-edit,
+    a.btn-delete {
+        text-align: center;
+    }
+
+    a.btn-create {
+        width: 100%;
+    }
+
+    button.btn-sm-danger,
+    a.btn-create-sm,
+    a.btn-create-sm-diff,
+    a.btn-edit,
+    a.btn-delete {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
