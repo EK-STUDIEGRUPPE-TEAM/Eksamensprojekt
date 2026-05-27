@@ -19,11 +19,12 @@ Projektets dokumentation og diagrammer findes her:
 |----------|---------|------------|
 | Java | 21.0.8 | Programmeringssprog |
 | Spring Boot | 4.0.6 | Backend webapplikation |
+| JDBC | via Spring Boot | Databaseforbindelse |
 | Thymeleaf | via Spring Boot | HTML templates |
 | HTML | 5 | Struktur på websider |
 | CSS | 3 | Styling af websider |
-| JDBC | via MySQL Connector/J 9.7.0 | Databaseforbindelse |
 | MySQL | 8.0.45 | Produktionsdatabase |
+| MySQL connector | 9.7.0 | Databasedriver til MySQL |
 | H2 | 2.4.240 | Test-/udviklingsdatabase |
 | Maven | 3.9.15 | Build tool og dependency management |
 | IntelliJ IDEA | 2025.3.2 | Udviklingsmiljø |
@@ -37,8 +38,8 @@ Projektets dokumentation og diagrammer findes her:
 ```
 3. Opret MySQL-database og kør SQL-script fra `/src/main/resources/schema.sql`
 4. Indsæt dine databaseoplysninger som enviroment variables i Spring Boot configurations:
-    - `DB_URL`
-    - `DB_USER` 
-    - `DB_PASSWORD`
+    - `DEV_URL`
+    - `DEV_USER` 
+    - `DEV_PASSWORD`
 5. Start applikationen
 5. Åbn browseren med `http://localhost:8080`
