@@ -10,6 +10,8 @@ Her ligger projektets diagrammer og dokumentation.
 
 ## UML package diagram
 
+![ER-diagram](UML-package-diagram.png)
+
 ## Klassediagram
 
 ## Qodana
